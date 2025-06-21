@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Well Clean - Services</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <meta content="" name="keywords" />
+    <meta content="" name="description" />
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="img/favicon-32x32.png" />
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Varela+Round&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Icon Font Stylesheet -->
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css"
+      rel="stylesheet"
+    />
+
+    <!-- Libraries Stylesheet -->
+    <link href="lib/animate/animate.min.css" rel="stylesheet" />
+    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet" />
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="css/bootstrap.min.css" rel="stylesheet" />
+
+    <!-- Template Stylesheet -->
+    <link href="css/style.css" rel="stylesheet" />
+    <style>
+      .navbar-light .navbar-nav .nav-link {
+        color: #393838;
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- Spinner Start -->
+    <div
+      id="spinner"
+      class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center"
+    >
+      <div
+        class="spinner-border text-primary"
+        style="width: 3rem; height: 3rem"
+        role="status"
+      >
+        <span class="sr-only">Loading...</span>
+      </div>
+    </div>
+    <!-- Spinner End -->
+    <!-- Social Media Sticky Buttons -->
+    <div class="social-icons">
+      <a
+        href="https://wa.me/447398538498"
+        class="social-btn whatsapp"
+        target="_blank"
+      >
+        <i class="fab fa-whatsapp"></i>
+      </a>
+
+      <a
+        href="https://www.facebook.com/well-clean"
+        class="social-btn facebook"
+        target="_blank"
+      >
+        <i class="fab fa-facebook-f"></i>
+      </a>
+
+      <a
+        href="https://www.instagram.com/well-clean"
+        class="social-btn instagram"
+        target="_blank"
+      >
+        <i class="fab fa-instagram"></i>
+      </a>
+    </div>
+    <!-- Navbar & Hero Start -->
+    <div class="container-fluid position-relative p-0">
+      <nav
+        class="navbar navbar-expand-lg navbar-light px-4 px-lg-5 py-3 py-lg-0"
+      >
+        <a href="/" class="navbar-brand p-0">
+          <!-- <h1 class="text-primary"><i class="fas fa-hand-holding-water me-3"></i>Well Clean</h1> -->
+          <img src="img/testing-logo-2.png" alt="Logo" />
+        </a>
+        <button class="navbar-toggler" type="button">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+          <div class="navbar-nav ms-auto py-0">
+            <a href="/" class="nav-item nav-link nav-link">Home</a>
+            <a href="/about" class="nav-item nav-link ">About</a>
+            <a href="/service" class="nav-item nav-link active">Services</a>
+            <a href="/pricing" class="nav-item nav-link">Pricing</a>
+            <a href="/contact" class="nav-item nav-link">Contact</a>
+          </div>
+          <div class="d-none d-xl-flex me-3">
+            <div class="d-flex flex-column pe-3 border-end border-primary">
+              <a href="tel:+447398538498"
+                ><span class="text-primary">Free: +44 7398 538498</span></a
+              >
+            </div>
+          </div>
+        </div>
+      </nav>
+
+      <!-- Header Start -->
+      <!-- <div class="container-fluid bg-breadcrumb">
+        <div class="container text-center py-5" style="max-width: 900px">
+          <h4
+            class="text-white display-4 mb-4 wow fadeInDown"
+            data-wow-delay="0.1s"
+          >
+            Our Services
+          </h4>
+        </div>
+      </div> -->
+      <!-- Header End -->
+    </div>
+    <!-- Navbar & Hero End -->
+
+    <!-- Service Start -->
+    <div class="container-fluid service bg-light overflow-hidden py-5">
+      <div class="container py-5">
+        <div
+          class="text-center mx-auto pt-4 pb-5 wow fadeInUp"
+          data-wow-delay="0.2s"
+          style="max-width: 800px"
+        >
+          <h4 class="text-uppercase text-primary mt-4">Our Services</h4>
+          <h4 class="display-6 mb-3 mt-4">
+            Keep Your Space Spotless with Our Cleaning Services
+          </h4>
+        </div>
+
+        <div class="row g-4">
+          <div class="col-lg-6 col-md-6 wow fadeInUp" data-wow-delay="0.3s">
+            <div
+              class="service-item bg-light border-bottom border-5 border-primary rounded"
+            >
+              <div class="position-relative text-center p-5">
+                <img
+                  class="mb-3"
+                  style="width: 100%; height: 50%"
+                  src="data:image/jpeg;base64,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"
+                  alt=""
+                />
+                <h3 class="my-3">Commercial Cleaning</h3>
+                <p class="mb-4" style="text-align: justify">
+                  At Well Clean Services Ltd, we understand that every business
+                  is different. That’s why we provide fully customisable
+                  commercial cleaning packages tailored to your specific needs
+                  and working environment. Whether you require daily upkeep,
+                  deep cleaning, end-of-tenancy, after-builders cleans or ad-hoc
+                  services, our team is on hand to deliver exceptional standards
+                  without disrupting your operations.
+
+                  <br />
+
+                  We offer flexible contracts—short- or long-term—with no
+                  lengthy commitments, ensuring our service grows with your
+                  business. Our highly trained professionals use safe,
+                  high-quality products to ensure your premises remain spotless,
+                  welcoming, and compliant with industry regulations.
+                </p>
+                <p class="mb-3">Our commercial cleaning services include:</p>
+                <ul class="mb-4" style="text-align: left">
+                  <li class="mb-2">
+                    <strong>Offices & Corporate Spaces:</strong> Regular
+                    cleaning of workstations, meeting rooms, kitchens, and
+                    reception areas.
+                  </li>
+                  <li class="mb-2">
+                    <strong>Education & Leisure Facilities:</strong> Classrooms,
+                    restrooms, gyms, libraries, sports halls, and event venues.
+                  </li>
+                  <li class="mb-2">
+                    <strong>Healthcare Facilities:</strong> Patient rooms,
+                    examination areas, surgical theatres, waiting lounges, and
+                    sanitary stations, all cleaned to NHS hygiene standards.
+                  </li>
+                  <li class="mb-2">
+                    <strong>Hospitality & Retail:</strong> Shops, cafés,
+                    restaurants, hotel lobbies, and communal areas, with
+                    high-touch surface disinfection.
+                  </li>
+                  <li class="mb-2">
+                    <strong>Construction Sites:</strong> After-builders and
+                    handover cleans for newly built or renovated spaces.
+                  </li>
+                  <li class="mb-2">
+                    <strong>Ad-hoc Services:</strong> Emergency cleans,
+                    post-event cleanups, or one-off deep cleans as required.
+                  </li>
+                </ul>
+                <p class="mb-4" style="text-align: justify">
+                  With flexible scheduling and industry-specific expertise, Well
+                  Clean Services Ltd ensures your business looks its best—day
+                  in, day out.
+                </p>
+                <button
+                  onclick="window.location.href='/pricing'"
+                  class="btn btn-primary w-100"
+                >
+                  <i class="fas fa-arrow-right me-2"></i>ENQUIRE NOW
+                </button>
+              </div>
+              <!-- <div class="position-relative text-center p-5">
+                <img
+                  class="mb-3"
+                  style="width: 100%; height: 50%"
+                  src="https://commercialcleaningcorp.com/wp-content/uploads/2019/09/2019-Sept_v1.jpg"
+                  alt=""
+                />
+                <h3 class="my-3">Healthcare Centres and Hospitals</h3>
+                <p class="mb-4" style="text-align: justify">
+                  Annaca delivers specialised cleaning for healthcare
+                  facilities, ensuring a safe and hygienic environment for
+                  patients, staff, and visitors. Our professional team focuses
+                  on critical areas, including patient rooms, examination areas,
+                  surgical suites, and reception lounges. Our methods adhere to
+                  strict healthcare standards, reducing the risk of infection
+                  and cross-contamination.
+                </p>
+                <button
+                  onclick="window.location.href='pricing.html'"
+                  class="btn btn-primary w-100"
+                >
+                  <i class="fas fa-arrow-right me-2"></i>ENQUIRE NOW
+                </button>
+              </div> -->
+            </div>
+          </div>
+          <div class="col-lg-6 col-md-6 wow fadeInUp" data-wow-delay="0.3s">
+            <div
+              class="service-item bg-light border-bottom border-5 border-primary rounded"
+            >
+              <div class="position-relative text-center p-5">
+                <img
+                  class="mb-3"
+                  style="width: 89%; height: 50%"
+                  src="https://media.cnn.com/api/v1/images/stellar/prod/200403100322-house-cleaner.jpg?q=x_117,y_203,h_1564,w_2779,c_crop/h_833,w_1480"
+                  alt=""
+                />
+                <h3 class="my-3">Domestic Cleaning</h3>
+                <p class="mb-4" style="text-align: justify">
+                  At Well Clean Services Ltd, we believe a clean home is a happy
+                  home. Our domestic cleaning packages are designed to fit
+                  seamlessly around your lifestyle, offering everything from
+                  regular weekly visits to deep spring cleans. Our professional
+                  and discreet team is fully vetted and trained, delivering
+                  consistent, high-quality results with every visit.
+
+                  <br />
+                  We focus on creating hygienic, relaxing spaces by paying close
+                  attention to detail—from sparkling bathrooms to dust-free
+                  skirting boards—while offering eco-friendly products for
+                  households that prefer greener choices. Whether you’re after a
+                  helping hand during a busy week or need support with a
+                  specific cleaning task, we’re here to help.
+                </p>
+                <p class="mb-3">Our domestic cleaning services include:</p>
+                <ul class="mb-4" style="text-align: left">
+                  <li class="mb-2">
+                    <strong>General Home Cleaning:</strong> Living rooms,
+                    kitchens, bathrooms, bedrooms, and hallways, with vacuuming,
+                    dusting, and sanitising throughout.
+                  </li>
+                  <li class="mb-2">
+                    <strong>Deep Cleans:</strong> Top-to-bottom attention,
+                    including behind appliances, inside cupboards, and descaling
+                    taps and tiles.
+                  </li>
+                  <li class="mb-2">
+                    <strong>End-of-Tenancy Cleans:</strong> Move-out cleaning to
+                    meet landlord or agency standards, ensuring a stress-free
+                    handover.
+                  </li>
+                  <li class="mb-2">
+                    <strong>After-Party & Occasion Cleans:</strong> Perfect for
+                    post-event recovery, returning your home to a tidy and fresh
+                    state.
+                  </li>
+                  <li class="mb-2">
+                    <strong>Holiday Let & Airbnb Cleaning:</strong> Turnaround
+                    cleans with linen change and restocking where needed.
+                  </li>
+                  <li class="mb-2">
+                    <strong>Eco-Friendly Cleans:</strong> Safe and sustainable
+                    products for families, pets, and allergy-sensitive homes.
+                  </li>
+                </ul>
+                <p class="mb-4" style="text-align: justify">
+                  With flexible appointment times and personalised cleaning
+                  plans, Well Clean Services Ltd takes care of your home—so you
+                  can focus on what matters most.
+                </p>
+                <button
+                  onclick="window.location.href='/pricing'"
+                  class="btn btn-primary w-100"
+                >
+                  <i class="fas fa-arrow-right me-2"></i>ENQUIRE NOW
+                </button>
+              </div>
+              <!-- <div class="position-relative text-center p-5">
+                <img
+                  class="mb-3"
+                  style="width: 100%; height: 50%"
+                  src="data:image/jpeg;base64,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"
+                  alt=""
+                />
+                <h3 class="my-3">Education and Leisure Facilities</h3>
+                <p class="mb-4" style="text-align: justify">
+                  Annacca provides tailored cleaning services to maintain
+                  hygiene and safety. In education, this includes cleaning
+                  classrooms, restrooms, cafeterias, libraries, and sports
+                  facilities, along with outdoor areas. For leisure facilities,
+                  we clean gyms, swimming pool areas, entertainment venues, and
+                  changing rooms. Additional services include high-touch surface
+                  disinfection, pre- and post-event cleaning, and flexible
+                  scheduling to minimise disruption.
+                </p>
+                <button
+                  onclick="window.location.href='pricing.html'"
+                  class="btn btn-primary w-100"
+                >
+                  <i class="fas fa-arrow-right me-2"></i>ENQUIRE NOW
+                </button>
+              </div> -->
+            </div>
+          </div>
+          
+        </div>
+      </div>
+    </div>
+    <!-- Service End -->
+
+    <!-- Add this JavaScript to handle the service toggling -->
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const serviceHeadings = document.querySelectorAll(
+          ".cleaning-service-tab"
+        );
+        const serviceContents = document.querySelectorAll(
+          ".cleaning-service-content"
+        );
+
+        serviceHeadings.forEach((heading) => {
+          heading.addEventListener("click", function () {
+            // Remove active class from all headings
+            serviceHeadings.forEach((h) => h.classList.remove("active"));
+            // Add active class to clicked heading
+            this.classList.add("active");
+
+            // Hide all service contents
+            serviceContents.forEach((content) => {
+              content.classList.remove("active");
+            });
+
+            // Show the selected service content immediately
+            const targetId = this.getAttribute("data-service");
+            const targetContent = document.getElementById(targetId);
+            targetContent.classList.add("active");
+          });
+        });
+
+        // Initialize with first service active
+        if (serviceHeadings.length > 0) {
+          serviceHeadings[0].click();
+        }
+      });
+    </script>
+
+    <!-- Footer Start -->
+    <div
+      class="container-fluid footer bg-footer py-5 wow fadeIn"
+      data-wow-delay="0.2s"
+    >
+      <div class="container py-5">
+        <div class="row g-4">
+          <div class="col-md-6 col-lg-6 col-xl-4">
+            <div class="footer-item d-flex flex-column">
+              <div class="footer-item">
+                <h3 class="mb-4">
+                  <img
+                    src="img/testing-logo-2.png"
+                    alt="Well-Clean"
+                    style="height: 70px"
+                  />
+                </h3>
+                <p class="mb-3">
+                  Well Clean is dedicated to providing top-notch cleaning
+                  services for both residential and commercial spaces using
+                  eco-friendly products and advanced cleaning techniques.
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 col-lg-6 col-xl-3">
+            <div class="footer-item d-flex flex-column">
+              <h4 class="mb-4">About Us</h4>
+              <a href="about.html"
+                ><i class="fas fa-angle-right me-2"></i> About</a
+              >
+              <a href="service.html"
+                ><i class="fas fa-angle-right me-2"></i> Services</a
+              >
+              <a href="about.html"
+                ><i class="fas fa-angle-right me-2"></i> Why Choose Us</a
+              >
+              <a href="contact.html"
+                ><i class="fas fa-angle-right me-2"></i> Contact us</a
+              >
+              <a href="index.html#faq-section"
+                ><i class="fas fa-angle-right me-2"></i> FAQs</a
+              >
+              <a href="terms-conditions.html"
+                ><i class="fas fa-angle-right me-2"></i> Terms & Conditions</a
+              >
+            </div>
+          </div>
+          <div class="col-md-6 col-lg-6 col-xl-3">
+            <div class="footer-item d-flex flex-column">
+              <h4 class="mb-4">Business Hours</h4>
+              <div class="mb-3">
+                <h6 class="text-muted mb-0">Mon - Friday:</h6>
+                <p class="mb-0">09.00 am to 07.00 pm</p>
+              </div>
+              <div class="mb-3">
+                <h6 class="text-muted mb-0">Saturday:</h6>
+                <p class="mb-0">10.00 am to 05.00 pm</p>
+              </div>
+              <div class="mb-3">
+                <h6 class="text-muted mb-0">Sunday:</h6>
+                10:00am to 5:00pm
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 col-lg-6 col-xl-2">
+            <div class="footer-item d-flex flex-column">
+              <h4 class="mb-4">Contact Info</h4>
+              <!-- <a 
+                ><i class="fa fa-map-marker-alt me-2"></i> 123 Street, New York,
+                USA</a
+              > -->
+              <a href="mailto:info@wellclean.com"
+                ><i class="fas fa-envelope me-2"></i> info@wellclean.com</a
+              >
+
+              <a href="tel:+447398538498"
+                ><i class="fas fa-phone me-2"></i> +44 7398 538498</a
+              >
+              <a href="tel:+447427783539" class="mb-3"
+                ><i class="fab fa-whatsapp me-2"></i> +44 7427 783539</a
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Footer End -->
+
+    <!-- Copyright Start -->
+    <div class="container-fluid copyright py-4">
+      <div class="container">
+        <div class="row g-4 align-items-center">
+          <div class="col-md-6 text-center text-md-start mb-md-0">
+            <span class="text-body">
+              <a class="border-bottom" style="border-bottom: none !important">
+                <i class="fas fa-copyright text-light me-2"></i>
+                Well Clean
+              </a>
+              <span id="year"></span> All rights reserved.
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Add this form element somewhere in your HTML -->
+    <form id="orderForm">
+      <div
+        class="modal fade"
+        id="orderModal"
+        tabindex="-1"
+        aria-labelledby="orderModalLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="orderModalLabel">Order Form</h5>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div class="modal-body">
+              <div class="mb-3">
+                <label for="name" class="form-label">Name</label>
+                <input type="text" class="form-control" id="name" required />
+              </div>
+              <div class="mb-3">
+                <label for="phone" class="form-label">Phone</label>
+                <input type="tel" class="form-control" id="phone" required />
+              </div>
+              <div class="mb-3">
+                <label for="email" class="form-label">Email</label>
+                <input type="email" class="form-control" id="email" />
+              </div>
+              <div class="mb-3">
+                <label for="address" class="form-label">Address</label>
+                <textarea class="form-control" id="address" rows="3"></textarea>
+              </div>
+              <div class="mb-3">
+                <label for="serviceType" class="form-label">Service Type</label>
+                <select class="form-control" id="serviceType">
+                  <option value="">Select Service</option>
+                  <option value="commercial">Commercial Cleaning</option>
+                  <option value="education">
+                    Education and Leisure Facilities
+                  </option>
+                </select>
+              </div>
+              <div class="mb-3">
+                <label for="date" class="form-label">Date and Time</label>
+                <input
+                  type="datetime-local"
+                  class="form-control"
+                  id="date"
+                  required
+                />
+              </div>
+              <div class="mb-3">
+                <label for="rooms" class="form-label">Number of Rooms</label>
+                <input type="number" class="form-control" id="rooms" />
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-bs-dismiss="modal"
+              >
+                Close
+              </button>
+              <button type="submit" class="btn btn-primary">
+                Submit Order
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+    <!-- Copyright End -->
+
+    <!-- Back to Top -->
+    <a class="btn btn-secondary btn-lg-square rounded-circle back-to-top"
+      ><i class="fa fa-arrow-up"></i
+    ></a>
+
+    <!-- JavaScript Libraries -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="lib/wow/wow.min.js"></script>
+    <script src="lib/easing/easing.min.js"></script>
+    <script src="lib/waypoints/waypoints.min.js"></script>
+    <script src="lib/counterup/counterup.min.js"></script>
+    <script src="lib/owlcarousel/owl.carousel.min.js"></script>
+
+    <!-- Template Javascript -->
+    <script src="js/main.js"></script>
+    <script src="js/script.js"></script>
+
+   
+
+    <!-- Booking Details Modal -->
+    <div
+      class="modal fade"
+      id="bookingDetailsModal"
+      tabindex="-1"
+      aria-labelledby="bookingDetailsModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="bookingDetailsModalLabel">
+              Booking Details
+            </h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <!-- Your booking details form content here -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
