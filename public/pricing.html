@@ -1121,10 +1121,18 @@
 
     <!-- Add this JavaScript -->
     <script>
-      // Initialize Stripe with your publishable key
-      const stripe = Stripe(
-        "pk_test_51R6IjjLcw8NUdCM1SyzY1ooQ5kAdiggdXgJ0xxI3uHTqScxvzu4ViSsVg4dRdoFBJXkokF4MscMcNLatpwRaTIoo00CnBewRev"
-      );
+      // Initialize Stripe
+      let stripe;
+
+      // Fetch the publishable key from the server
+      fetch("/get-stripe-key")
+        .then((response) => response.json())
+        .then((data) => {
+          stripe = Stripe(data.publishableKey);
+        })
+        .catch((error) => {
+          console.error("Error loading Stripe:", error);
+        });
 
       function validateAndSubmit(formId) {
         const form = document.getElementById(formId);
