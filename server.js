@@ -82,7 +82,10 @@ app.get("/get-stripe-key", (req, res) => {
     publishableKey: process.env.STRIPE_PUBLISHABLE_KEY,
   });
 });
-
+// Add this before your 404 handler
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
 // Routes
 app.get("/pricing", (req, res) => {
   res.render("pricing", {
