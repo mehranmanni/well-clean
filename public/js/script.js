@@ -436,69 +436,71 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   // Get booking details from forms
-  function getBookingDetails() {
-    const serviceType =
-      oneOffSection.style.display === "block" ? "one-off" : "regular";
-    const roomSize =
-      serviceType === "one-off"
-        ? document.getElementById("oneOffRoomSize").value
-        : document.getElementById("regularRoomSize").value;
+  function getBookingDetails(formId) {
+    const form = document.getElementById(formId);
+    if (!form) return null;
 
-    const date =
-      serviceType === "one-off"
-        ? document.getElementById("oneOffDate").value
-        : document.getElementById("regularDate").value;
+    // Get form values safely
+    const getValue = (id) =>
+      form.querySelector(`#${id}`)?.value.trim() || "Not provided";
 
-    const time =
-      serviceType === "one-off"
-        ? document.getElementById("oneOffTime").value
-        : document.getElementById("regularFrequency").value;
+    const isOneOff = formId === "oneOffForm";
+    const serviceType = isOneOff ? "One-Off Cleaning" : "Regular Cleaning";
 
-    const notes =
-      serviceType === "one-off"
-        ? document.getElementById("oneOffNotes").value
-        : document.getElementById("regularNotes").value;
-
-    // Convert room size to human-readable format
-    const houseSize =
-      {
-        "1-2": "1-2 Rooms",
-        "3-4": "3-4 Rooms",
-        "5+": "5+ Rooms",
-      }[roomSize] || "Unknown";
-
-    return {
-      serviceType,
-      houseSize,
-      date,
-      time,
-      notes,
+    const bookingData = {
+      serviceType: serviceType,
+      name: getValue("name"),
+      phone: getValue("phone"),
+      email: getValue("email"),
+      houseSize: getValue(isOneOff ? "oneOffRoomSize" : "regularRoomSize"),
+      bathrooms: getValue(isOneOff ? "oneOffBathrooms" : "regularBathrooms"),
+      bedrooms: getValue(isOneOff ? "oneOffBedrooms" : "regularBedrooms"),
+      postcode: getValue("postcode"),
+      date: getValue(isOneOff ? "oneOffDate" : "regularDate"),
+      time: getValue(isOneOff ? "oneOffTime" : "regularTime"),
+      price: getValue(isOneOff ? "oneOffPrice" : "regularPrice"),
+      ...(!isOneOff && {
+        frequency: getValue("regularFrequency"),
+        duration: getValue("regularDuration"),
+      }),
     };
+
+    return bookingData;
   }
 
-  // Form submission handlers
   if (document.getElementById("oneOffForm")) {
     document
       .getElementById("oneOffForm")
       .addEventListener("submit", function (e) {
         e.preventDefault();
-        // console.log("One-Off Form Submitted");
-        const bookingDetails = getBookingDetails();
-        // console.log("Booking Details:", bookingDetails);
-        if (bookingModal) {
-          bookingModal.show();
-        }
+        const bookingDetails = getBookingDetails("oneOffForm");
+        console.log("=== One-Off Cleaning Booking Details ===");
+        console.log(bookingDetails);
+        console.log("======================================\n");
+
+        // Store booking details in sessionStorage
+        sessionStorage.setItem("bookingData", JSON.stringify(bookingDetails));
+
+        // Redirect to payment success page
+        window.location.href = "/payment-success.html";
       });
   }
 
+  // Form submission handlers
   if (document.getElementById("regularForm")) {
     document
       .getElementById("regularForm")
       .addEventListener("submit", function (e) {
         e.preventDefault();
-        // console.log("Regular Form Submitted");
-        const bookingDetails = getBookingDetails();
-        // console.log("Booking Details:", bookingDetails);
+        const bookingDetails = getBookingDetails("regularForm");
+        console.log("=== Regular Cleaning Booking Details ===");
+        console.log(bookingDetails);
+        console.log("======================================\n");
+
+        // Store booking details in sessionStorage
+        sessionStorage.setItem("bookingData", JSON.stringify(bookingDetails));
+
+        // Show booking confirmation modal
         if (bookingModal) {
           bookingModal.show();
         }
@@ -512,7 +514,7 @@ document.addEventListener("DOMContentLoaded", function () {
       .addEventListener("click", function () {
         // console.log("Confirm Booking Button Clicked");
         // Get booking details
-        const bookingDetails = getBookingDetails();
+        const bookingDetails = getBookingDetails("oneOffForm");
         // console.log("Booking Details:", bookingDetails);
 
         // Get customer details
@@ -525,7 +527,7 @@ document.addEventListener("DOMContentLoaded", function () {
           address: document.getElementById("address")?.value || "",
           postcode: document.getElementById("postcode")?.value || "",
           city: document.getElementById("city")?.value || "",
-          county: document.getElementById("county")?.value || "",
+          country: document.getElementById("country")?.value || "",
           preferredTime: document.getElementById("preferredTime")?.value || "",
           additionalNotes:
             document.getElementById("additionalNotes")?.value || "",
@@ -563,7 +565,7 @@ document.addEventListener("DOMContentLoaded", function () {
               ${bookingData.address}
               Postcode: ${bookingData.postcode}
               City: ${bookingData.city}
-              County: ${bookingData.county}
+              country: ${bookingData.country}
               
               *Service Details:*
               Service Type: ${bookingData.serviceType}

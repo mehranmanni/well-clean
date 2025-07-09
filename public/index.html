@@ -55,7 +55,7 @@
     </style>
   </head>
 
-  <body>
+  <body style="font-family: 'Varela Round'">
     <!-- Spinner Start -->
     <div
       id="spinner"
@@ -420,7 +420,7 @@
       </div>
     </div> -->
     <!-- Order Modal Ends -->
-    <!-- Estimate Modal -->
+     <!-- Estimate Modal -->
     <div
       class="modal fade"
       id="estimateModal"
@@ -444,27 +444,58 @@
           <div class="modal-body">
             <form id="estimateForm">
               <div class="row">
-                <!-- Full Name -->
+                <!-- Business Name -->
                 <div class="col-md-6 mb-3">
-                  <label for="estimateName" class="form-label">Full Name</label>
+                  <label for="businessName" class="form-label"
+                    >Business Name</label
+                  >
                   <input
                     type="text"
                     class="form-control"
-                    id="estimateName"
-                    placeholder="Enter your name"
+                    id="businessName"
+                    placeholder="Enter your business name"
                     required
+                  />
+                </div>
+
+                <!-- Contact Person -->
+                <div class="col-md-6 mb-3">
+                  <label for="contactPerson" class="form-label"
+                    >Contact Person</label
+                  >
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="contactPerson"
+                    placeholder="Your contact person"
+                    required
+                  />
+                </div>
+              </div>
+
+              <div class="row">
+                <!-- Email Address -->
+                <div class="col-md-6 mb-3">
+                  <label for="emailAddress" class="form-label"
+                    >Email Address</label
+                  >
+                  <input
+                    type="email"
+                    class="form-control"
+                    id="emailAddress"
+                    placeholder="Your email"
                   />
                 </div>
 
                 <!-- Phone Number -->
                 <div class="col-md-6 mb-3">
-                  <label for="estimatePhone" class="form-label"
+                  <label for="phoneNumber" class="form-label"
                     >Phone Number</label
                   >
                   <input
                     type="tel"
                     class="form-control"
-                    id="estimatePhone"
+                    id="phoneNumber"
                     placeholder="Your phone number"
                     required
                   />
@@ -472,93 +503,140 @@
               </div>
 
               <div class="row">
-                <!-- Email -->
+                <!-- Business Address -->
                 <div class="col-md-6 mb-3">
-                  <label for="estimateEmail" class="form-label"
-                    >Email (Optional)</label
+                  <label for="businessAddress" class="form-label"
+                    >Business Address</label
                   >
                   <input
-                    type="email"
+                    type="text"
                     class="form-control"
-                    id="estimateEmail"
-                    placeholder="Your email"
+                    id="businessAddress"
+                    placeholder="Your postcode"
                   />
                 </div>
 
-                <!-- Service Type -->
+                <!-- Type of Premises -->
                 <div class="col-md-6 mb-3">
-                  <label for="estimateService" class="form-label"
-                    >Select Service</label
+                  <label for="premisesType" class="form-label"
+                    >Type of Premises</label
                   >
-                  <select class="form-select" id="estimateService" required>
-                    <option value="" disabled selected>Choose a service</option>
-                    <option>House Cleaning</option>
-                    <option>Deep Cleaning</option>
-                    <option>Move-In/Move-Out Cleaning</option>
-                    <option>Carpet Cleaning</option>
-                    <option>Window Cleaning</option>
+                  <select class="form-select" id="premisesType" required>
+                    <option value="" disabled selected>
+                      Choose property type
+                    </option>
+                    <option>Office</option>
+                    <option>Retail Store</option>
+                    <option>Warehouse</option>
+                    <option>Restaurant</option>
+                    <option>School / Nursery</option>
+                    <option>Medical Facility</option>
                     <option>Other</option>
                   </select>
                 </div>
               </div>
 
               <div class="row">
+                <!-- Approximate Size -->
+                <div class="col-md-6 mb-3">
+                  <label for="approxSize" class="form-label"
+                    >Approximate Size of Premises</label
+                  >
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="approxSize"
+                    placeholder="Your (sq ft or sq m)"
+                  />
+                </div>
+
+                <!-- Number of Rooms -->
+                <div class="col-md-6 mb-3">
+                  <label for="numRooms" class="form-label"
+                    >Number of Rooms / Areas to be Cleaned</label
+                  >
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="numRooms"
+                    placeholder="Your number of rooms"
+                  />
+                </div>
+              </div>
+
+              <div class="row">
+                <!-- Cleaning Frequency -->
+                <div class="col-md-6 mb-3">
+                  <label for="cleaningFrequency" class="form-label"
+                    >How Often Do You Require Cleaning?</label
+                  >
+                  <select class="form-select" id="cleaningFrequency" required>
+                    <option value="" disabled selected>Choose how often</option>
+                    <option>Daily</option>
+                    <option>Weekly</option>
+                    <option>Fortnightly</option>
+                    <option>Monthly</option>
+                    <option>One-off</option>
+                    <option>Other</option>
+                  </select>
+                </div>
+
                 <!-- Preferred Date & Time -->
                 <div class="col-md-6 mb-3">
-                  <label for="estimateDate" class="form-label"
+                  <label for="preferredDateTime" class="form-label"
                     >Preferred Date & Time</label
                   >
                   <input
                     type="datetime-local"
                     class="form-control"
-                    id="estimateDate"
+                    id="preferredDateTime"
                     required
                   />
                 </div>
+              </div>
 
-                <!-- Property Type -->
+              <div class="row">
+                <!-- Services Required -->
                 <div class="col-md-6 mb-3">
-                  <label for="estimatePropertyType" class="form-label"
-                    >Property Type</label
+                  <label for="servicesRequired" class="form-label"
+                    >Services Required (tick all that apply):</label
                   >
-                  <select
-                    class="form-select"
-                    id="estimatePropertyType"
-                    required
-                  >
-                    <option value="" disabled selected>
-                      Choose property type
-                    </option>
-                    <option>House</option>
-                    <option>Apartment</option>
-                    <option>Commercial Space</option>
+                  <select class="form-select" id="servicesRequired" required>
+                    <option value="" disabled selected>Choose a service</option>
+                    <option>General Cleaning (dusting, vacuuming, bins)</option>
+                    <option>Floor Cleaning (mopping, polishing)</option>
+                    <option>Window Cleaning</option>
+                    <option>Carpet Cleaning</option>
+                    <option>Washroom Cleaning & Supplies</option>
+                    <option>Kitchen / Breakroom Cleaning</option>
+                    <option>Deep Cleaning</option>
                     <option>Other</option>
+                  </select>
+                </div>
+
+                <!-- Free Site Visit -->
+                <div class="col-md-6 mb-3">
+                  <label for="freeSiteVisit" class="form-label"
+                    >Would you like a free site visit and quote?</label
+                  >
+                  <select class="form-select" id="freeSiteVisit" required>
+                    <option value="" disabled selected>
+                      Choose your answer
+                    </option>
+                    <option>Yes</option>
+                    <option>No</option>
                   </select>
                 </div>
               </div>
 
-              <!-- Number of Rooms -->
+              <!-- Additional Notes -->
               <div class="mb-3">
-                <label for="estimateRooms" class="form-label"
-                  >Number of Rooms</label
-                >
-                <input
-                  type="number"
-                  class="form-control"
-                  id="estimateRooms"
-                  min="1"
-                  required
-                />
-              </div>
-
-              <!-- Special Requests -->
-              <div class="mb-3">
-                <label for="estimateRequests" class="form-label"
-                  >Special Requests (Optional)</label
+                <label for="additionalNotes" class="form-label"
+                  >Additional Notes or Specific Requirements:</label
                 >
                 <textarea
                   class="form-control"
-                  id="estimateRequests"
+                  id="additionalNotes"
                   rows="3"
                   placeholder="Additional instructions"
                 ></textarea>
@@ -566,7 +644,7 @@
 
               <!-- Submit Button -->
               <button type="submit" class="btn btn-primary w-100 py-2">
-                Request Estimate
+                Submit
               </button>
             </form>
           </div>
@@ -604,7 +682,7 @@
         <div
           class="text-center mx-auto pb-5 wow fadeInUp"
           data-wow-delay="0.2s"
-          style="max-width: 800px"
+          style="max-width: 800px; margin: 0px 0px -65px 0px;"
         >
           <h4 style="font-size: 2rem" class="text-uppercase text-secondary">
             At WellClean, we make dirt unseen!
@@ -685,7 +763,10 @@
               <h1 class="display-3 mb-3">
                 We Deliver Quality Cleaning Services.
               </h1>
-              <p style="text-align: justify" class="mb-4">
+              <p
+                style="text-align: justify; font-family: 'Varela Round'"
+                class="mb-4"
+              >
                 At Well Clean, we pride ourselves on delivering top-notch
                 cleaning services tailored to meet your needs. Our team of
                 experienced professionals uses eco-friendly products and
@@ -856,7 +937,7 @@
                 <div class="col-12">
                   <div class="d-flex">
                     <div class="ps-4">
-                      <div class="service-btn bg-blu">
+                      <div class="service-btn-right bg-blu">
                         <i class="fas fa-building text-white fa-2x"></i>
                       </div>
                     </div>
@@ -880,7 +961,7 @@
                 <div class="col-12">
                   <div class="d-flex">
                     <div class="ps-4">
-                      <div class="service-btn bg-blu">
+                      <div class="service-btn-right bg-blu">
                         <i class="fas fa-school text-white fa-2x"></i>
                       </div>
                     </div>
@@ -921,7 +1002,7 @@
                 Professional Cleaning Experts
               </h4>
               <p class="mb-4">
-                Our team specializes in thorough home and commercial cleaning,
+                Our team specialises in thorough home and commercial cleaning,
                 ensuring every space is spotless and hygienic.
               </p>
             </div>

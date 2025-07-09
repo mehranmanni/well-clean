@@ -99,7 +99,7 @@
         <div class="collapse navbar-collapse" id="navbarCollapse">
           <div class="navbar-nav ms-auto py-0">
             <a href="/" class="nav-item nav-link nav-link">Home</a>
-            <a href="/about" class="nav-item nav-link ">About</a>
+            <a href="/about" class="nav-item nav-link">About</a>
             <a href="/service" class="nav-item nav-link active">Services</a>
             <a href="/pricing" class="nav-item nav-link">Pricing</a>
             <a href="/contact" class="nav-item nav-link">Contact</a>
@@ -156,23 +156,7 @@
                   alt=""
                 />
                 <h3 class="my-3">Commercial Cleaning</h3>
-                <p class="mb-4" style="text-align: justify">
-                  At Well Clean Services Ltd, we understand that every business
-                  is different. That’s why we provide fully customisable
-                  commercial cleaning packages tailored to your specific needs
-                  and working environment. Whether you require daily upkeep,
-                  deep cleaning, end-of-tenancy, after-builders cleans or ad-hoc
-                  services, our team is on hand to deliver exceptional standards
-                  without disrupting your operations.
-
-                  <br />
-
-                  We offer flexible contracts—short- or long-term—with no
-                  lengthy commitments, ensuring our service grows with your
-                  business. Our highly trained professionals use safe,
-                  high-quality products to ensure your premises remain spotless,
-                  welcoming, and compliant with industry regulations.
-                </p>
+                
                 <p class="mb-3">Our commercial cleaning services include:</p>
                 <ul class="mb-4" style="text-align: left">
                   <li class="mb-2">
@@ -208,12 +192,15 @@
                   Clean Services Ltd ensures your business looks its best—day
                   in, day out.
                 </p>
-                <button
-                  onclick="window.location.href='/pricing'"
+                <a
                   class="btn btn-primary w-100"
+                  data-bs-toggle="modal"
+                  data-bs-target="#estimateModal"
+                  style="margin-top: 1.6rem"
                 >
-                  <i class="fas fa-arrow-right me-2"></i>ENQUIRE NOW
-                </button>
+                  <i class="fas fa-arrow-right me-2"></i>
+                  Enquire Now
+                </a>
               </div>
               <!-- <div class="position-relative text-center p-5">
                 <img
@@ -253,22 +240,7 @@
                   alt=""
                 />
                 <h3 class="my-3">Domestic Cleaning</h3>
-                <p class="mb-4" style="text-align: justify">
-                  At Well Clean Services Ltd, we believe a clean home is a happy
-                  home. Our domestic cleaning packages are designed to fit
-                  seamlessly around your lifestyle, offering everything from
-                  regular weekly visits to deep spring cleans. Our professional
-                  and discreet team is fully vetted and trained, delivering
-                  consistent, high-quality results with every visit.
 
-                  <br />
-                  We focus on creating hygienic, relaxing spaces by paying close
-                  attention to detail—from sparkling bathrooms to dust-free
-                  skirting boards—while offering eco-friendly products for
-                  households that prefer greener choices. Whether you’re after a
-                  helping hand during a busy week or need support with a
-                  specific cleaning task, we’re here to help.
-                </p>
                 <p class="mb-3">Our domestic cleaning services include:</p>
                 <ul class="mb-4" style="text-align: left">
                   <li class="mb-2">
@@ -309,7 +281,7 @@
                   onclick="window.location.href='/pricing'"
                   class="btn btn-primary w-100"
                 >
-                  <i class="fas fa-arrow-right me-2"></i>ENQUIRE NOW
+                  <i class="fas fa-arrow-right me-2"></i>Book Now
                 </button>
               </div>
               <!-- <div class="position-relative text-center p-5">
@@ -339,7 +311,6 @@
               </div> -->
             </div>
           </div>
-          
         </div>
       </div>
     </div>
@@ -583,8 +554,6 @@
     <script src="js/main.js"></script>
     <script src="js/script.js"></script>
 
-   
-
     <!-- Booking Details Modal -->
     <div
       class="modal fade"
@@ -612,5 +581,237 @@
         </div>
       </div>
     </div>
+    <!-- Estimate Modal -->
+    <div
+      class="modal fade"
+      id="estimateModal"
+      tabindex="-1"
+      aria-labelledby="estimateModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title text-primary" id="estimateModalLabel">
+              Enquire Now for Commercial Cleaning
+            </h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <form id="estimateForm">
+              <div class="row">
+                <!-- Business Name -->
+                <div class="col-md-6 mb-3">
+                  <label for="businessName" class="form-label"
+                    >Business Name</label
+                  >
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="businessName"
+                    placeholder="Enter your business name"
+                    required
+                  />
+                </div>
+
+                <!-- Contact Person -->
+                <div class="col-md-6 mb-3">
+                  <label for="contactPerson" class="form-label"
+                    >Contact Person</label
+                  >
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="contactPerson"
+                    placeholder="Your contact person"
+                    required
+                  />
+                </div>
+              </div>
+
+              <div class="row">
+                <!-- Email Address -->
+                <div class="col-md-6 mb-3">
+                  <label for="emailAddress" class="form-label"
+                    >Email Address</label
+                  >
+                  <input
+                    type="email"
+                    class="form-control"
+                    id="emailAddress"
+                    placeholder="Your email"
+                  />
+                </div>
+
+                <!-- Phone Number -->
+                <div class="col-md-6 mb-3">
+                  <label for="phoneNumber" class="form-label"
+                    >Phone Number</label
+                  >
+                  <input
+                    type="tel"
+                    class="form-control"
+                    id="phoneNumber"
+                    placeholder="Your phone number"
+                    required
+                  />
+                </div>
+              </div>
+
+              <div class="row">
+                <!-- Business Address -->
+                <div class="col-md-6 mb-3">
+                  <label for="businessAddress" class="form-label"
+                    >Business Address</label
+                  >
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="businessAddress"
+                    placeholder="Your postcode"
+                  />
+                </div>
+
+                <!-- Type of Premises -->
+                <div class="col-md-6 mb-3">
+                  <label for="premisesType" class="form-label"
+                    >Type of Premises</label
+                  >
+                  <select class="form-select" id="premisesType" required>
+                    <option value="" disabled selected>
+                      Choose property type
+                    </option>
+                    <option>Office</option>
+                    <option>Retail Store</option>
+                    <option>Warehouse</option>
+                    <option>Restaurant</option>
+                    <option>School / Nursery</option>
+                    <option>Medical Facility</option>
+                    <option>Other</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="row">
+                <!-- Approximate Size -->
+                <div class="col-md-6 mb-3">
+                  <label for="approxSize" class="form-label"
+                    >Approximate Size of Premises</label
+                  >
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="approxSize"
+                    placeholder="Your (sq ft or sq m)"
+                  />
+                </div>
+
+                <!-- Number of Rooms -->
+                <div class="col-md-6 mb-3">
+                  <label for="numRooms" class="form-label"
+                    >Number of Rooms / Areas to be Cleaned</label
+                  >
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="numRooms"
+                    placeholder="Your number of rooms"
+                  />
+                </div>
+              </div>
+
+              <div class="row">
+                <!-- Cleaning Frequency -->
+                <div class="col-md-6 mb-3">
+                  <label for="cleaningFrequency" class="form-label"
+                    >How Often Do You Require Cleaning?</label
+                  >
+                  <select class="form-select" id="cleaningFrequency" required>
+                    <option value="" disabled selected>Choose how often</option>
+                    <option>Daily</option>
+                    <option>Weekly</option>
+                    <option>Fortnightly</option>
+                    <option>Monthly</option>
+                    <option>One-off</option>
+                    <option>Other</option>
+                  </select>
+                </div>
+
+                <!-- Preferred Date & Time -->
+                <div class="col-md-6 mb-3">
+                  <label for="preferredDateTime" class="form-label"
+                    >Preferred Date & Time</label
+                  >
+                  <input
+                    type="datetime-local"
+                    class="form-control"
+                    id="preferredDateTime"
+                    required
+                  />
+                </div>
+              </div>
+
+              <div class="row">
+                <!-- Services Required -->
+                <div class="col-md-6 mb-3">
+                  <label for="servicesRequired" class="form-label"
+                    >Services Required (tick all that apply):</label
+                  >
+                  <select class="form-select" id="servicesRequired" required>
+                    <option value="" disabled selected>Choose a service</option>
+                    <option>General Cleaning (dusting, vacuuming, bins)</option>
+                    <option>Floor Cleaning (mopping, polishing)</option>
+                    <option>Window Cleaning</option>
+                    <option>Carpet Cleaning</option>
+                    <option>Washroom Cleaning & Supplies</option>
+                    <option>Kitchen / Breakroom Cleaning</option>
+                    <option>Deep Cleaning</option>
+                    <option>Other</option>
+                  </select>
+                </div>
+
+                <!-- Free Site Visit -->
+                <div class="col-md-6 mb-3">
+                  <label for="freeSiteVisit" class="form-label"
+                    >Would you like a free site visit and quote?</label
+                  >
+                  <select class="form-select" id="freeSiteVisit" required>
+                    <option value="" disabled selected>
+                      Choose your answer
+                    </option>
+                    <option>Yes</option>
+                    <option>No</option>
+                  </select>
+                </div>
+              </div>
+
+              <!-- Additional Notes -->
+              <div class="mb-3">
+                <label for="additionalNotes" class="form-label"
+                  >Additional Notes or Specific Requirements:</label
+                >
+                <textarea
+                  class="form-control"
+                  id="additionalNotes"
+                  rows="3"
+                  placeholder="Additional instructions"
+                ></textarea>
+              </div>
+
+              <!-- Submit Button -->
+              <button type="submit" class="btn btn-primary w-100 py-2">
+                Submit
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Estimate Modal Ends -->
   </body>
 </html>

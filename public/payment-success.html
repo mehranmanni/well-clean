@@ -12,6 +12,9 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
       rel="stylesheet"
     />
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="img/favicon-32x32.png" />
+
     <style>
       body {
         background-color: #f8f9fa;
@@ -131,6 +134,37 @@
       .receipt-buttons {
         display: none !important;
       }
+      .section-header {
+        font-weight: bold;
+        font-size: 1.1em;
+        color: #2c3e50;
+        margin-top: 20px;
+        padding-bottom: 5px;
+        border-bottom: 2px solid #3498db;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+      }
+      .detail-item {
+        margin-bottom: 12px;
+        padding-bottom: 12px;
+        border-bottom: 1px solid #eee;
+      }
+      .detail-label {
+        font-weight: 600;
+        color: #555;
+        margin-bottom: 4px;
+      }
+      .detail-value {
+        color: #2c3e50;
+      }
+      .full-width {
+        grid-column: 1 / -1;
+      }
+      .booking-details-container {
+        padding: 20px;
+        border-radius: 10px;
+        background-color: #f8f9fa;
+      }
     </style>
   </head>
   <body>
@@ -145,21 +179,25 @@
               src="img/testing-logo-2.png"
               alt="Well Clean Logo"
               class="img-fluid me-3"
-              style="max-height: 60px"
+              style="max-height: 70px"
             />
-            <div class="success-icon" style="font-size: 40px; margin: 0">
-              <i class="fas fa-check-circle"></i>
-            </div>
           </div>
-          <h2 class="mb-3">Payment Successful!</h2>
+          <div class="d-flex justify-content-center">
+            <h2 class="mb-3 d-flex align-items-center gap-2">
+              Payment Successful!
+              <div class="success-icon" style="font-size: 40px; margin: 0">
+                <i class="fas fa-check-circle"></i>
+              </div>
+            </h2>
+          </div>
+
           <p class="lead">Thank you for booking with Well Clean.</p>
         </div>
         <div class="payment-confirmed">
           <i class="fas fa-check-circle me-2"></i> Payment Confirmed
         </div>
 
-        <div class="booking-details">
-          <h5 class="mb-4 text-center">Booking Details</h5>
+        <div class="booking-details-container">
           <div id="bookingDetails">
             <!-- Details will be populated by JavaScript -->
           </div>
@@ -168,8 +206,8 @@
         <div class="text-center">
           <p class="mb-4">
             Our team will contact you shortly to confirm your cleaning
-            appointment details. For any questions, feel free to reach out to us
-            on WhatsApp.
+            appointment details. <br />
+            For any questions, feel free to reach out to us on WhatsApp.
           </p>
 
           <div class="d-flex justify-content-center flex-wrap">
@@ -192,12 +230,38 @@
     <script>
       // Get booking details from URL parameters
       function getBookingDetails() {
-        const params = new URLSearchParams(window.location.search);
+        const urlParams = new URLSearchParams(window.location.search);
         const details = {};
 
-        // Get all URL parameters
-        for (const [key, value] of params.entries()) {
-          details[key] = decodeURIComponent(value);
+        // Common fields
+        details.serviceType = urlParams.get("serviceType") || "N/A";
+        details.houseSize = urlParams.get("houseSize") || "N/A";
+        details.roomSize = urlParams.get("roomSize") || "N/A";
+        details.totalPrice = urlParams.get("totalPrice") || "£0.00";
+        details.name = urlParams.get("name") || "N/A";
+        details.email = urlParams.get("email") || "N/A";
+        details.phone = urlParams.get("phone") || "N/A";
+        details.alternatePhone = urlParams.get("alternatePhone") || "N/A";
+        details.address = urlParams.get("address") || "N/A";
+        details.city = urlParams.get("city") || "N/A";
+        details.postcode = urlParams.get("postcode") || "N/A";
+        details.country = urlParams.get("country") || "N/A";
+        details.notes = urlParams.get("notes") || "N/A";
+        details.specialInstructions =
+          urlParams.get("specialInstructions") || "N/A";
+
+        // One-off cleaning specific fields
+        if (details.serviceType === "One-Off Cleaning") {
+          details.date = urlParams.get("oneOffDate") || "N/A";
+          details.time = urlParams.get("oneOffTime") || "N/A";
+          details.preferredTime = urlParams.get("preferredTime") || "N/A";
+        }
+
+        // Regular cleaning specific fields
+        if (details.serviceType === "Regular Cleaning") {
+          details.frequency = urlParams.get("frequency") || "N/A";
+          details.serviceDate = urlParams.get("serviceDate") || "N/A";
+          details.serviceTime = urlParams.get("serviceTime") || "N/A";
         }
 
         return details;
@@ -205,148 +269,231 @@
 
       // Format booking details for display
       function formatBookingDetails(details) {
-        const formattedDetails = [];
-        const ignoreFields = [
-          "payment_intent",
-          "payment_intent_client_secret",
-          "redirect_status",
-        ];
+        if (!details) return "";
 
-        // Add service details
-        if (details.serviceType) {
-          formattedDetails.push({
-            label: "Service Type",
-            value: details.serviceType || "N/A",
-          });
+        // Format date for display
+        let formattedDate = "N/A";
+        if (details.date || details.serviceDate) {
+          const date = details.date || details.serviceDate;
+          const dateObj = new Date(date);
+          if (!isNaN(dateObj)) {
+            formattedDate = dateObj.toLocaleDateString("en-GB", {
+              weekday: "long",
+              year: "numeric",
+              month: "long",
+              day: "numeric",
+            });
+          } else {
+            formattedDate = date;
+          }
         }
 
-        if (details.houseSize) {
-          formattedDetails.push({
-            label: "House Size",
-            value: details.houseSize || "N/A",
-          });
+        // Format time for display
+        let formattedTime = "N/A";
+        if (details.time || details.serviceTime) {
+          const time = details.time || details.serviceTime;
+          const timeMatch = time.match(/^([0-9]{1,2}):?([0-9]{2})?/);
+          if (timeMatch) {
+            let hours = parseInt(timeMatch[1]);
+            const minutes = timeMatch[2] ? ":" + timeMatch[2] : "";
+            const ampm = hours >= 12 ? "PM" : "AM";
+            hours = hours % 12;
+            hours = hours ? hours : 12;
+            formattedTime = hours + minutes + " " + ampm;
+          } else {
+            formattedTime = time;
+          }
         }
 
-        if (details.totalPrice) {
-          formattedDetails.push({
-            label: "Amount Paid",
-            value: details.totalPrice || "N/A",
-          });
+        // Determine cleaning type and format accordingly
+        const isRegular = details.serviceType === "Regular Cleaning";
+
+        // Service Information Section
+        let serviceInfo = `
+          <div class="section-header">Service Information</div>
+          <div class="detail-item">
+            <div class="detail-label">Service Type:</div>
+            <div class="detail-value">${details.serviceType || "N/A"}</div>
+          </div>
+          <div class="detail-item">
+            <div class="detail-label">House Size:</div>
+            <div class="detail-value">${
+              details.roomSize || details.houseSize || "N/A"
+            }</div>
+          </div>
+        `;
+
+        // Add frequency only for regular cleaning
+        if (isRegular) {
+          serviceInfo += `
+            <div class="detail-item">
+              <div class="detail-label">Cleaning Frequency:</div>
+              <div class="detail-value">${details.frequency || "N/A"}</div>
+            </div>
+          `;
         }
 
-        // Add customer details
-        if (details.customerName) {
-          formattedDetails.push({
-            label: "Name",
-            value: details.customerName || "N/A",
-          });
-        }
+        // Add date and time
+        serviceInfo += `
+          <div class="detail-item">
+            <div class="detail-label">Scheduled Date:</div>
+            <div class="detail-value">${formattedDate}</div>
+          </div>
+          
+        `;
 
-        if (details.customerEmail) {
-          formattedDetails.push({
-            label: "Email",
-            value: details.customerEmail || "N/A",
-          });
-        }
+        // Customer Information Section
+        const customerInfo = `
+          <div class="section-header mt-4">Customer Information</div>
+          <div class="detail-item">
+            <div class="detail-label">Name:</div>
+            <div class="detail-value">${details.name || "N/A"}</div>
+          </div>
+          <div class="detail-item">
+            <div class="detail-label">Email:</div>
+            <div class="detail-value">${details.email || "N/A"}</div>
+          </div>
+          <div class="detail-item">
+            <div class="detail-label">Phone:</div>
+            <div class="detail-value">${details.phone || "N/A"}</div>
+          </div>
+          ${
+            details.alternatePhone
+              ? `
+          <div class="detail-item">
+            <div class="detail-label">Alternative Phone:</div>
+            <div class="detail-value">${details.alternatePhone || "N/A"}</div>
+          </div>
+          `
+              : ""
+          }
+        `;
 
-        if (details.customerPhone) {
-          formattedDetails.push({
-            label: "Phone",
-            value: details.customerPhone || "N/A",
-          });
-        }
+        // Service Address Section
+        const addressInfo = `
+          <div class="section-header mt-4">Service Address</div>
+          <div class="detail-item">
+            <div class="detail-label">Address:</div>
+            <div class="detail-value">${details.address || "N/A"}</div>
+          </div>
+          <div class="detail-item">
+            <div class="detail-label">City:</div>
+            <div class="detail-value">${details.city || "N/A"}</div>
+          </div>
+          <div class="detail-item">
+            <div class="detail-label">Postcode:</div>
+            <div class="detail-value">${details.postcode || "N/A"}</div>
+          </div>
+          <div class="detail-item">
+            <div class="detail-label">Country:</div>
+            <div class="detail-value">${details.country || "N/A"}</div>
+          </div>
+        `;
 
-        // Add service date and time if available
-        if (details.serviceDate) {
-          formattedDetails.push({
-            label: "Service Date",
-            value: details.serviceDate || "N/A",
-          });
-        }
+        // Special Instructions Section
+        const instructions = `
+          ${
+            details.notes || details.specialInstructions
+              ? `
+          <div class="section-header mt-4">Special Instructions</div>
+          <div class="detail-item">
+            <div class="detail-value">${
+              details.notes || details.specialInstructions || "None"
+            }</div>
+          </div>
+          `
+              : ""
+          }
+        `;
 
-        if (details.serviceTime) {
-          formattedDetails.push({
-            label: "Service Time",
-            value: details.serviceTime || "N/A",
-          });
-        }
+        // Payment Information Section
+        const paymentInfo = `
+          <div class="section-header mt-4">Payment Information</div>
+          <div class="detail-item">
+            <div class="detail-label">Total Amount:</div>
+            <div class="detail-value fw-bold">${
+              details.totalPrice || "£0.00"
+            }</div>
+          </div>
+          <div class="detail-item">
+            <div class="detail-label">Payment Status:</div>
+            <div class="detail-value text-success fw-bold">
+              <i class="fas fa-check-circle me-2"></i>Paid
+            </div>
+          </div>
+        `;
 
-        // Add address details
-        if (details.address) {
-          formattedDetails.push({
-            label: "Address",
-            value: details.address || "N/A",
-          });
-        }
-
-        if (details.city) {
-          formattedDetails.push({
-            label: "City",
-            value: details.city || "N/A",
-          });
-        }
-
-        if (details.postcode) {
-          formattedDetails.push({
-            label: "Postcode",
-            value: details.postcode || "N/A",
-          });
-        }
-
-        // Add any additional notes
-        if (details.notes) {
-          formattedDetails.push({
-            label: "Additional Notes",
-            value: details.notes || "N/A",
-            fullWidth: true,
-          });
-        }
-
-        return formattedDetails;
+        return `
+          <div class="booking-details-container">
+            ${serviceInfo}
+            ${customerInfo}
+            ${addressInfo}
+            ${instructions}
+            ${paymentInfo}
+          </div>
+        `;
       }
 
       // Generate WhatsApp message
       function generateWhatsAppMessage(details) {
-        let message = `*New Payment Confirmation*\n\n`;
+        if (!details) return "";
 
-        // Add service details
-        message += `*Service Type:* ${details.serviceType || "N/A"}\n`;
-        message += `*House Size:* ${details.houseSize || "N/A"}\n`;
-        message += `*Amount Paid:* ${details.totalPrice || "N/A"}\n\n`;
+        const isRegular = details.serviceType === "Regular Cleaning";
 
-        // Add customer details
-        message += `*Customer Details*\n`;
-        message += `Name: ${details.customerName || "N/A"}\n`;
-        message += `Email: ${details.customerEmail || "N/A"}\n`;
-        message += `Phone: ${details.customerPhone || "N/A"}\n\n`;
+        let message = `*New Booking*
 
-        // Add service date and time
-        if (details.serviceDate || details.serviceTime) {
-          message += `*Service Schedule*\n`;
-          message += `Date: ${details.serviceDate || "N/A"}\n`;
-          message += `Time: ${details.serviceTime || "N/A"}\n\n`;
-        }
+*Service Information*
+Service Type: ${details.serviceType || "N/A"}
+House Size: ${details.roomSize || details.houseSize || "N/A"}
+${isRegular ? `Frequency: ${details.frequency || "N/A"}\n` : ""}
+Amount Paid: ${details.totalPrice || "N/A"}
 
-        // Add address
-        message += `*Service Address*\n`;
-        message += `${details.address || ""}\n`;
-        if (details.city || details.postcode) {
-          message += `${details.city || ""} ${details.postcode || ""}\n`;
-        }
+*Customer Details*
+Name: ${details.name || details.customerName || "N/A"}
+Email: ${details.email || details.customerEmail || "N/A"}
+Phone: ${details.phone || details.customerPhone || "N/A"}
+${
+  details.alternatePhone ? `Alternative Phone: ${details.alternatePhone}\n` : ""
+}
 
-        // Add notes if any
-        if (details.notes) {
-          message += `\n*Additional Notes:*\n${details.notes}\n`;
-        }
+*Service Schedule*
+${
+  details.date || details.serviceDate
+    ? `Date: ${details.date || details.serviceDate}\n`
+    : ""
+}
+${
+  details.time || details.serviceTime
+    ? `Time: ${details.time || details.serviceTime}\n`
+    : ""
+}
 
-        message += `\n*Payment Status:* ✅ PAID`;
+*Service Address*
+Address: ${details.address || "N/A"}
+City: ${details.city || "N/A"}
+Postcode: ${details.postcode || "N/A"}
+Country: ${details.country || "N/A"}
 
-        return encodeURIComponent(message);
+${
+  details.notes || details.specialInstructions
+    ? `*Special Instructions*
+${details.notes || details.specialInstructions}
+
+`
+    : ""
+}
+
+*Payment Status*
+Paid Successfully
+
+Thank you for booking with Well Clean!`;
+
+        return message;
       }
 
       // Function to create receipt content
       function createReceiptContent() {
-        const bookingDetails = getBookingDetails();
+        const bookingData = JSON.parse(sessionStorage.getItem("receiptData"));
         const container = document.getElementById("receiptContainer");
 
         // Create receipt HTML
@@ -365,8 +512,7 @@
             <div class="payment-confirmed">
               <i class="fas fa-check-circle me-2"></i> Payment Confirmed
             </div>
-            <div class="booking-details">
-              <h5 class="mb-4 text-center">Booking Details</h5>
+            <div class="booking-details-container">
               <div id="receiptDetails"></div>
             </div>
           </div>
@@ -374,19 +520,10 @@
 
         // Format and add booking details
         const receiptDetails = document.getElementById("receiptDetails");
-        const formattedDetails = formatBookingDetails(bookingDetails);
+        const formattedDetails = formatBookingDetails(bookingData);
 
         if (formattedDetails.length > 0) {
-          receiptDetails.innerHTML = formattedDetails
-            .map(
-              (detail) => `
-                <div class="detail-item">
-                  <div class="detail-label">${detail.label}:</div>
-                  <div class="detail-value">${detail.value}</div>
-                </div>
-              `
-            )
-            .join("");
+          receiptDetails.innerHTML = formattedDetails;
         }
 
         return container;
@@ -437,32 +574,36 @@
 
       // Initialize the page
       document.addEventListener("DOMContentLoaded", function () {
-        const bookingDetails = getBookingDetails();
-        const detailsContainer = document.getElementById("bookingDetails");
-        const whatsappBtn = document.getElementById("whatsappBtn");
+        // First try to get booking details from sessionStorage
+        const bookingData = JSON.parse(sessionStorage.getItem("bookingData"));
 
-        // Display booking details
-        const formattedDetails = formatBookingDetails(bookingDetails);
+        if (bookingData) {
+          // If we have data in sessionStorage, use it
+          const detailsContainer = document.getElementById("bookingDetails");
+          detailsContainer.innerHTML = formatBookingDetails(bookingData);
 
-        if (formattedDetails.length > 0) {
-          detailsContainer.innerHTML = formattedDetails
-            .map(
-              (detail) => `
-            <div class="detail-item">
-              <div class="detail-label">${detail.label}:</div>
-              <div class="detail-value">${detail.value}</div>
-            </div>
-          `
-            )
-            .join("");
+          // Update WhatsApp button with the booking details
+          const whatsappBtn = document.getElementById("whatsappBtn");
+          if (whatsappBtn) {
+            const whatsappMessage = generateWhatsAppMessage(bookingData);
+            whatsappBtn.href = `https://wa.me/447507460808?text=${encodeURIComponent(
+              whatsappMessage
+            )}`;
+          }
+
+          // Store the booking data in sessionStorage for receipt generation
+          sessionStorage.setItem("receiptData", JSON.stringify(bookingData));
+
+          // Clear the booking data from sessionStorage after use
+          sessionStorage.removeItem("bookingData");
         } else {
-          detailsContainer.innerHTML = "<p>No booking details available.</p>";
+          // Fallback to URL parameters if no session data
+          const bookingDetails = getBookingDetails();
+          const detailsContainer = document.getElementById("bookingDetails");
+          if (bookingDetails) {
+            detailsContainer.innerHTML = formatBookingDetails(bookingDetails);
+          }
         }
-
-        // Set up WhatsApp button
-        whatsappBtn.href = `https://wa.me/447398538498?text=${generateWhatsAppMessage(
-          bookingDetails
-        )}`;
       });
 
       // Add event listener for download button

@@ -40,6 +40,8 @@
         color: #393838;
       }
     </style>
+    <!-- PayPal SDK -->
+    <script src="https://www.paypal.com/sdk/js?client-id=ASNGhKzEe51oF20pg75Uv28jRFOZD1kKmpWS35DsKL9tJBM2BjLJ1XnfmJNjASOFNYQA6jDqMvM5BV0r&currency=GBP"></script>
   </head>
 
   <body>
@@ -92,7 +94,15 @@
           <!-- <h1 class="text-primary"><i class="fas fa-hand-holding-water me-3"></i>Well Clean</h1> -->
           <img src="img/testing-logo-2.png" alt="Logo" />
         </a>
-        <button class="navbar-toggler" type="button">
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarCollapse"
+          aria-controls="navbarCollapse"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
           <span class="navbar-toggler-icon"></span>
         </button>
 
@@ -191,12 +201,12 @@
             <div class="row justify-content-center">
               <div class="col-12 text-center">
                 <h2 class="text-uppercase my-4">Online Booking</h2>
-                <div class="d-flex justify-content-center gap-4 mb-4">
-                  <button class="btn btn-primary px-4 py-2" id="oneOffBtn">
-                    <i class="fas fa-broom me-2"></i>One-Off Cleans
+                <div class="pricing-btn-container">
+                  <button class="pricing-btn active" id="oneOffBtn">
+                    One-off domestic clean
                   </button>
-                  <button class="btn btn-secondary px-4 py-2" id="regularBtn">
-                    <i class="fas fa-calendar-alt me-2"></i>Regular Cleaning
+                  <button class="pricing-btn" id="regularBtn">
+                    Regular cleaning
                   </button>
                 </div>
               </div>
@@ -220,12 +230,26 @@
                           <select
                             class="form-select"
                             id="oneOffRoomSize"
+                            name="roomSize"
                             required
                           >
                             <option value="">Select size</option>
                             <option value="1-2">1-2 Rooms</option>
                             <option value="3-4">3-4 Rooms</option>
                             <option value="5+">5+ Rooms</option>
+                          </select>
+                        </div>
+                        <div class="mb-4">
+                          Type of Clean
+                          <select
+                            class="form-select mb-4"
+                            id="oneOffRoomSize"
+                            required
+                          >
+                            <option value="">Select type of clean</option>
+                            <option value="light">Light Clean</option>
+                            <option value="standard">Standard Clean</option>
+                            <option value="deep">Deep Clean</option>
                           </select>
                         </div>
                         <div class="mb-4">
@@ -236,6 +260,7 @@
                             type="date"
                             class="form-control"
                             id="oneOffDate"
+                            name="oneOffDate"
                             required
                           />
                         </div>
@@ -247,21 +272,22 @@
                             type="time"
                             class="form-control"
                             id="oneOffTime"
+                            name="oneOffTime"
                             required
                           />
                         </div>
                         <h5 class="mt-4 mb-3">Contact Information</h5>
                         <div class="row">
                           <div class="col-md-6 mb-3">
-                            <label for="name" class="form-label"
+                            <label for="fullName" class="form-label"
                               >Full Name *</label
                             >
-                            <input
-                              type="text"
+                            <textarea
                               class="form-control"
-                              id="name"
-                              required
-                            />
+                              id="fullName"
+                              name="fullName"
+                              rows="1"
+                            ></textarea>
                           </div>
                           <div class="col-md-6 mb-3">
                             <label for="email" class="form-label"
@@ -332,13 +358,14 @@
                             />
                           </div>
                           <div class="col-md-4 mb-3">
-                            <label for="county" class="form-label"
-                              >County *</label
+                            <label for="country" class="form-label"
+                              >Country *</label
                             >
                             <input
                               type="text"
                               class="form-control"
-                              id="county"
+                              name="country"
+                              id="country"
                               required
                             />
                           </div>
@@ -349,6 +376,7 @@
                           >
                           <textarea
                             class="form-control"
+                            name="oneOffNotes"
                             id="oneOffNotes"
                             rows="3"
                           ></textarea>
@@ -383,6 +411,7 @@
                           >
                           <select
                             class="form-select"
+                            name="regularRoomSize"
                             id="regularRoomSize"
                             required
                           >
@@ -398,6 +427,7 @@
                           >
                           <select
                             class="form-select"
+                            name="regularFrequency"
                             id="regularFrequency"
                             required
                           >
@@ -413,6 +443,7 @@
                           <input
                             type="date"
                             class="form-control"
+                            name="regularDate"
                             id="regularDate"
                             required
                           />
@@ -426,86 +457,96 @@
                             <input
                               type="text"
                               class="form-control"
+                              name="name"
                               id="name"
                               required
                             />
                           </div>
                           <div class="col-md-6 mb-3">
-                            <label for="email" class="form-label"
+                            <label for="emailLabel" class="form-label"
                               >Email Address *</label
                             >
                             <input
                               type="email"
                               class="form-control"
-                              id="email"
+                              name="emailLabel"
+                              id="emailLabel"
                               required
                             />
                           </div>
                         </div>
                         <div class="row">
                           <div class="col-md-6 mb-3">
-                            <label for="phone" class="form-label"
+                            <label for="phoneLabel" class="form-label"
                               >Phone Number *</label
                             >
                             <input
                               type="tel"
                               class="form-control"
-                              id="phone"
+                              name="phoneLabel"
+                              id="phoneLabel"
                               required
                             />
                           </div>
                           <div class="col-md-6 mb-3">
-                            <label for="alternatePhone" class="form-label"
+                            <label for="alternatePhoneLabel" class="form-label"
                               >Alternate Phone</label
                             >
                             <input
                               type="tel"
                               class="form-control"
-                              id="alternatePhone"
+                              name="alternatePhoneLabel"
+                              id="alternatePhoneLabel"
                             />
                           </div>
                         </div>
                         <h5 class="mt-4 mb-3">Address Information</h5>
                         <div class="mb-3">
-                          <label for="address" class="form-label"
+                          <label for="addressLabel" class="form-label"
                             >Address *</label
                           >
                           <textarea
                             class="form-control"
-                            id="address"
+                            name="addressLabel"
+                            id="addressLabel"
                             rows="2"
                             required
                           ></textarea>
                         </div>
                         <div class="row">
                           <div class="col-md-4 mb-3">
-                            <label for="postcode" class="form-label"
+                            <label for="postcodeLabel" class="form-label"
                               >Postcode *</label
                             >
                             <input
                               type="text"
                               class="form-control"
-                              id="postcode"
+                              name="postcodeLabel"
+                              id="postcodeLabel"
                               required
                             />
                           </div>
                           <div class="col-md-4 mb-3">
-                            <label for="city" class="form-label">City *</label>
-                            <input
-                              type="text"
-                              class="form-control"
-                              id="city"
-                              required
-                            />
-                          </div>
-                          <div class="col-md-4 mb-3">
-                            <label for="county" class="form-label"
-                              >County *</label
+                            <label for="cityLabel" class="form-label"
+                              >City *</label
                             >
                             <input
                               type="text"
                               class="form-control"
-                              id="county"
+                              name="cityLabel"
+                              id="cityLabel"
+                              required
+                            />
+                          </div>
+                          <div class="col-md-4 mb-3">
+                            <label for="countryLabel" class="form-label"
+                              >Country *</label
+                            >
+                            <input
+                              type="text"
+                              class="form-control"
+                              name="countryLabel"
+                              id="countryLabel"
                               required
                             />
                           </div>
@@ -516,7 +557,8 @@
                           >
                           <textarea
                             class="form-control"
-                            id="regularNotes"
+                            name="regularNotesLabel"
+                            id="regularNotesLabel"
                             rows="3"
                             required
                           ></textarea>
@@ -526,8 +568,7 @@
                             type="button"
                             class="btn btn-primary px-4 py-2"
                             id="bookNowBtn"
-                            data-bs-toggle="modal"
-                            data-bs-target="#paymentMethodModal"
+                            onclick="validateAndSubmit('regularForm')"
                           >
                             <i class="fas fa-calendar-check me-2"></i>Book Now
                           </button>
@@ -733,6 +774,35 @@
 
     <!-- Add this JavaScript to handle the service toggling -->
     <script>
+      function getBookingDetails() {
+        const isOneOff =
+          document.getElementById("oneOffSection").style.display !== "none";
+        const form = isOneOff
+          ? document.getElementById("oneOffForm")
+          : document.getElementById("regularForm");
+
+        const formData = new FormData(form);
+        const data = {};
+
+        // Convert FormData to object
+        for (let [key, value] of formData.entries()) {
+          data[key] = value;
+        }
+
+        // Get additional data from the UI
+        data.serviceType = isOneOff ? "One-Off" : "Regular";
+        data.houseSize =
+          form.querySelector("select[name$='RoomSize']")?.value || "";
+        data.cleaningType =
+          form.querySelector("select[name$='CleaningType']")?.value || "";
+        data.frequency =
+          form.querySelector("select[name='frequency']")?.value || "";
+        data.totalPrice =
+          document.getElementById("totalPrice")?.textContent || "";
+
+        return data;
+      }
+
       document.addEventListener("DOMContentLoaded", function () {
         const oneOffBtn = document.getElementById("oneOffBtn");
         const regularBtn = document.getElementById("regularBtn");
@@ -742,9 +812,9 @@
         // Pricing data
         const priceData = {
           "one-off": {
-            "1-2": { min: 40, max: 60 },
-            "3-4": { min: 80, max: 120 },
-            "5+": { min: 120, max: 180 },
+            "1-2": { min: 40, max: 60, paypal: 50 },
+            "3-4": { min: 80, max: 120, paypal: 100 },
+            "5+": { min: 120, max: 180, paypal: 150 },
           },
           regular: {
             weekly: 13.5,
@@ -872,7 +942,7 @@
           .addEventListener("change", updatePrice);
 
         // Get booking details from forms
-        function getBookingDetails() {
+        function getBookingDetailsFromForm() {
           const serviceType =
             oneOffSection.style.display === "block" ? "one-off" : "regular";
           const roomSize =
@@ -895,7 +965,6 @@
               ? document.getElementById("oneOffNotes").value
               : document.getElementById("regularNotes").value;
 
-          // Convert room size to human-readable format
           const houseSize =
             {
               "1-2": "1-2 Rooms",
@@ -903,7 +972,20 @@
               "5+": "5+ Rooms",
             }[roomSize] || "Unknown";
 
+          const customerDetails = {
+            fullName: document.getElementById("fullName")?.value || "",
+            email: document.getElementById("email")?.value || "",
+            phone: document.getElementById("phone")?.value || "",
+            address: document.getElementById("address")?.value || "",
+            postcode: document.getElementById("postcode")?.value || "",
+            city: document.getElementById("city")?.value || "",
+            country: document.getElementById("Country")?.value || "",
+            preferredDate: date || "",
+            preferredTime: time || "",
+          };
+
           return {
+            ...customerDetails,
             serviceType,
             houseSize,
             date,
@@ -921,29 +1003,9 @@
             const bookingDetails = getBookingDetails();
             // console.log("Booking Details:", bookingDetails);
 
-            // Get customer details
-            const customerDetails = {
-              fullName: document.getElementById("name")?.value || "",
-              email: document.getElementById("email")?.value || "",
-              phone: document.getElementById("phone")?.value || "",
-              alternatePhone:
-                document.getElementById("alternatePhone")?.value || "",
-              address: document.getElementById("address")?.value || "",
-              postcode: document.getElementById("postcode")?.value || "",
-              city: document.getElementById("city")?.value || "",
-              county: document.getElementById("county")?.value || "",
-              preferredTime:
-                document.getElementById("preferredTime")?.value || "",
-              additionalNotes:
-                document.getElementById("oneOffNotes")?.value || "",
-            };
-
-            // console.log("Customer Details:", customerDetails);
-
             // Combine all data
             const bookingData = {
               ...bookingDetails,
-              ...customerDetails,
               timestamp: new Date().toLocaleString("en-GB", {
                 year: "numeric",
                 month: "long",
@@ -969,7 +1031,7 @@
               ${bookingData.address}
               Postcode: ${bookingData.postcode}
               City: ${bookingData.city}
-              County: ${bookingData.county}
+              Country: ${bookingData.country}
               
               *Service Details:*
               Service Type: ${bookingData.serviceType}
@@ -981,7 +1043,7 @@
               }
               
               *Additional Notes:*
-              ${bookingData.additionalNotes}
+              ${bookingData.notes}
               
               Status: ${bookingData.status}
               Timestamp: ${bookingData.timestamp}
@@ -1022,15 +1084,15 @@
 
             // Get customer details
             const customerDetails = {
-              fullName: document.getElementById("name")?.value || "",
+              fullName: document.getElementById("fullName")?.value || "",
               email: document.getElementById("email")?.value || "",
               phone: document.getElementById("phone")?.value || "",
-              alternatePhone:
-                document.getElementById("alternatePhone")?.value || "",
               address: document.getElementById("address")?.value || "",
               postcode: document.getElementById("postcode")?.value || "",
               city: document.getElementById("city")?.value || "",
-              county: document.getElementById("county")?.value || "",
+              country: document.getElementById("Country")?.value || "",
+              preferredDate:
+                document.getElementById("preferredDate")?.value || "",
               preferredTime:
                 document.getElementById("preferredTime")?.value || "",
               additionalNotes:
@@ -1068,7 +1130,7 @@
               ${bookingData.address}
               Postcode: ${bookingData.postcode}
               City: ${bookingData.city}
-              County: ${bookingData.county}
+              Country: ${bookingData.country}
               
               *Service Details:*
               Service Type: ${bookingData.serviceType}
@@ -1080,7 +1142,7 @@
               }
               
               *Additional Notes:*
-              ${bookingData.additionalNotes}
+              ${bookingData.notes}
               
               Status: ${bookingData.status}
               Timestamp: ${bookingData.timestamp}
@@ -1159,6 +1221,83 @@
         });
 
         if (isValid) {
+          // console.group("📋 Form Submission Data");
+          // console.log("🏠 Cleaning Details:");
+          // console.log(
+          //   "  • Size of House:",
+          //   form.querySelector('[name="roomSize"]')?.value || "Not selected"
+          // );
+          // console.log(
+          //   "  • Preferred Date:",
+          //   form.querySelector('[name="oneOffDate"]')?.value || "Not selected"
+          // );
+          // console.log(
+          //   "  • Preferred Time:",
+          //   form.querySelector('[name="oneOffTime"]')?.value || "Not selected"
+          // );
+
+          // console.log("\n👤 Contact Information:");
+          // console.log(
+          //   "  • Full Name:",
+          //   form.querySelector('[name="fullName"]')?.value ||
+          //     document.getElementById("fullName")?.value ||
+          //     "Not provided"
+          // );
+          // console.log(
+          //   "  • Email:",
+          //   form.querySelector('[name="email"]')?.value ||
+          //     document.getElementById("email")?.value ||
+          //     "Not provided"
+          // );
+          // console.log(
+          //   "  • Phone:",
+          //   form.querySelector('[name="phone"]')?.value ||
+          //     document.getElementById("phone")?.value ||
+          //     "Not provided"
+          // );
+          // console.log(
+          //   "  • Alternate Phone:",
+          //   form.querySelector('[name="alternatePhone"]')?.value ||
+          //     document.getElementById("alternatePhone")?.value ||
+          //     "Not provided"
+          // );
+
+          // console.log("\n🏠 Address Information:");
+          // console.log(
+          //   "  • Address:",
+          //   form.querySelector('[name="address"]')?.value ||
+          //     document.getElementById("address")?.value ||
+          //     "Not provided"
+          // );
+          // console.log(
+          //   "  • Postcode:",
+          //   form.querySelector('[name="postcode"]')?.value ||
+          //     document.getElementById("postcode")?.value ||
+          //     "Not provided"
+          // );
+          // console.log(
+          //   "  • City:",
+          //   form.querySelector('[name="city"]')?.value ||
+          //     document.getElementById("city")?.value ||
+          //     "Not provided"
+          // );
+          // console.log(
+          //   "  • Country:",
+          //   form.querySelector('[name="country"]')?.value ||
+          //     document.getElementById("country")?.value ||
+          //     "Not provided"
+          // );
+
+          // console.log("\n📝 Special Instructions:");
+          // console.log(
+          //   "  ",
+          //   form.querySelector('[name="oneOffNotes"]')?.value ||
+          //     document.getElementById("oneOffNotes")?.value ||
+          //     "None provided"
+          // );
+
+          // console.groupEnd();
+
           // Show payment modal if form is valid
           const paymentModal = new bootstrap.Modal(
             document.getElementById("paymentModal")
@@ -1175,109 +1314,348 @@
               window.pendingFormData[element.id] = element.value;
             }
           }
+
+          // Store in localStorage
+          localStorage.setItem(
+            "bookingDetails",
+            JSON.stringify(window.pendingFormData)
+          );
+          console.log("Booking details stored:", window.pendingFormData);
         }
       }
 
       async function processPayment(paymentMethod) {
-        if (paymentMethod === "stripe") {
-          let button = document.querySelector(
-            '.payment-option[onclick*="stripe"]'
+        let button = document.querySelector(
+          `.payment-option[onclick*="${paymentMethod}"]`
+        );
+        let originalText = button ? button.innerHTML : "";
+
+        // Get service type (one-off or regular)
+        const isRegular =
+          document.getElementById("regularSection").style.display === "block";
+
+        // Get selected room size and frequency
+        const roomSize = isRegular
+          ? document.getElementById("regularRoomSize")?.value || "1-2"
+          : document.querySelector('input[name="roomSize"]:checked')?.value ||
+            "1-2";
+
+        const frequency = isRegular
+          ? document.getElementById("regularFrequency")?.value || "weekly"
+          : "one-off";
+
+        // Calculate amount based on service type and frequency
+        let selectedAmount = 0;
+        if (isRegular) {
+          // Use regular cleaning pricing based on frequency
+          selectedAmount = frequency === "weekly" ? 13.5 : 15.0;
+        } else {
+          // Use one-off cleaning pricing based on room size
+          if (roomSize === "3-4") selectedAmount = 100.0;
+          else if (roomSize === "5+") selectedAmount = 150.0;
+          else selectedAmount = 50.0; // Default for 1-2 rooms
+        }
+
+        // Update displayed price (sync UI and logic)
+        const priceElement = document.getElementById("totalPrice");
+        if (priceElement) {
+          priceElement.textContent = `£${selectedAmount.toFixed(2)}`;
+        }
+
+        const serviceType = isRegular ? "Regular Cleaning" : "One-Off Cleaning";
+        const houseSize = `${roomSize} ${
+          roomSize.includes("+") ? "Rooms" : "Rooms"
+        }`;
+        const priceRange =
+          document.getElementById("priceRange")?.textContent || "";
+
+        window.pendingFormData = {
+          serviceType,
+          houseSize,
+          frequency: isRegular
+            ? frequency === "weekly"
+              ? "Weekly/Bi-Weekly"
+              : "Monthly"
+            : "N/A",
+          priceRange,
+          totalPrice: `£${selectedAmount.toFixed(2)}`,
+          customerName: document.getElementById("name")?.value || "N/A",
+          email: document.getElementById("emailLabel")?.value || "N/A",
+          phone: document.getElementById("phoneLabel")?.value || "N/A",
+          address: document.getElementById("addressLabel")?.value || "N/A",
+          postcode: document.getElementById("postcodeLabel")?.value || "N/A",
+          city: document.getElementById("cityLabel")?.value || "N/A",
+          country: document.getElementById("countryLabel")?.value || "N/A",
+          preferredDate: isRegular
+            ? document.getElementById("regularDate")?.value || "N/A"
+            : document.getElementById("oneOffDate")?.value || "N/A",
+          preferredTime: isRegular
+            ? document.getElementById("regularTime")?.value || "N/A"
+            : document.getElementById("oneOffTime")?.value || "N/A",
+        };
+
+        try {
+          if (button) {
+            button.innerHTML =
+              '<i class="fas fa-spinner fa-spin"></i> Processing...';
+            button.disabled = true;
+          }
+
+          const amount = parseFloat(
+            window.pendingFormData.totalPrice.replace(/[^0-9.]/g, "")
           );
-          let originalText = button ? button.innerHTML : "";
 
-          try {
-            // Show loading state
-            if (button) {
-              button.innerHTML =
-                '<i class="fas fa-spinner fa-spin"></i> Processing...';
-              button.disabled = true;
-            }
+          if (!amount || isNaN(amount)) throw new Error("Invalid price");
 
-            // Get the booking details
-            const bookingDetails = {
-              serviceType: document.getElementById("serviceType").textContent,
-              houseSize: document.getElementById("houseSize").textContent,
-              priceRange: document.getElementById("priceRange").textContent,
-              totalPrice: document.getElementById("totalPrice").textContent,
-              customerName: document.getElementById("name")?.value || "",
-              customerEmail: document.getElementById("email")?.value || "",
-              customerPhone: document.getElementById("phone")?.value || "",
-              serviceDate: document.getElementById("oneOffDate")?.value || "",
-              serviceTime: document.getElementById("oneOffTime")?.value || "",
-              address: document.getElementById("address")?.value || "",
-              postcode: document.getElementById("postcode")?.value || "",
-              city: document.getElementById("city")?.value || "",
-              notes: document.getElementById("oneOffNotes")?.value || "",
-            };
+          const serviceType =
+            window.pendingFormData?.serviceType || "Cleaning Service";
+          const houseSize = window.pendingFormData?.houseSize || "1-2 Rooms";
 
-            // Convert booking details to URL parameters
-            const urlParams = new URLSearchParams();
-            Object.entries(bookingDetails).forEach(([key, value]) => {
-              if (value) urlParams.append(key, value);
-            });
+          if (paymentMethod === "paypal") {
+            const modalBody = document.querySelector(
+              "#paymentModal .modal-body"
+            );
 
-            // Create a payment intent on your server
-            const response = await fetch("/create-payment-intent", {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify({
-                amount: Math.round(
-                  parseFloat(
-                    bookingDetails.totalPrice.replace(/[^0-9.]/g, "")
-                  ) * 100
-                ),
+            // 💥 Ensure any existing PayPal buttons are wiped out completely
+            const existingContainer = document.getElementById(
+              "paypal-button-container"
+            );
+            if (existingContainer) existingContainer.remove();
+
+            modalBody.innerHTML = `
+  <div id="paypal-button-container" class="mt-3"></div>
+  <p class="mt-3">Processing PayPal payment for <strong>£${amount.toFixed(
+    2
+  )}</strong></p>
+`;
+            console.log("PayPal Amount Being Sent:", amount.toFixed(2));
+
+            paypal
+              .Buttons({
+                createOrder: function (data, actions) {
+                  return actions.order.create({
+                    purchase_units: [
+                      {
+                        amount: {
+                          value: amount.toFixed(2),
+                        },
+                        description: `${serviceType} - ${houseSize}`,
+                      },
+                    ],
+                  });
+                },
+                onApprove: function (data, actions) {
+                  return actions.order.capture().then(function (details) {
+                    window.location.href = `/payment-success?orderId=${data.orderID}&payerName=${details.payer.name.given_name}`;
+                  });
+                },
+                onError: function (err) {
+                  console.error("PayPal payment failed:", err);
+                  alert("PayPal payment failed. Please try again.");
+                },
+              })
+              .render("#paypal-button-container");
+          } else if (paymentMethod === "stripe") {
+            let button = document.querySelector(
+              '.payment-option[onclick*="stripe"]'
+            );
+            let originalText = button ? button.innerHTML : "";
+
+            try {
+              // Show loading state
+              if (button) {
+                button.innerHTML =
+                  '<i class="fas fa-spinner fa-spin"></i> Processing...';
+                button.disabled = true;
+              }
+
+              // Get the selected number of rooms
+              const roomSize =
+                document.querySelector('input[name="roomSize"]:checked')
+                  ?.value ||
+                document.querySelector('select[name="roomSize"]')?.value ||
+                "1-2";
+
+              // Set the price based on the number of rooms (in pence for Stripe)
+              let amount = 5000; // £50.00 in pence (1-2 rooms)
+              if (roomSize === "3-4") {
+                amount = 10000; // £100.00 in pence
+              } else if (roomSize === "5+") {
+                amount = 15000; // £150.00 in pence
+              }
+
+              // Update the displayed price
+              const priceElement = document.getElementById("totalPrice");
+              if (priceElement) {
+                priceElement.textContent = `£${(amount / 100).toFixed(2)}`;
+              }
+
+              // Rest of your existing code...
+              const serviceType =
+                document.getElementById("serviceType").textContent;
+              const isOneOff = serviceType === "One-Off";
+
+              // Get common form elements
+              const nameElement = document.getElementById("name");
+              const emailElement = document.getElementById("email");
+              const phoneElement = document.getElementById("phone");
+              const addressElement = document.getElementById("address");
+              const postcodeElement = document.getElementById("postcode");
+              const cityElement = document.getElementById("city");
+              const CountryElement = document.getElementById("Country");
+              const alternatePhoneElement =
+                document.getElementById("alternatePhone");
+              const preferredDateElement =
+                document.getElementById("preferredDate");
+              const preferredTimeElement =
+                document.getElementById("preferredTime");
+
+              // Get service-specific elements
+              const oneOffDateElement = document.getElementById("oneOffDate");
+              const oneOffTimeElement = document.getElementById("oneOffTime");
+              const oneOffNotesElement = document.getElementById("oneOffNotes");
+              const regularFrequencyElement =
+                document.getElementById("cleaningFrequency");
+              const regularTimeElement =
+                document.getElementById("preferredTime");
+              const regularDateElement = document.getElementById("regularDate");
+              const regularNotesElement =
+                document.getElementById("regularNotes");
+
+              const bookingDetails = {
+                serviceType: serviceType,
+                houseSize: document.getElementById("houseSize").textContent,
+                priceRange: document.getElementById("priceRange").textContent,
+                totalPrice: `£${(amount / 100).toFixed(2)}`,
+                customerName:
+                  document.querySelector('[name="fullName"]')?.value || "",
+                customerEmail: emailElement ? emailElement.value : "",
+                customerPhone: phoneElement ? phoneElement.value : "",
+                alternatePhone: alternatePhoneElement
+                  ? alternatePhoneElement.value
+                  : "",
+                address: addressElement ? addressElement.value : "",
+                postcode: postcodeElement ? postcodeElement.value : "",
+                city: cityElement ? cityElement.value : "",
+                country:
+                  document.querySelector('[name="country"]')?.value ||
+                  CountryElement?.value ||
+                  "",
+                oneOffDate:
+                  isOneOff && oneOffDateElement ? oneOffDateElement.value : "",
+                oneOffTime:
+                  isOneOff && oneOffTimeElement ? oneOffTimeElement.value : "",
+                notes: isOneOff
+                  ? oneOffNotesElement
+                    ? oneOffNotesElement.value
+                    : ""
+                  : regularNotesElement
+                  ? regularNotesElement.value
+                  : "",
+                cleaningFrequency:
+                  !isOneOff && regularFrequencyElement
+                    ? regularFrequencyElement.value
+                    : "",
+                preferredTime:
+                  !isOneOff && regularTimeElement
+                    ? regularTimeElement.value
+                    : "",
+                preferredDate:
+                  !isOneOff && regularDateElement
+                    ? regularDateElement.value
+                    : "",
+              };
+
+              // Convert booking details to URL parameters
+              const urlParams = new URLSearchParams();
+
+              // Add all booking details to URL parameters
+              Object.entries(bookingDetails).forEach(([key, value]) => {
+                if (value) urlParams.append(key, value);
+              });
+
+              // Explicitly add oneOffDate and oneOffTime from the form
+              const oneOffDate = document.querySelector(
+                '[name="oneOffDate"]'
+              )?.value;
+              const oneOffTime = document.querySelector(
+                '[name="oneOffTime"]'
+              )?.value;
+
+              if (oneOffDate) urlParams.set("oneOffDate", oneOffDate);
+              if (oneOffTime) urlParams.set("oneOffTime", oneOffTime);
+
+              // Create payment intent data with success URL containing all parameters
+              const paymentIntentData = {
+                amount: amount, // Use the calculated amount in pence
                 currency: "gbp",
                 metadata: {
                   serviceType: bookingDetails.serviceType,
                   houseSize: bookingDetails.houseSize,
                   priceRange: bookingDetails.priceRange,
-                  totalPrice: bookingDetails.totalPrice,
+                  totalPrice: `£${(amount / 100).toFixed(2)}`,
                   customerName: bookingDetails.customerName || "",
                   customerEmail: bookingDetails.customerEmail || "",
                   customerPhone: bookingDetails.customerPhone || "",
-                  serviceDate: bookingDetails.serviceDate || "",
-                  serviceTime: bookingDetails.serviceTime || "",
                   address: bookingDetails.address || "",
                   postcode: bookingDetails.postcode || "",
                   city: bookingDetails.city || "",
+                  country: bookingDetails.country || "",
                   notes: bookingDetails.notes || "",
+                  oneOffDate: oneOffDate || "",
+                  oneOffTime: oneOffTime || "",
+                  cleaningFrequency: bookingDetails.cleaningFrequency || "",
+                  preferredTime: bookingDetails.preferredTime || "",
+                  preferredDate: bookingDetails.preferredDate || "",
                 },
-              }),
-            });
+                success_url: `${
+                  window.location.origin
+                }/payment-success.html?${urlParams.toString()}`,
+                cancel_url: `${window.location.origin}/pricing.html`,
+              };
 
-            if (!response.ok) {
-              const error = await response.json();
-              throw new Error(error.error || "Failed to create payment intent");
-            }
+              // Create a payment intent on your server
+              const response = await fetch("/create-payment-intent", {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify(paymentIntentData),
+              });
 
-            const { clientSecret } = await response.json();
+              if (!response.ok) {
+                const error = await response.json();
+                throw new Error(
+                  error.error || "Failed to create payment intent"
+                );
+              }
 
-            // Create a modal for payment details
-            const modal = document.createElement("div");
-            modal.style.position = "fixed";
-            modal.style.top = "0";
-            modal.style.left = "0";
-            modal.style.width = "100%";
-            modal.style.height = "100vh";
-            modal.style.backgroundColor = "rgba(0,0,0,0.5)";
-            modal.style.display = "flex";
-            modal.style.justifyContent = "center";
-            modal.style.alignItems = "center";
-            modal.style.zIndex = "9999";
+              const { clientSecret } = await response.json();
 
-            const modalContent = document.createElement("div");
-            modalContent.style.backgroundColor = "white";
-            modalContent.style.padding = "20px";
-            modalContent.style.borderRadius = "8px";
-            modalContent.style.width = "90%";
-            modalContent.style.maxWidth = "500px";
-            modalContent.style.maxHeight = "90vh";
-            modalContent.style.overflowY = "auto";
+              // Create a modal for payment details
+              const modal = document.createElement("div");
+              modal.style.position = "fixed";
+              modal.style.top = "0";
+              modal.style.left = "0";
+              modal.style.width = "100%";
+              modal.style.height = "100vh";
+              modal.style.backgroundColor = "rgba(0,0,0,0.5)";
+              modal.style.display = "flex";
+              modal.style.justifyContent = "center";
+              modal.style.alignItems = "center";
+              modal.style.zIndex = "9999";
 
-            // Create service summary HTML
-            const serviceSummary = `
+              const modalContent = document.createElement("div");
+              modalContent.style.backgroundColor = "white";
+              modalContent.style.padding = "20px";
+              modalContent.style.borderRadius = "8px";
+              modalContent.style.width = "90%";
+              modalContent.style.maxWidth = "500px";
+              modalContent.style.maxHeight = "90vh";
+              modalContent.style.overflowY = "auto";
+
+              // Create service summary HTML
+              const serviceSummary = `
               <div style="margin-bottom: 20px; border-bottom: 1px solid #eee; padding-bottom: 15px;">
                 <h5 style="margin-bottom: 10px; color: #333;">Service Summary</h5>
                 <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
@@ -1299,7 +1677,7 @@
               </div>
             `;
 
-            modalContent.innerHTML = `
+              modalContent.innerHTML = `
               <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
                 <h4 style="margin: 0;">Complete Payment</h4>
                 <button id="close-payment" style="background: none; border: none; font-size: 1.5rem; cursor: pointer;">&times;</button>
@@ -1317,131 +1695,183 @@
               <div id="payment-message" class="hidden" style="color: #e74c3c; margin-top: 15px; font-size: 0.9rem;"></div>
             `;
 
-            modal.appendChild(modalContent);
-            document.body.appendChild(modal);
-            document.body.style.overflow = "hidden"; // Prevent background scrolling
+              modal.appendChild(modalContent);
+              document.body.appendChild(modal);
+              document.body.style.overflow = "hidden"; // Prevent background scrolling
 
-            // Initialize Stripe Elements with the clientSecret
-            const elements = stripe.elements({
-              clientSecret: clientSecret,
-              appearance: {
-                theme: "stripe",
-                variables: {
-                  colorPrimary: "#4a90e2",
+              // Initialize Stripe Elements with the clientSecret
+              const elements = stripe.elements({
+                clientSecret: clientSecret,
+                appearance: {
+                  theme: "stripe",
+                  variables: {
+                    colorPrimary: "#4a90e2",
+                  },
                 },
-              },
-            });
+              });
 
-            // Create and mount the Payment Element
-            const paymentElement = elements.create("payment");
-            paymentElement.mount("#payment-element");
+              // Create and mount the Payment Element
+              const paymentElement = elements.create("payment");
+              paymentElement.mount("#payment-element");
 
-            // Handle form submission
-            const form = document.createElement("form");
-            form.id = "payment-form";
+              // Handle form submission
+              const form = document.createElement("form");
+              form.id = "payment-form";
 
-            // Handle payment submission
-            document
-              .getElementById("submit-payment")
-              .addEventListener("click", async (e) => {
-                e.preventDefault();
+              // Handle payment submission
+              document
+                .getElementById("submit-payment")
+                .addEventListener("click", async (e) => {
+                  e.preventDefault();
 
-                const submitButton = document.getElementById("submit-payment");
-                const spinner = document.getElementById("spinner");
-                const buttonText = document.getElementById("button-text");
-                const paymentMessage =
-                  document.getElementById("payment-message");
+                  const submitButton =
+                    document.getElementById("submit-payment");
+                  const spinner = document.getElementById("spinner");
+                  const buttonText = document.getElementById("button-text");
+                  const paymentMessage =
+                    document.getElementById("payment-message");
 
-                // Show spinner and disable button
-                submitButton.disabled = true;
-                buttonText.style.display = "none";
-                spinner.style.display = "inline-block";
-                paymentMessage.textContent = "";
-                paymentMessage.style.display = "none";
+                  // Show spinner and disable button
+                  submitButton.disabled = true;
+                  buttonText.style.display = "none";
+                  spinner.style.display = "inline-block";
+                  paymentMessage.textContent = "";
+                  paymentMessage.style.display = "none";
 
-                try {
-                  const { error } = await stripe.confirmPayment({
-                    elements,
-                    confirmParams: {
-                      return_url: `${
-                        window.location.origin
-                      }/payment-success?${urlParams.toString()}`,
-                      receipt_email: bookingDetails.customerEmail || "",
-                    },
-                  });
+                  try {
+                    const { error } = await stripe.confirmPayment({
+                      elements,
+                      confirmParams: {
+                        return_url: `${
+                          window.location.origin
+                        }/payment-success?${urlParams.toString()}`,
+                        receipt_email: bookingDetails.customerEmail || "",
+                      },
+                    });
 
-                  if (error) {
-                    throw error;
+                    if (error) {
+                      throw error;
+                    }
+                  } catch (error) {
+                    console.error("Payment error:", error);
+                    paymentMessage.textContent =
+                      error.message || "An unexpected error occurred.";
+                    paymentMessage.style.display = "block";
+                    submitButton.disabled = false;
+                    buttonText.style.display = "inline";
+                    spinner.style.display = "none";
                   }
-                } catch (error) {
-                  console.error("Payment error:", error);
-                  paymentMessage.textContent =
-                    error.message || "An unexpected error occurred.";
-                  paymentMessage.style.display = "block";
-                  submitButton.disabled = false;
-                  buttonText.style.display = "inline";
-                  spinner.style.display = "none";
+                });
+
+              // Handle close button
+              document
+                .getElementById("close-payment")
+                .addEventListener("click", () => {
+                  closePaymentModal();
+                });
+
+              // Close modal when clicking outside
+              modal.addEventListener("click", (e) => {
+                if (e.target === modal) {
+                  closePaymentModal();
                 }
               });
 
-            // Handle close button
-            document
-              .getElementById("close-payment")
-              .addEventListener("click", () => {
-                closePaymentModal();
-              });
-
-            // Close modal when clicking outside
-            modal.addEventListener("click", (e) => {
-              if (e.target === modal) {
-                closePaymentModal();
-              }
-            });
-
-            // Function to close the payment modal
-            const closePaymentModal = () => {
-              document.body.removeChild(modal);
-              document.body.style.overflow = "auto";
+              // Function to close the payment modal
+              const closePaymentModal = () => {
+                document.body.removeChild(modal);
+                document.body.style.overflow = "auto";
+                if (button) {
+                  button.innerHTML = originalText;
+                  button.disabled = false;
+                }
+              };
+            } catch (error) {
+              console.error("Payment error:", error);
+              alert(
+                "Payment failed: " + (error.message || "Something went wrong")
+              );
+              // Reset button state
               if (button) {
                 button.innerHTML = originalText;
                 button.disabled = false;
               }
-            };
-          } catch (error) {
-            console.error("Payment error:", error);
-            alert(
-              "Payment failed: " + (error.message || "Something went wrong")
-            );
-            // Reset button state
-            if (button) {
-              button.innerHTML = originalText;
-              button.disabled = false;
             }
+          } else if (paymentMethod === "paypal") {
+            const bookingDetails = { ...window.pendingFormData };
+
+            const amount = parseFloat(
+              bookingDetails.totalPrice.replace(/[^0-9.]/g, "")
+            );
+
+            console.log("PayPal Amount Being Sent:", amount); // Debug check
+
+            const modalBody = document.querySelector(
+              "#paymentModal .modal-body"
+            );
+            modalBody.innerHTML = `
+    <div id="paypal-button-container" class="mt-3"></div>
+    <p class="mt-3">Processing PayPal payment for <strong>£${amount.toFixed(
+      2
+    )}</strong></p>
+  `;
+
+            paypal
+              .Buttons({
+                createOrder: function (data, actions) {
+                  return actions.order.create({
+                    purchase_units: [
+                      {
+                        amount: {
+                          value: amount.toFixed(2),
+                          currency_code: "GBP",
+                          breakdown: {
+                            item_total: {
+                              currency_code: "GBP",
+                              value: amount.toFixed(2),
+                            },
+                          },
+                        },
+                        description: `${bookingDetails.serviceType} - ${bookingDetails.houseSize}`,
+                      },
+                    ],
+                  });
+                },
+                onApprove: function (data, actions) {
+                  return actions.order.capture().then(function (details) {
+                    window.location.href = `/payment-success?orderId=${data.orderID}&payerName=${details.payer.name.given_name}`;
+                  });
+                },
+                onError: function (err) {
+                  console.error("PayPal payment failed:", err);
+                  alert("PayPal payment failed. Please try again.");
+                },
+              })
+              .render("#paypal-button-container");
           }
-        } else {
-          // Handle other payment methods (PayPal, etc.)
-          alert(`Processing ${paymentMethod} payment...`);
-          // Close the modal
-          const paymentModal = bootstrap.Modal.getInstance(
-            document.getElementById("paymentModal")
-          );
-          paymentModal.hide();
+        } catch (error) {
+          console.error("Payment error:", error);
+          alert("Payment failed: " + (error.message || "Something went wrong"));
+          if (button) {
+            button.innerHTML = originalText;
+            button.disabled = false;
+          }
         }
       }
     </script>
 
     <style>
       .payment-option {
-        transition: transform 0.2s;
+        transition: transform 0.2s, box-shadow 0.2s;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
       }
       .payment-option:hover {
-        transform: scale(1.05);
-      }
-      .payment-img {
-        border: 1px solid #dee2e6;
-        border-radius: 8px;
-        padding: 10px;
-        background: white;
+        transform: translateY(-3px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
       }
     </style>
 
@@ -1468,21 +1898,37 @@
           </div>
           <div class="modal-body text-center">
             <p class="mb-4">Please choose your preferred payment method:</p>
-            <div class="d-flex justify-content-center gap-4">
-              <div class="payment-option" onclick="processPayment('paypal')">
-                <img
-                  src="img/paypal.png"
-                  alt="PayPal"
-                  class="img-fluid payment-img"
-                  style="width: 180px; cursor: pointer"
-                />
+            <div class="d-flex justify-content-center align-items-center gap-4">
+              <!-- PayPal Button with square border -->
+              <div
+                class="payment-option"
+                style="
+                  border: 1px solid #ddd;
+                  border-radius: 4px;
+                  padding: 34px 110px;
+                  width: 200px;
+                "
+              >
+                <div id="paypal-button-container"></div>
               </div>
-              <div class="payment-option" onclick="processPayment('stripe')">
+
+              <!-- Stripe Button -->
+              <div
+                class="payment-option"
+                onclick="processPayment('stripe')"
+                style="
+                  cursor: pointer;
+                  border: 1px solid #ddd;
+                  border-radius: 4px;
+                  padding: 31px;
+                  width: 200px;
+                "
+              >
                 <img
                   src="img/stripe.png"
                   alt="Stripe"
-                  class="img-fluid payment-img"
-                  style="width: 150px; cursor: pointer"
+                  class="img-fluid"
+                  style="max-width: 120px"
                 />
               </div>
             </div>
@@ -1491,6 +1937,132 @@
       </div>
     </div>
 
+    <script>
+      function initializePayPalButton() {
+        // Get the room size from the form
+        function getSelectedRoomSize() {
+          const activeForm =
+            document.getElementById("oneOffSection").style.display === "block"
+              ? "oneOff"
+              : "regular";
+          const roomSizeSelect = document.getElementById(
+            `${activeForm}RoomSize`
+          );
+          return roomSizeSelect ? roomSizeSelect.value : null;
+        }
+
+        // Calculate price based on room size
+        function calculatePrice() {
+          const roomSize = getSelectedRoomSize();
+          switch (roomSize) {
+            case "1-2":
+              return "50.00";
+            case "3-4":
+              return "100.00";
+            case "5+":
+              return "150.00";
+            default:
+              return "0.00";
+          }
+        }
+
+        // Update PayPal button when room size changes
+        function updatePayPalButton() {
+          const roomSize = getSelectedRoomSize();
+          const price = calculatePrice();
+          const container = document.getElementById("paypal-button-container");
+
+          // Only enable PayPal button if a room size is selected
+          if (roomSize) {
+            container.style.display = "block";
+
+            // Clean up any existing PayPal button
+            if (window.paypalButtonInstance) {
+              window.paypalButtonInstance.close();
+              window.paypalButtonInstance = null;
+            }
+
+            // Clear the container
+            container.innerHTML = "";
+
+            // Create new PayPal button
+            window.paypalButtonInstance = paypal.Buttons({
+              createOrder: function (data, actions) {
+                return actions.order.create({
+                  purchase_units: [
+                    {
+                      amount: {
+                        value: price,
+                        currency_code: "GBP",
+                        breakdown: {
+                          item_total: {
+                            value: price,
+                            currency_code: "GBP",
+                          },
+                        },
+                      },
+                      items: [
+                        {
+                          name: `Cleaning Service (${roomSize} rooms)`,
+                          description: `Professional cleaning for ${roomSize} rooms`,
+                          quantity: "1",
+                          unit_amount: {
+                            value: price,
+                            currency_code: "GBP",
+                          },
+                        },
+                      ],
+                    },
+                  ],
+                });
+              },
+              onApprove: function (data, actions) {
+                return actions.order.capture().then(function (details) {
+                  // Handle successful payment
+                  alert(
+                    "Transaction completed by " + details.payer.name.given_name
+                  );
+                  // You can add your form submission logic here
+                });
+              },
+              onError: function (err) {
+                console.error("PayPal Error:", err);
+              },
+            });
+
+            // Render the PayPal button
+            if (window.paypalButtonInstance) {
+              window.paypalButtonInstance.render("#paypal-button-container");
+            }
+          } else {
+            container.style.display = "none";
+          }
+        }
+
+        // Add event listeners to room size selectors
+        document
+          .getElementById("oneOffRoomSize")
+          ?.addEventListener("change", updatePayPalButton);
+        document
+          .getElementById("regularRoomSize")
+          ?.addEventListener("change", updatePayPalButton);
+
+        // Initialize the button
+        updatePayPalButton();
+      }
+
+      // Initialize PayPal button when the page loads
+      document.addEventListener("DOMContentLoaded", function () {
+        // Other existing code...
+
+        // Initialize PayPal button
+        if (typeof paypal !== "undefined") {
+          initializePayPalButton();
+        } else {
+          console.error("PayPal SDK not loaded");
+        }
+      });
+    </script>
     <!-- Footer Start -->
     <div
       class="container-fluid footer bg-footer py-5 wow fadeIn"
@@ -1640,9 +2212,9 @@
 
         const priceData = {
           "one-off": {
-            "1-2": { min: 40, max: 60 },
-            "3-4": { min: 80, max: 120 },
-            "5+": { min: 120, max: 180 },
+            "1-2": { min: 40, max: 60, paypal: 50 },
+            "3-4": { min: 80, max: 120, paypal: 100 },
+            "5+": { min: 120, max: 180, paypal: 150 },
           },
           regular: {
             weekly: 13.5,
@@ -1655,6 +2227,7 @@
             oneOffSection && oneOffSection.style.display === "block"
               ? "one-off"
               : "regular";
+
           const roomSize =
             serviceType === "one-off"
               ? oneOffRoomSizeEl?.value
@@ -1697,6 +2270,8 @@
               document.getElementById(
                 "priceRange"
               ).textContent = `£${priceRange.min} - £${priceRange.max}`;
+
+              // Hide hourly rate and monthly rate sections
               document.getElementById("hourlyRateSection").style.display =
                 "none";
               document.getElementById("monthlyRateSection").style.display =
@@ -1713,12 +2288,15 @@
                 frequency === "weekly"
                   ? `£13.50hr (with cleaning supplies provided) - £14.50`
                   : `£15 per hour`;
+
+              // Show hourly rate section, hide monthly rate
               document.getElementById("hourlyRateSection").style.display =
                 "block";
               document.getElementById("monthlyRateSection").style.display =
                 "none";
             }
           } else {
+            // Reset prices if no selection
             document.getElementById("totalPrice").textContent = "£0.00";
             document.getElementById("serviceType").textContent =
               "Select a service type";
@@ -1764,19 +2342,19 @@
         if (regularFrequencyEl)
           regularFrequencyEl.addEventListener("change", updatePrice);
 
-        function getBookingDetails() {
+        function getBookingDetailsFromForm() {
           const serviceType =
-            oneOffSection && oneOffSection.style.display === "block"
-              ? "one-off"
-              : "regular";
+            oneOffSection.style.display === "block" ? "one-off" : "regular";
           const roomSize =
             serviceType === "one-off"
               ? oneOffRoomSizeEl?.value
               : regularRoomSizeEl?.value;
+
           const date =
             serviceType === "one-off"
               ? document.getElementById("oneOffDate")?.value
               : document.getElementById("regularDate")?.value;
+
           const time =
             serviceType === "one-off"
               ? document.getElementById("oneOffTime")?.value
@@ -1793,9 +2371,29 @@
               "5+": "5+ Rooms",
             }[roomSize] || "Unknown";
 
-          return { serviceType, houseSize, date, time, notes };
+          const customerDetails = {
+            fullName: document.getElementById("fullName")?.value || "",
+            email: document.getElementById("email")?.value || "",
+            phone: document.getElementById("phone")?.value || "",
+            address: document.getElementById("address")?.value || "",
+            postcode: document.getElementById("postcode")?.value || "",
+            city: document.getElementById("city")?.value || "",
+            country: document.getElementById("Country")?.value || "",
+            preferredDate: date || "",
+            preferredTime: time || "",
+          };
+
+          return {
+            ...customerDetails,
+            serviceType,
+            houseSize,
+            date,
+            time,
+            notes,
+          };
         }
 
+        // Form submission handlers
         if (oneOffForm) {
           oneOffForm.addEventListener("submit", function (e) {
             e.preventDefault();
@@ -1825,9 +2423,12 @@
               address: document.getElementById("address")?.value || "",
               postcode: document.getElementById("postcode")?.value || "",
               city: document.getElementById("city")?.value || "",
-              county: document.getElementById("county")?.value || "",
-              preferredTime:
-                document.getElementById("preferredTime")?.value || "",
+              country:
+                document.querySelector('[name="country"]')?.value ||
+                document.getElementById("Country")?.value ||
+                "",
+              oneOffDate: document.getElementById("oneOffDate")?.value || "",
+              oneOffTime: document.getElementById("oneOffTime")?.value || "",
               additionalNotes:
                 document.getElementById("oneOffNotes")?.value || "",
             };
@@ -1863,7 +2464,7 @@
           ${bookingData.address}
           Postcode: ${bookingData.postcode}
           City: ${bookingData.city}
-          County: ${bookingData.county}
+          Country: ${bookingData.country}
 
           *Service Details:*
           Service Type: ${bookingData.serviceType}
@@ -1875,7 +2476,7 @@
           }
 
           *Additional Notes:*
-          ${bookingData.additionalNotes}
+          ${bookingData.notes}
 
           Status: ${bookingData.status}
           Timestamp: ${bookingData.timestamp}
@@ -1918,6 +2519,62 @@
 
         // Initialize price once
         updatePrice();
+      });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://www.paypal.com/sdk/js?client-id=AboK-oq6nnplV5UVW9djS7-Q5z6iZjZjzzR2vD6IQnThL1twuIlL4Khla8kSKgfBInLF9EqZtyxpSJ9i&currency=GBP"></script>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        setTimeout(() => {
+          paypal
+            .Buttons({
+              createOrder: function (data, actions) {
+                return actions.order.create({
+                  purchase_units: [
+                    {
+                      amount: {
+                        value: "10.00", // Make this dynamic based on your needs
+                        currency_code: "GBP",
+                      },
+                    },
+                  ],
+                });
+              },
+              onApprove: function (data, actions) {
+                return actions.order.capture().then(function (details) {
+                  alert(
+                    "Transaction completed by " + details.payer.name.given_name
+                  );
+                  // Add any additional success handling here
+                });
+              },
+              onError: function (err) {
+                console.error("PayPal error:", err);
+                // Handle errors here
+              },
+            })
+            .render("#paypal-button-container");
+        }, 500);
+      });
+    </script>
+    <script>
+      // Get references to the two buttons
+      const oneOffBtn = document.getElementById("oneOffBtn");
+      const regularBtn = document.getElementById("regularBtn");
+
+      // Add a click listener to the "One-off" button
+      oneOffBtn.addEventListener("click", () => {
+        // Add 'active' to this button and remove it from the other
+        oneOffBtn.classList.add("active");
+        regularBtn.classList.remove("active");
+      });
+
+      // Add a click listener to the "Regular" button
+      regularBtn.addEventListener("click", () => {
+        // Add 'active' to this button and remove it from the other
+        regularBtn.classList.add("active");
+        oneOffBtn.classList.remove("active");
       });
     </script>
   </body>
