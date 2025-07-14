@@ -116,8 +116,8 @@
           </div>
           <div class="d-none d-xl-flex me-3">
             <div class="d-flex flex-column pe-3 border-end border-primary">
-              <a href="tel:+447398538498"
-                ><span class="text-primary">Free: +44 7398 538498</span></a
+              <a href="tel:+441733964472"
+                ><span class="text-primary">Free: +441733964472</span></a
               >
             </div>
           </div>
@@ -230,7 +230,7 @@
                           <select
                             class="form-select"
                             id="oneOffRoomSize"
-                            name="roomSize"
+                            name="oneOffRoomSize"
                             required
                           >
                             <option value="">Select size</option>
@@ -243,13 +243,13 @@
                           Type of Clean
                           <select
                             class="form-select mb-4"
-                            id="oneOffRoomSize"
+                            id="oneOffCleaningType"
                             required
                           >
                             <option value="">Select type of clean</option>
-                            <option value="light">Light Clean</option>
-                            <option value="standard">Standard Clean</option>
-                            <option value="deep">Deep Clean</option>
+                            <option value="Light">Light Clean</option>
+                            <option value="Standard">Standard Clean</option>
+                            <option value="Deep">Deep Clean</option>
                           </select>
                         </div>
                         <div class="mb-4">
@@ -419,6 +419,19 @@
                             <option value="1-2">1-2 Rooms</option>
                             <option value="3-4">3-4 Rooms</option>
                             <option value="5+">5+ Rooms</option>
+                          </select>
+                        </div>
+                        <div class="mb-4">
+                          Type of Clean
+                          <select
+                            class="form-select mb-4"
+                            id="regularCleaningType"
+                            required
+                          >
+                            <option value="">Select type of clean</option>
+                            <option value="Light">Light Clean</option>
+                            <option value="Standard">Standard Clean</option>
+                            <option value="Deep">Deep Clean</option>
                           </select>
                         </div>
                         <div class="mb-4">
@@ -790,7 +803,7 @@
         }
 
         // Get additional data from the UI
-        data.serviceType = isOneOff ? "One-Off" : "Regular";
+        data.serviceType = isOneOff ? "one-off" : "regular";
         data.houseSize =
           form.querySelector("select[name$='RoomSize']")?.value || "";
         data.cleaningType =
@@ -826,6 +839,10 @@
         function updatePrice() {
           const serviceType =
             oneOffSection.style.display === "block" ? "one-off" : "regular";
+          const cleaningType =
+            serviceType === "one-off"
+              ? document.getElementById("oneOffCleaningType").value
+              : document.getElementById("regularCleaningType").value;
           const roomSize =
             serviceType === "one-off"
               ? document.getElementById("oneOffRoomSize").value
@@ -833,27 +850,50 @@
           const frequency = document.getElementById("regularFrequency").value;
 
           // Update service type
-          document.getElementById("serviceType").textContent =
-            serviceType === "one-off" ? "One-Off Clean" : "Regular Cleaning";
-
-          // Update house size
-          document.getElementById("houseSize").textContent = roomSize
-            ? `${roomSize} Rooms`
-            : "Select house size";
-
-          // Update frequency (only for regular)
-          if (serviceType === "regular") {
-            document.getElementById("frequencySection").style.display = "block";
-            document.getElementById("cleaningFrequency").textContent = frequency
-              ? frequency === "weekly"
-                ? "Weekly/Bi-Weekly"
-                : "Monthly"
-              : "Select frequency";
-          } else {
-            document.getElementById("frequencySection").style.display = "none";
+          const serviceTypeEl = document.getElementById("serviceType");
+          if (serviceTypeEl) {
+            serviceTypeEl.textContent =
+              serviceType === "one-off" ? "One-Off Clean" : "Regular Cleaning";
           }
 
-          // Calculate price
+          // Update house size
+          const houseSizeEl = document.getElementById("houseSize");
+          if (houseSizeEl) {
+            houseSizeEl.textContent = roomSize
+              ? `${roomSize} Rooms`
+              : "Select house size";
+          }
+
+          // Update cleaning type
+          const cleaningTypeEl = document.getElementById("cleaningType");
+          if (cleaningTypeEl) {
+            cleaningTypeEl.textContent = cleaningType
+              ? cleaningType === "Light"
+                ? "Light Clean"
+                : cleaningType === "Standard"
+                ? "Standard Clean"
+                : "Deep Clean"
+              : "Select cleaning type";
+          }
+
+          // Update frequency (only for regular)
+          const frequencySection = document.getElementById("frequencySection");
+          const cleaningFrequencyEl =
+            document.getElementById("cleaningFrequency");
+
+          if (serviceType === "regular") {
+            if (frequencySection) frequencySection.style.display = "block";
+            if (cleaningFrequencyEl) {
+              cleaningFrequencyEl.textContent = frequency
+                ? frequency === "weekly"
+                  ? "Weekly/Bi-Weekly"
+                  : "Monthly"
+                : "Select frequency";
+            }
+          } else {
+            if (frequencySection) frequencySection.style.display = "none";
+          }
+
           if (roomSize) {
             if (serviceType === "one-off") {
               const priceRange = priceData["one-off"][roomSize];
@@ -944,54 +984,129 @@
         // Get booking details from forms
         function getBookingDetailsFromForm() {
           const serviceType =
-            oneOffSection.style.display === "block" ? "one-off" : "regular";
-          const roomSize =
-            serviceType === "one-off"
-              ? document.getElementById("oneOffRoomSize").value
-              : document.getElementById("regularRoomSize").value;
+            document.getElementById("oneOffSection").style.display === "block"
+              ? "one-off"
+              : "regular";
 
-          const date =
-            serviceType === "one-off"
-              ? document.getElementById("oneOffDate").value
-              : document.getElementById("regularDate").value;
-
-          const time =
-            serviceType === "one-off"
-              ? document.getElementById("oneOffTime").value
-              : document.getElementById("regularFrequency").value;
-
+          // Get common elements
+          const fullName = document.getElementById("fullName")?.value || "";
+          const email = document.getElementById("email")?.value || "";
+          const phone = document.getElementById("phone")?.value || "";
+          const alternatePhone =
+            document.getElementById("alternatePhone")?.value || "";
+          const address = document.getElementById("address")?.value || "";
+          const postcode = document.getElementById("postcode")?.value || "";
+          const city = document.getElementById("city")?.value || "";
+          const country = document.getElementById("country")?.value || "";
           const notes =
-            serviceType === "one-off"
-              ? document.getElementById("oneOffNotes").value
-              : document.getElementById("regularNotes").value;
+            document.getElementById(
+              serviceType === "one-off" ? "oneOffNotes" : "regularNotes"
+            )?.value || "";
 
-          const houseSize =
-            {
-              "1-2": "1-2 Rooms",
-              "3-4": "3-4 Rooms",
-              "5+": "5+ Rooms",
-            }[roomSize] || "Unknown";
+          if (serviceType === "one-off") {
+            // One-off specific fields
+            const roomSize =
+              document.getElementById("oneOffRoomSize")?.value || "";
+            const cleaningType =
+              document.getElementById("oneOffCleaningType")?.value || "";
+            const date = document.getElementById("oneOffDate")?.value || "";
+            const time = document.getElementById("oneOffTime")?.value || "";
 
-          const customerDetails = {
-            fullName: document.getElementById("fullName")?.value || "",
-            email: document.getElementById("email")?.value || "",
-            phone: document.getElementById("phone")?.value || "",
-            address: document.getElementById("address")?.value || "",
-            postcode: document.getElementById("postcode")?.value || "",
-            city: document.getElementById("city")?.value || "",
-            country: document.getElementById("Country")?.value || "",
-            preferredDate: date || "",
-            preferredTime: time || "",
-          };
+            const houseSize =
+              roomSize === "1-2"
+                ? "1-2 Rooms"
+                : roomSize === "3-4"
+                ? "3-4 Rooms"
+                : roomSize === "5+"
+                ? "5+ Rooms"
+                : "";
 
-          return {
-            ...customerDetails,
-            serviceType,
-            houseSize,
-            date,
-            time,
-            notes,
-          };
+            const cleaningTypeDisplay =
+              cleaningType === "Light"
+                ? "Light Clean"
+                : cleaningType === "Standard"
+                ? "Standard Clean"
+                : cleaningType === "Deep"
+                ? "Deep Clean"
+                : "";
+
+            return {
+              serviceType: "One-Off Cleaning",
+              cleaningType: cleaningTypeDisplay,
+              cleaningTypeLabel: cleaningType,
+              roomSize,
+              houseSize,
+              date,
+              time,
+              preferredDate: date,
+              preferredTime: time,
+              customerName: fullName,
+              fullName,
+              email,
+              phone,
+              alternatePhone,
+              alternatePhoneNumber: alternatePhone,
+              address,
+              streetAddress: address,
+              postcode,
+              zipCode: postcode,
+              city,
+              country,
+              notes,
+              specialInstructions: notes,
+              status: "pending",
+              timestamp: new Date().toISOString(),
+            };
+          } else {
+            // Regular cleaning specific fields
+            const roomSize =
+              document.getElementById("regularRoomSize")?.value || "";
+            const frequency =
+              document.getElementById("regularFrequency")?.value || "";
+            const date = document.getElementById("regularDate")?.value || "";
+
+            const houseSize =
+              roomSize === "1-2"
+                ? "1-2 Rooms"
+                : roomSize === "3-4"
+                ? "3-4 Rooms"
+                : roomSize === "5+"
+                ? "5+ Rooms"
+                : "";
+
+            const frequencyDisplay =
+              frequency === "weekly"
+                ? "Weekly/Bi-Weekly"
+                : frequency === "monthly"
+                ? "Monthly"
+                : "";
+
+            return {
+              serviceType: "Regular Cleaning",
+              frequency: frequencyDisplay,
+              frequencyValue: frequency,
+              roomSize,
+              houseSize,
+              date,
+              preferredDate: date,
+              customerName: fullName,
+              fullName,
+              email,
+              phone,
+              alternatePhone,
+              alternatePhoneNumber: alternatePhone,
+              address,
+              streetAddress: address,
+              postcode,
+              zipCode: postcode,
+              city,
+              country,
+              notes,
+              specialInstructions: notes,
+              status: "pending",
+              timestamp: new Date().toISOString(),
+            };
+          }
         }
 
         // Form submission handlers
@@ -1224,25 +1339,46 @@
           // console.group("📋 Form Submission Data");
           // console.log("🏠 Cleaning Details:");
           // console.log(
-          //   "  • Size of House:",
-          //   form.querySelector('[name="roomSize"]')?.value || "Not selected"
+          //   "• Size of House:",
+          //   form.querySelector('[name="oneOffRoomSize"]')?.value ||
+          //     "Not selected"
           // );
-          // console.log(
-          //   "  • Preferred Date:",
-          //   form.querySelector('[name="oneOffDate"]')?.value || "Not selected"
-          // );
+          const formElement =
+            document.getElementById("oneOffForm") ||
+            document.getElementById("regularForm");
+          if (formElement) {
+            const cleaningTypeSelect =
+              document.getElementById("oneOffCleaningType") ||
+              document.getElementById("regularCleaningType");
+
+            if (cleaningTypeSelect) {
+              console.log(
+                "• Cleaning Type:",
+                cleaningTypeSelect.value || "Not selected"
+              );
+            } else {
+              console.log("• Cleaning Type: Select element not found by ID");
+              // Fallback to name attribute if ID doesn't work
+              const fallbackSelect = formElement.querySelector(
+                '[name="oneOffCleaningType"], [name="regularCleaningType"]'
+              );
+              console.log("Fallback select found:", fallbackSelect);
+            }
+          } else {
+            console.log("• Form not found");
+          }
+
           // console.log(
           //   "  • Preferred Time:",
           //   form.querySelector('[name="oneOffTime"]')?.value || "Not selected"
           // );
 
-          // console.log("\n👤 Contact Information:");
-          // console.log(
-          //   "  • Full Name:",
-          //   form.querySelector('[name="fullName"]')?.value ||
-          //     document.getElementById("fullName")?.value ||
-          //     "Not provided"
-          // );
+          console.log(
+            "  • Special Instructions:",
+            form.querySelector('[name="oneOffNotes"]')?.value ||
+              document.getElementById("oneOffNotes")?.value ||
+              "Not provided"
+          );
           // console.log(
           //   "  • Email:",
           //   form.querySelector('[name="email"]')?.value ||
@@ -1284,7 +1420,7 @@
           // console.log(
           //   "  • Country:",
           //   form.querySelector('[name="country"]')?.value ||
-          //     document.getElementById("country")?.value ||
+          //     document.getElementById("Country")?.value ||
           //     "Not provided"
           // );
 
@@ -1369,30 +1505,12 @@
         const priceRange =
           document.getElementById("priceRange")?.textContent || "";
 
-        window.pendingFormData = {
-          serviceType,
-          houseSize,
-          frequency: isRegular
-            ? frequency === "weekly"
-              ? "Weekly/Bi-Weekly"
-              : "Monthly"
-            : "N/A",
-          priceRange,
-          totalPrice: `£${selectedAmount.toFixed(2)}`,
-          customerName: document.getElementById("name")?.value || "N/A",
-          email: document.getElementById("emailLabel")?.value || "N/A",
-          phone: document.getElementById("phoneLabel")?.value || "N/A",
-          address: document.getElementById("addressLabel")?.value || "N/A",
-          postcode: document.getElementById("postcodeLabel")?.value || "N/A",
-          city: document.getElementById("cityLabel")?.value || "N/A",
-          country: document.getElementById("countryLabel")?.value || "N/A",
-          preferredDate: isRegular
-            ? document.getElementById("regularDate")?.value || "N/A"
-            : document.getElementById("oneOffDate")?.value || "N/A",
-          preferredTime: isRegular
-            ? document.getElementById("regularTime")?.value || "N/A"
-            : document.getElementById("oneOffTime")?.value || "N/A",
-        };
+        // Combine form fields with price
+        const allFormData =
+          JSON.parse(localStorage.getItem("bookingDetails")) || {};
+        allFormData.totalPrice = `£${selectedAmount.toFixed(2)}`;
+
+        window.pendingFormData = allFormData;
 
         try {
           if (button) {
@@ -1446,6 +1564,10 @@
                 },
                 onApprove: function (data, actions) {
                   return actions.order.capture().then(function (details) {
+                    sessionStorage.setItem(
+                      "receiptData",
+                      JSON.stringify(window.pendingFormData)
+                    );
                     window.location.href = `/payment-success?orderId=${data.orderID}&payerName=${details.payer.name.given_name}`;
                   });
                 },
@@ -1502,7 +1624,7 @@
               const addressElement = document.getElementById("address");
               const postcodeElement = document.getElementById("postcode");
               const cityElement = document.getElementById("city");
-              const CountryElement = document.getElementById("Country");
+              const CountryElement = document.getElementById("country");
               const alternatePhoneElement =
                 document.getElementById("alternatePhone");
               const preferredDateElement =
@@ -1839,6 +1961,10 @@
                 },
                 onApprove: function (data, actions) {
                   return actions.order.capture().then(function (details) {
+                    sessionStorage.setItem(
+                      "receiptData",
+                      JSON.stringify(window.pendingFormData)
+                    );
                     window.location.href = `/payment-success?orderId=${data.orderID}&payerName=${details.payer.name.given_name}`;
                   });
                 },
@@ -1994,39 +2120,22 @@
                       amount: {
                         value: price,
                         currency_code: "GBP",
-                        breakdown: {
-                          item_total: {
-                            value: price,
-                            currency_code: "GBP",
-                          },
-                        },
                       },
-                      items: [
-                        {
-                          name: `Cleaning Service (${roomSize} rooms)`,
-                          description: `Professional cleaning for ${roomSize} rooms`,
-                          quantity: "1",
-                          unit_amount: {
-                            value: price,
-                            currency_code: "GBP",
-                          },
-                        },
-                      ],
                     },
                   ],
                 });
               },
               onApprove: function (data, actions) {
                 return actions.order.capture().then(function (details) {
-                  // Handle successful payment
                   alert(
                     "Transaction completed by " + details.payer.name.given_name
                   );
-                  // You can add your form submission logic here
+                  // Add any additional success handling here
                 });
               },
               onError: function (err) {
-                console.error("PayPal Error:", err);
+                console.error("PayPal error:", err);
+                // Handle errors here
               },
             });
 
@@ -2139,8 +2248,8 @@
                 ><i class="fas fa-envelope me-2"></i> info@wellclean.com</a
               >
 
-              <a href="tel:+447398538498"
-                ><i class="fas fa-phone me-2"></i> +44 7398 538498</a
+              <a href="tel:+441733964472"
+                ><i class="fas fa-phone me-2"></i> +441733964472</a
               >
               <a href="tel:+447427783539" class="mb-3"
                 ><i class="fab fa-whatsapp me-2"></i> +44 7427 783539</a
@@ -2345,52 +2454,126 @@
         function getBookingDetailsFromForm() {
           const serviceType =
             oneOffSection.style.display === "block" ? "one-off" : "regular";
-          const roomSize =
-            serviceType === "one-off"
-              ? oneOffRoomSizeEl?.value
-              : regularRoomSizeEl?.value;
 
-          const date =
-            serviceType === "one-off"
-              ? document.getElementById("oneOffDate")?.value
-              : document.getElementById("regularDate")?.value;
-
-          const time =
-            serviceType === "one-off"
-              ? document.getElementById("oneOffTime")?.value
-              : regularFrequencyEl?.value;
+          // Get common elements
+          const fullName = document.getElementById("fullName")?.value || "";
+          const email = document.getElementById("email")?.value || "";
+          const phone = document.getElementById("phone")?.value || "";
+          const alternatePhone =
+            document.getElementById("alternatePhone")?.value || "";
+          const address = document.getElementById("address")?.value || "";
+          const postcode = document.getElementById("postcode")?.value || "";
+          const city = document.getElementById("city")?.value || "";
+          const country = document.getElementById("country")?.value || "";
           const notes =
-            serviceType === "one-off"
-              ? document.getElementById("oneOffNotes")?.value
-              : document.getElementById("regularNotes")?.value;
+            document.getElementById(
+              serviceType === "one-off" ? "oneOffNotes" : "regularNotes"
+            )?.value || "";
 
-          const houseSize =
-            {
-              "1-2": "1-2 Rooms",
-              "3-4": "3-4 Rooms",
-              "5+": "5+ Rooms",
-            }[roomSize] || "Unknown";
+          if (serviceType === "one-off") {
+            // One-off specific fields
+            const roomSize =
+              document.getElementById("oneOffRoomSize")?.value || "";
+            const cleaningType =
+              document.getElementById("oneOffCleaningType")?.value || "";
+            const date = document.getElementById("oneOffDate")?.value || "";
+            const time = document.getElementById("oneOffTime")?.value || "";
 
-          const customerDetails = {
-            fullName: document.getElementById("fullName")?.value || "",
-            email: document.getElementById("email")?.value || "",
-            phone: document.getElementById("phone")?.value || "",
-            address: document.getElementById("address")?.value || "",
-            postcode: document.getElementById("postcode")?.value || "",
-            city: document.getElementById("city")?.value || "",
-            country: document.getElementById("Country")?.value || "",
-            preferredDate: date || "",
-            preferredTime: time || "",
-          };
+            const houseSize =
+              roomSize === "1-2"
+                ? "1-2 Rooms"
+                : roomSize === "3-4"
+                ? "3-4 Rooms"
+                : roomSize === "5+"
+                ? "5+ Rooms"
+                : "";
 
-          return {
-            ...customerDetails,
-            serviceType,
-            houseSize,
-            date,
-            time,
-            notes,
-          };
+            const cleaningTypeDisplay =
+              cleaningType === "Light"
+                ? "Light Clean"
+                : cleaningType === "Standard"
+                ? "Standard Clean"
+                : cleaningType === "Deep"
+                ? "Deep Clean"
+                : "";
+
+            return {
+              serviceType: "One-Off Cleaning",
+              cleaningType: cleaningTypeDisplay,
+              cleaningTypeLabel: cleaningType,
+              roomSize,
+              houseSize,
+              date,
+              time,
+              preferredDate: date,
+              preferredTime: time,
+              customerName: fullName,
+              fullName,
+              email,
+              phone,
+              alternatePhone,
+              alternatePhoneNumber: alternatePhone,
+              address,
+              streetAddress: address,
+              postcode,
+              zipCode: postcode,
+              city,
+              country,
+              notes,
+              specialInstructions: notes,
+              status: "pending",
+              timestamp: new Date().toISOString(),
+            };
+          } else {
+            // Regular cleaning specific fields
+            const roomSize =
+              document.getElementById("regularRoomSize")?.value || "";
+            const frequency =
+              document.getElementById("regularFrequency")?.value || "";
+            const date = document.getElementById("regularDate")?.value || "";
+
+            const houseSize =
+              roomSize === "1-2"
+                ? "1-2 Rooms"
+                : roomSize === "3-4"
+                ? "3-4 Rooms"
+                : roomSize === "5+"
+                ? "5+ Rooms"
+                : "";
+
+            const frequencyDisplay =
+              frequency === "weekly"
+                ? "Weekly/Bi-Weekly"
+                : frequency === "monthly"
+                ? "Monthly"
+                : "";
+
+            return {
+              serviceType: "Regular Cleaning",
+              frequency: frequencyDisplay,
+              frequencyValue: frequency,
+              roomSize,
+              houseSize,
+              date,
+              preferredDate: date,
+              customerName: fullName,
+              fullName,
+              email,
+              phone,
+              alternatePhone,
+              alternatePhoneNumber: alternatePhone,
+              address,
+              streetAddress: address,
+              postcode,
+              zipCode: postcode,
+              city,
+              country,
+              notes,
+              specialInstructions: notes,
+              status: "pending",
+              timestamp: new Date().toISOString(),
+            };
+          }
         }
 
         // Form submission handlers
@@ -2418,19 +2601,16 @@
               fullName: document.getElementById("fullName")?.value || "",
               email: document.getElementById("email")?.value || "",
               phone: document.getElementById("phone")?.value || "",
-              alternatePhone:
-                document.getElementById("alternatePhone")?.value || "",
               address: document.getElementById("address")?.value || "",
               postcode: document.getElementById("postcode")?.value || "",
               city: document.getElementById("city")?.value || "",
-              country:
-                document.querySelector('[name="country"]')?.value ||
-                document.getElementById("Country")?.value ||
-                "",
-              oneOffDate: document.getElementById("oneOffDate")?.value || "",
-              oneOffTime: document.getElementById("oneOffTime")?.value || "",
+              country: document.getElementById("Country")?.value || "",
+              preferredDate:
+                document.getElementById("preferredDate")?.value || "",
+              preferredTime:
+                document.getElementById("preferredTime")?.value || "",
               additionalNotes:
-                document.getElementById("oneOffNotes")?.value || "",
+                document.getElementById("regularNotes")?.value || "",
             };
 
             // console.log("Customer Details:", customerDetails);
@@ -2472,7 +2652,7 @@
           ${
             bookingData.serviceType === "Regular"
               ? `Frequency: ${bookingData.time}\n`
-              : `Preferred Time: ${bookingData.time}\n`
+              : `Preferred Time: ${bookingData.time}\nPreferred Time: ${bookingData.preferredTime}\n`
           }
 
           *Additional Notes:*
