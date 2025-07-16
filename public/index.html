@@ -126,6 +126,13 @@
         >
           <i class="fab fa-instagram"></i>
         </a>
+        <a
+          href="https://www.linkedin.com/company/well-clean"
+          class="social-btn linkedin"
+          target="_blank"
+        >
+          <i class="fab fa-linkedin-in"></i>
+        </a>
       </div>
 
       <!-- Carousel Start -->
@@ -1505,7 +1512,7 @@
               <h4 class="text-white my-4">Completed Projects</h4>
               <div class="counter-counting">
                 <span class="text-white fs-2 fw-bold" data-toggle="counter-up"
-                  >513</span
+                  >10</span
                 >
                 <span class="h1 fw-bold text-white">+</span>
               </div>
@@ -1522,7 +1529,7 @@
               <h4 class="text-white my-4">Employees</h4>
               <div class="counter-counting">
                 <span class="text-white fs-2 fw-bold" data-toggle="counter-up"
-                  >53</span
+                  >5</span
                 >
                 <span class="h1 fw-bold text-white">+</span>
               </div>
@@ -1539,7 +1546,7 @@
               <h4 class="text-white my-4">Years Experiance</h4>
               <div class="counter-counting">
                 <span class="text-white fs-2 fw-bold" data-toggle="counter-up"
-                  >17</span
+                  >15</span
                 >
                 <span class="h1 fw-bold text-white">+</span>
               </div>
@@ -1556,7 +1563,7 @@
               <h4 class="text-white my-4">Happy Clients</h4>
               <div class="counter-counting">
                 <span class="text-white fs-2 fw-bold" data-toggle="counter-up"
-                  >456</span
+                  >100</span
                 >
                 <span class="h1 fw-bold text-white">+</span>
               </div>
@@ -1771,7 +1778,16 @@
 
       window.addEventListener("resize", updateNavbarVisibility);
     </script>
-
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    if (window.location.hash === "#openEstimateModal") {
+      const modalTrigger = document.querySelector('[data-bs-target="#estimateModal"]');
+      if (modalTrigger) {
+        modalTrigger.click(); // Simulates a click on the "Enquire Now" button
+      }
+    }
+  });
+</script>
     <script src="js/main.js"></script>
     <script src="js/script.js"></script>
   </body>

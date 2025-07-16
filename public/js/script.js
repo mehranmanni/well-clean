@@ -235,13 +235,17 @@ document.addEventListener("DOMContentLoaded", function () {
 // Smooth scrolling for anchor links
 document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
   anchor.addEventListener("click", function (e) {
-    e.preventDefault();
-    const target = document.querySelector(this.getAttribute("href"));
-    if (target) {
-      target.scrollIntoView({
-        behavior: "smooth",
-        block: "start",
-      });
+    const href = this.getAttribute("href");
+    // Only prevent default and handle smooth scroll if href is not just '#'
+    if (href !== "#") {
+      e.preventDefault();
+      const target = document.querySelector(href);
+      if (target) {
+        target.scrollIntoView({
+          behavior: "smooth",
+          block: "start",
+        });
+      }
     }
   });
 });
@@ -295,92 +299,92 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 
-  // Pricing data
-  const priceData = {
-    "one-off": {
-      "1-2": { min: 40, max: 60 },
-      "3-4": { min: 80, max: 120 },
-      "5+": { min: 120, max: 180 },
-    },
-    regular: {
-      weekly: 13.5,
-      monthly: 15,
-    },
+  const oneOffPrices = {
+    "1-bed flat": { Light: 45, Standard: 55, Deep: 100 },
+    "2-bed, 1-bath": { Light: 60, Standard: 70, Deep: 120 },
+    "3-bed, 1-2 bath": { Light: 70, Standard: 85, Deep: 145 },
+    "4-bed, 2-bath": { Light: 90, Standard: 130, Deep: 180 },
+    "5-bed, 2-3 bath": { Light: 110, Standard: 150, Deep: 225 },
+    "6+ bedrooms / large homes": { Light: 130, Standard: 200, Deep: 275 },
+  };
+
+  const regularPrices = {
+    weekly: 13.5,
+    monthly: 15,
   };
 
   // Update price display
   function updatePrice() {
-    // Check if required elements exist
-    if (!oneOffSection || !regularSection) {
-      return; // Exit if sections don't exist
-    }
-
     const serviceType =
       oneOffSection.style.display === "block" ? "one-off" : "regular";
+
+    // Get selected values
+    const cleaningType =
+      serviceType === "one-off"
+        ? document.getElementById("oneOffCleaningType").value
+        : document.getElementById("regularCleaningType").value;
+
     const roomSize =
       serviceType === "one-off"
         ? document.getElementById("oneOffRoomSize").value
         : document.getElementById("regularRoomSize").value;
+
     const frequency = document.getElementById("regularFrequency").value;
 
-    // Update service type
+    // Update UI labels
     document.getElementById("serviceType").textContent =
       serviceType === "one-off" ? "One-Off Clean" : "Regular Cleaning";
 
-    // Update house size
     document.getElementById("houseSize").textContent = roomSize
-      ? `${roomSize} Rooms`
+      ? roomSize
       : "Select house size";
 
-    // Update frequency (only for regular)
+    // Hide or show frequency section
     if (serviceType === "regular") {
       document.getElementById("frequencySection").style.display = "block";
       document.getElementById("cleaningFrequency").textContent = frequency
-        ? frequency === "weekly"
-          ? "Weekly/Bi-Weekly"
-          : "Monthly"
+        ? frequency
         : "Select frequency";
     } else {
       document.getElementById("frequencySection").style.display = "none";
     }
 
-    // Calculate price
-    if (roomSize) {
-      if (serviceType === "one-off") {
-        const priceRange = priceData["one-off"][roomSize];
-        const price = (priceRange.min + priceRange.max) / 2;
-        document.getElementById("totalPrice").textContent = `£${price.toFixed(
-          2
-        )}`;
-        document.getElementById("basePrice").textContent = `£${price.toFixed(
-          2
-        )}`;
-        document.getElementById(
-          "priceRange"
-        ).textContent = `£${priceRange.min} - £${priceRange.max}`;
-
-        // Hide hourly rate and monthly rate sections
-        document.getElementById("hourlyRateSection").style.display = "none";
-        document.getElementById("monthlyRateSection").style.display = "none";
-      } else if (frequency) {
-        const rate = priceData["regular"][frequency];
-        document.getElementById("totalPrice").textContent = `£${rate.toFixed(
-          2
-        )}`;
-        document.getElementById("hourlyRate").textContent = `£${rate.toFixed(
-          2
-        )}`;
-        document.getElementById("priceRange").textContent =
-          frequency === "weekly"
-            ? `£13.50hr (with cleaning supplies provided) - £14.50`
-            : `£15 per hour`;
-
-        // Show hourly rate section, hide monthly rate
-        document.getElementById("hourlyRateSection").style.display = "block";
-        document.getElementById("monthlyRateSection").style.display = "none";
+    // Pricing logic
+    if (serviceType === "one-off") {
+      let price = 0;
+      if (roomSize && cleaningType) {
+        price = oneOffPrices?.[roomSize]?.[cleaningType] || 0;
       }
+
+      document.getElementById("totalPrice").textContent = `£${price.toFixed(
+        2
+      )}`;
+      document.getElementById("basePrice").textContent = `£${price.toFixed(2)}`;
+      document.getElementById("priceRange").textContent =
+        price > 0
+          ? `£${price.toFixed(2)}`
+          : "Select options to see price range";
+
+      // Hide regular sections
+      document.getElementById("hourlyRateSection").style.display = "none";
+      document.getElementById("monthlyRateSection").style.display = "none";
+    } else if (serviceType === "regular") {
+      // Regular cleaning logic
+      let rate = 0;
+      if (frequency === "weekly") rate = 13.5;
+      else if (frequency === "monthly") rate = 15;
+
+      document.getElementById("totalPrice").textContent = `£${rate.toFixed(2)}`;
+      document.getElementById("hourlyRate").textContent = `£${rate.toFixed(2)}`;
+      document.getElementById("priceRange").textContent =
+        frequency === "weekly"
+          ? `£13.50/hr (with cleaning supplies provided)`
+          : `£15.00/hr`;
+
+      document.getElementById("hourlyRateSection").style.display = "block";
+      document.getElementById("monthlyRateSection").style.display = "none";
     } else {
-      // Reset prices if no selection
+      // Default blank state
       document.getElementById("totalPrice").textContent = "£0.00";
       document.getElementById("serviceType").textContent =
         "Select a service type";
@@ -624,8 +628,10 @@ document.addEventListener("DOMContentLoaded", function () {
       });
   }
 
-  // Initial update
-  updatePrice();
+  // Initial update - only if elements exist
+  if (oneOffSection && regularSection) {
+    updatePrice();
+  }
 });
 
 const availabilityContainer = document.getElementById("availability-cards");

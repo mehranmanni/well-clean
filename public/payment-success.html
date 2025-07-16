@@ -228,447 +228,174 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
     <script>
-      // Get booking details from URL parameters
-      function getBookingDetails() {
+      document.addEventListener("DOMContentLoaded", () => {
+        /** Utilities **/
         const urlParams = new URLSearchParams(window.location.search);
-        const details = {};
+        const getParam = (name) => urlParams.get(name) || "";
 
-        // Common fields
-        details.serviceType = urlParams.get("serviceType") || "N/A";
+        /** 1️⃣ Collect ALL booking data from query string **/
+        const bookingDetails = {
+          serviceType: getParam("serviceType") || "N/A",
+          cleaningType: getParam("cleaningType") || "N/A",
+          houseSize: getParam("houseSize") || getParam("roomSize") || "N/A",
+          frequency: getParam("frequency") || "N/A",
+          preferredDate: getParam("preferredDate") || "N/A",
+          preferredTime: getParam("preferredTime") || "N/A",
+          totalPrice: getParam("totalPrice") || "£0.00",
+          name: getParam("name") || getParam("customerName") || "N/A",
+          email: getParam("email") || getParam("customerEmail") || "N/A",
+          phone: getParam("phone") || getParam("customerPhone") || "N/A",
+          alternatePhone: getParam("alternatePhone") || "N/A",
+          address: getParam("address") || "N/A",
+          city: getParam("city") || "N/A",
+          postcode: getParam("postcode") || "N/A",
+          country: getParam("country") || "N/A",
+          priceRange: getParam("priceRange") || "",
+        };
 
-        // Get cleaning type from URL parameters
-        details.cleaningType = urlParams.get("cleaningType") || "N/A";
-        details.cleaningTypeDisplay =
-          details.cleaningType === "Light"
-            ? "Light Clean"
-            : details.cleaningType === "Standard"
-            ? "Standard Clean"
-            : details.cleaningType === "Deep"
-            ? "Deep Clean"
-            : details.cleaningType;
-
-        // Get house size from URL parameters, with fallbacks
-        details.houseSize =
-          urlParams.get("houseSize") ||
-          urlParams.get("oneOffRoomSize") ||
-          urlParams.get("roomSize") ||
-          "N/A";
-
-        // Format house size if it's just the number of rooms
-        if (details.houseSize === "1-2") details.houseSize = "1-2 Rooms";
-        else if (details.houseSize === "3-4") details.houseSize = "3-4 Rooms";
-        else if (details.houseSize === "5+") details.houseSize = "5+ Rooms";
-
-        // Get other booking details
-        details.roomSize = urlParams.get("roomSize") || "N/A";
-        details.totalPrice = urlParams.get("totalPrice") || "£0.00";
-        details.name =
-          urlParams.get("name") || urlParams.get("customerName") || "N/A";
-        details.email =
-          urlParams.get("email") || urlParams.get("customerEmail") || "N/A";
-        details.phone =
-          urlParams.get("phone") || urlParams.get("customerPhone") || "N/A";
-        details.alternatePhone = urlParams.get("alternatePhone") || "N/A";
-        details.address = urlParams.get("address") || "N/A";
-        details.city = urlParams.get("city") || "N/A";
-        details.postcode = urlParams.get("postcode") || "N/A";
-        details.country = urlParams.get("country") || "N/A";
-
-        // Get date and time
-        details.date =
-          urlParams.get("date") || urlParams.get("preferredDate") || "N/A";
-        details.time =
-          urlParams.get("time") || urlParams.get("preferredTime") || "N/A";
-
-        return details;
-      }
-
-      // Format booking details for display
-      function formatBookingDetails(details) {
-        if (!details) return "";
-
-        // Format date for display
-        let formattedDate = "N/A";
-        if (details.date || details.serviceDate || details.preferredDate) {
-          const date =
-            details.date || details.serviceDate || details.preferredDate;
-          const dateObj = new Date(date);
-          if (!isNaN(dateObj)) {
-            formattedDate = dateObj.toLocaleDateString("en-GB", {
-              weekday: "long",
-              year: "numeric",
-              month: "long",
-              day: "numeric",
-            });
-          } else {
-            formattedDate = date;
-          }
-        }
-
-        // Format time for display
-        let formattedTime = "N/A";
-        if (details.time || details.serviceTime || details.preferredTime) {
-          const time =
-            details.time || details.serviceTime || details.preferredTime;
-          const timeMatch = time.match(/^([0-9]{1,2}):?([0-9]{2})?/);
-          if (timeMatch) {
-            let hours = parseInt(timeMatch[1]);
-            const minutes = timeMatch[2] ? ":" + timeMatch[2] : "";
-            const ampm = hours >= 12 ? "PM" : "AM";
-            hours = hours % 12;
-            hours = hours ? hours : 12;
-            formattedTime = hours + minutes + " " + ampm;
-          } else {
-            formattedTime = time;
-          }
-        }
-
-        // Get cleaning type with fallback
-        const cleaningType =
-          details.cleaningType ||
-          (details.cleaningTypeLabel
-            ? details.cleaningTypeLabel.charAt(0).toUpperCase() +
-              details.cleaningTypeLabel.slice(1) +
-              " Clean"
-            : "N/A");
-
-        // Get house size with fallback
-        const houseSize =
-          details.houseSize ||
-          (details.roomSize
-            ? `${details.roomSize} ${
-                details.roomSize.includes("+") ? "Rooms" : "Rooms"
-              }`
-            : "N/A");
-
-        // Service Information Section
-        let serviceInfo = `
-                <div class="section-header">Service Information</div>
-               <div class="detail-item">
-              <div class="detail-label">Service Type:</div>
-             <div class="detail-value">${details.serviceType || "N/A"}</div>
-         </div>
-          <div class="detail-item">
-            <div class="detail-label">House Size:</div>
-            <div class="detail-value">${houseSize || "N/A"}</div>
-    
-                 </div>`;
-
-        // Add frequency only for regular cleaning
-        if (details.frequency && details.frequency !== "N/A") {
-          serviceInfo += `
-            <div class="detail-item">
-              <div class="detail-label">Cleaning Frequency:</div>
-              <div class="detail-value">${details.frequency}</div>
-            </div>`;
-        }
-
-        // Add date and time
-        // serviceInfo += `
-        // <div class="detail-item">
-        //     <div class="detail-label">Cleaning Type:</div>
-        //     <div class="detail-value">${
-        //       details.cleaningTypeDisplay || "N/A"
-        //     }</div>
-        //   </div>
-        //   <div class="detail-item">
-        //     <div class="detail-label">Scheduled Date:</div>
-        //     <div class="detail-value">${formattedDate}</div>
-        //   </div>
-        //   <div class="detail-item">
-        //     <div class="detail-label">Scheduled Time:</div>
-        //     <div class="detail-value">${formattedTime}</div>
-        //   </div>
-        // `;
-
-        // Customer Information Section
-        const customerInfo = `
-          <div class="section-header">Customer Information</div>
-          <div class="detail-item">
-            <div class="detail-label">Name:</div>
-            <div class="detail-value">${
-              details.customerName || details.fullName || details.name || "N/A"
-            }</div>
-          </div>
-          <div class="detail-item">
-            <div class="detail-label">Email:</div>
-            <div class="detail-value">${
-              details.email || details.customerEmail || "N/A"
-            }</div>
-          </div>
-          <div class="detail-item">
-            <div class="detail-label">Phone:</div>
-            <div class="detail-value">${
-              details.phone || details.customerPhone || "N/A"
-            }</div>
-          </div>
-          <div class="detail-item">
-            <div class="detail-label">Alternate Phone:</div>
-            <div class="detail-value">${
-              details.alternatePhone || details.alternatePhoneNumber || "N/A"
-            }</div>
-          </div>
-        `;
-
-        // Address Information Section
-        const addressInfo = `
-          <div class="section-header">Service Address</div>
-          <div class="detail-item">
-            <div class="detail-label">Address:</div>
-            <div class="detail-value">${
-              details.address || details.streetAddress || "N/A"
-            }</div>
-          </div>
-          <div class="detail-item">
-            <div class="detail-label">City:</div>
-            <div class="detail-value">${details.city || "N/A"}</div>
-          </div>
-          <div class="detail-item">
-            <div class="detail-label">Postcode:</div>
-            <div class="detail-value">${
-              details.postcode || details.zipCode || "N/A"
-            }</div>
-          </div>
-          <div class="detail-item">
-            <div class="detail-label">Country:</div>
-            <div class="detail-value">${details.country || "N/A"}</div>
-          </div>
-        `;
-
-        // Special Instructions Section
-        //        const specialInstructions = `
-        //   <div class="section-header">Special Instructions</div>
-        //   <div class="detail-item">
-        //     <div class="detail-value">${
-        //       details.oneOffNotes ||
-        //       details.notes ||
-        //       "No special instructions provided"
-        //     }</div>
-        //   </div>
-        // `;
-
-        // Payment Information Section
-        const paymentInfo = `
-          <div class="section-header">Payment Information</div>
-          <div class="detail-item">
-            <div class="detail-label">Total Amount:</div>
-            <div class="detail-value">${
-              details.totalPrice || details.amount || "£0.00"
-            }</div>
-          </div>
-          <div class="detail-item">
-            <div class="detail-label">Payment Status:</div>
-            <div class="detail-value text-success">${
-              details.paymentStatus || "Paid"
-            }</div>
-          </div>
-        `;
-
-        // Combine all sections
-        return (
-          serviceInfo +
-          customerInfo +
-          addressInfo +
-          // specialInstructions +
-          paymentInfo
-        );
-      }
-
-      // Generate WhatsApp message
-      function generateWhatsAppMessage(details) {
-        if (!details) return "";
-
-        const isRegular = details.serviceType === "Regular Cleaning";
-
-        let message = `*New Booking*
-
-                 *Service Information*
-                  Service Type: ${details.serviceType || "N/A"}
-                    House Size: ${
-                      details.houseSize || details.roomSize || "N/A"
-                    }
-           ${isRegular ? `Frequency: ${details.frequency || "N/A"}\n` : ""}
-             Amount Paid: ${details.totalPrice || "N/A"}
-
-            *Customer Details*
-             Name: ${details.name || details.customerName || "N/A"}
-               Email: ${details.email || details.customerEmail || "N/A"}
-          Phone: ${details.phone || details.customerPhone || "N/A"}
-                   ${
-                     details.alternatePhone
-                       ? `Alternative Phone: ${details.alternatePhone}\n`
-                       : ""
-                   }
-
-                *Service Schedule*
-                ${
-                  details.date || details.serviceDate
-                    ? `Date: ${details.date || details.serviceDate}\n`
-                    : ""
-                }
-                  ${
-                    details.time || details.serviceTime
-                      ? `Time: ${details.time || details.serviceTime}\n`
-                      : ""
-                  }
-
-          *Service Address*
-            Address: ${details.address || "N/A"}
-          City: ${details.city || "N/A"}
-           Postcode: ${details.postcode || "N/A"}
-                  Country: ${details.country || "N/A"}
-
-
-
-           *Payment Status*
-                  Paid Successfully
-
-              Thank you for booking with Well Clean!`;
-
-        return message;
-      }
-
-      // Function to create receipt content
-      function createReceiptContent() {
-        const bookingData = JSON.parse(sessionStorage.getItem("receiptData"));
-        const container = document.getElementById("receiptContainer");
-
-        // Create receipt HTML
-        container.innerHTML = `
-          <div class="success-container">
-            <div class="text-center mb-4">
-              <div class="d-flex justify-content-center align-items-center mb-3">
-                <img src="img/testing-logo-2.png" alt="Well Clean Logo" class="img-fluid me-3" style="max-height: 60px">
-                <div class="success-icon" style="font-size: 40px; margin: 0; color: #28a745;">
-                  <i class="fas fa-check-circle"></i>
-                </div>
-              </div>
-              <h2 class="mb-3">Payment Successful!</h2>
-              <p class="lead">Thank you for booking with Well Clean.</p>
-            </div>
-            <div class="payment-confirmed">
-              <i class="fas fa-check-circle me-2"></i> Payment Confirmed
-            </div>
-            <div class="booking-details-container">
-              <div id="receiptDetails"></div>
-            </div>
-          </div>
-        `;
-
-        // Format and add booking details
-        const receiptDetails = document.getElementById("receiptDetails");
-        const formattedDetails = formatBookingDetails(bookingData);
-
-        if (formattedDetails.length > 0) {
-          receiptDetails.innerHTML = formattedDetails;
-        }
-
-        return container;
-      }
-
-      // Function to capture and download div as PNG
-      async function downloadReceipt() {
-        try {
-          const receiptElement = createReceiptContent();
-
-          // Wait for images to load
-          const images = receiptElement.getElementsByTagName("img");
-          await Promise.all(
-            Array.from(images).map((img) => {
-              if (img.complete) return Promise.resolve();
-              return new Promise((resolve) => {
-                img.onload = resolve;
-                img.onerror = resolve; // Continue even if image fails to load
+        /** 2️⃣ Format date nicely **/
+        const formatDate = (dateString) => {
+          if (!dateString || dateString === "N/A") return "N/A";
+          const d = new Date(dateString);
+          return isNaN(d)
+            ? dateString
+            : d.toLocaleDateString("en-GB", {
+                weekday: "long",
+                year: "numeric",
+                month: "long",
+                day: "numeric",
               });
-            })
-          );
+        };
 
-          // Capture with higher quality settings
-          const canvas = await html2canvas(receiptElement, {
-            scale: 3, // Increased scale for better quality
-            logging: false,
-            useCORS: true,
-            allowTaint: true,
-            backgroundColor: "#ffffff",
-            scrollX: 0,
-            scrollY: 0,
-            windowWidth: document.documentElement.offsetWidth,
-            windowHeight: document.documentElement.offsetHeight,
-          });
+        /** 3️⃣ Format time nicely **/
+        const formatTime = (timeString) => {
+          if (!timeString || timeString === "N/A") return "N/A";
+          const match = timeString.match(/^(\d{1,2}):?(\d{2})?$/);
+          if (!match) return timeString;
+          let hours = parseInt(match[1], 10);
+          const minutes = match[2] ? ":" + match[2] : ":00";
+          const ampm = hours >= 12 ? "PM" : "AM";
+          hours = hours % 12 || 12;
+          return `${hours}${minutes} ${ampm}`;
+        };
 
-          // Create and trigger download
-          const link = document.createElement("a");
-          link.download = `WellClean_Receipt_${
-            getBookingDetails().bookingId || "new"
-          }_${new Date().toISOString().slice(0, 10)}.png`;
-          link.href = canvas.toDataURL("image/png", 1.0); // Maximum quality
-          link.click();
-        } catch (error) {
-          console.error("Error generating receipt:", error);
-          alert("Error generating receipt. Please try again.");
+        /** 4️⃣ Determine Display Price **/
+        let displayPrice =
+          bookingDetails.priceRange || bookingDetails.totalPrice;
+        if (displayPrice === "£0.00" && getParam("amount")) {
+          displayPrice = `£${(parseFloat(getParam("amount")) / 100).toFixed(
+            2
+          )}`;
         }
-      }
 
-      document.addEventListener("DOMContentLoaded", function () {
-        // Load booking details
-        const details = getBookingDetails();
-        document.getElementById("bookingDetails").innerHTML =
-          formatBookingDetails(details);
+        /** 5️⃣ Build the HTML to insert **/
+        const detailsHTML = `
+    <div class="section-header">Service Information</div>
+    <div class="detail-item">
+      <div class="detail-label">Service Type:</div>
+      <div class="detail-value">${bookingDetails.serviceType}</div>
+    </div>
+    <div class="detail-item">
+      <div class="detail-label">House Size:</div>
+      <div class="detail-value">${bookingDetails.houseSize}</div>
+    </div>
+    <div class="detail-item">
+      <div class="detail-label">Preferred Date:</div>
+      <div class="detail-value">${formatDate(
+        bookingDetails.preferredDate
+      )}</div>
+    </div>
+    <div class="detail-item">
+      <div class="detail-label">Preferred Time:</div>
+      <div class="detail-value">${formatTime(
+        bookingDetails.preferredTime
+      )}</div>
+    </div>
+    ${
+      bookingDetails.frequency !== "N/A" && bookingDetails.frequency
+        ? `<div class="detail-item">
+            <div class="detail-label">Cleaning Frequency:</div>
+            <div class="detail-value">${bookingDetails.frequency}</div>
+          </div>`
+        : ""
+    }
 
-        // Store details in sessionStorage (for receipt generation)
-        sessionStorage.setItem("receiptData", JSON.stringify(details));
+    <div class="section-header">Customer Information</div>
+    <div class="detail-item">
+      <div class="detail-label">Name:</div>
+      <div class="detail-value">${bookingDetails.name}</div>
+    </div>
+    <div class="detail-item">
+      <div class="detail-label">Email:</div>
+      <div class="detail-value">${bookingDetails.email}</div>
+    </div>
+    <div class="detail-item">
+      <div class="detail-label">Phone:</div>
+      <div class="detail-value">${bookingDetails.phone}</div>
+    </div>
+    <div class="detail-item">
+      <div class="detail-label">Alternate Phone:</div>
+      <div class="detail-value">${bookingDetails.alternatePhone}</div>
+    </div>
 
-        // WHATSAPP BUTTON
-        document
-          .getElementById("whatsappBtn")
-          .addEventListener("click", function (e) {
-            e.preventDefault();
-            const message = encodeURIComponent(
-              generateWhatsAppMessage(details)
-            );
-            const whatsappURL = `https://wa.me/+447398538498?text=${message}`;
-            window.open(whatsappURL, "_blank");
-          });
+    <div class="section-header">Service Address</div>
+    <div class="detail-item">
+      <div class="detail-label">Address:</div>
+      <div class="detail-value">${bookingDetails.address}</div>
+    </div>
+    <div class="detail-item">
+      <div class="detail-label">City:</div>
+      <div class="detail-value">${bookingDetails.city}</div>
+    </div>
+    <div class="detail-item">
+      <div class="detail-label">Postcode:</div>
+      <div class="detail-value">${bookingDetails.postcode}</div>
+    </div>
+    <div class="detail-item">
+      <div class="detail-label">Country:</div>
+      <div class="detail-value">${bookingDetails.country}</div>
+    </div>
 
-        // DOWNLOAD BUTTON
-        document
-          .getElementById("downloadBtn")
-          .addEventListener("click", function (e) {
-            e.preventDefault();
-            // Create receipt content
-            const receiptContainer =
-              document.getElementById("receiptContainer");
-            const receiptData = JSON.parse(
-              sessionStorage.getItem("receiptData")
-            );
-            receiptContainer.innerHTML = `
-        <div class="success-container">
-          <div class="text-center mb-4">
-            <div class="d-flex justify-content-center align-items-center mb-3">
-              <img src="img/testing-logo-2.png" alt="Well Clean Logo" class="img-fluid me-3" style="max-height: 60px">
-              <div class="success-icon" style="font-size: 40px; margin: 0; color: #28a745;">
-                <i class="fas fa-check-circle"></i>
-              </div>
-            </div>
-            <h2 class="mb-3">Payment Successful!</h2>
-            <p class="lead">Thank you for booking with Well Clean.</p>
-          </div>
-          <div class="payment-confirmed">
-            <i class="fas fa-check-circle me-2"></i> Payment Confirmed
-          </div>
-          <div class="booking-details-container">
-            ${formatBookingDetails(receiptData)}
-          </div>
-        </div>
-      `;
+    <div class="section-header">Payment Information</div>
+    <div class="detail-item">
+      <div class="detail-label">Total Amount:</div>
+      <div class="detail-value">${displayPrice}</div>
+    </div>
+    <div class="detail-item">
+      <div class="detail-label">Payment Status:</div>
+      <div class="detail-value text-success">Paid</div>
+    </div>
+  `;
 
-            html2canvas(receiptContainer).then((canvas) => {
-              const link = document.createElement("a");
-              link.download = "WellClean-Receipt.png";
-              link.href = canvas.toDataURL();
-              link.click();
-            });
-          });
+        /** 6️⃣ Inject the HTML into the page **/
+        document.getElementById("bookingDetails").innerHTML = detailsHTML;
+
+        /** 7️⃣ WhatsApp Link **/
+        const whatsappBtn = document.getElementById("whatsappBtn");
+        if (whatsappBtn) {
+          const message = encodeURIComponent(
+            `*New Booking*
+*Service Type:* ${bookingDetails.serviceType}
+*House Size:* ${bookingDetails.houseSize}
+*Preferred Date:* ${formatDate(bookingDetails.preferredDate)}
+*Preferred Time:* ${formatTime(bookingDetails.preferredTime)}
+*Amount Paid:* ${displayPrice}
+
+*Customer Details*
+Name: ${bookingDetails.name}
+Email: ${bookingDetails.email}
+Phone: ${bookingDetails.phone}
+Alternate Phone: ${bookingDetails.alternatePhone}
+
+*Address*
+${bookingDetails.address}
+${bookingDetails.city}, ${bookingDetails.postcode}
+${bookingDetails.country}
+
+Thank you for booking with Well Clean!`
+          );
+          whatsappBtn.href = `https://wa.me/+447398538498?text=${message}`;
+        }
       });
     </script>
   </body>

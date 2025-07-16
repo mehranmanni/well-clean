@@ -482,9 +482,6 @@ h6 {
   }
 } */
 
-.modal .modal-header {
-  height: 100px;
-}
 
 #searchModal .modal-content {
   background: rgba(255, 255, 255, 0.6);
@@ -779,7 +776,9 @@ h6 {
 .instagram {
   background: #e4405f;
 } /* Instagram Pink */
-
+.linkedin {
+  background: #0077b6;
+} /* LinkedIn Blue */
 /* Style for modal input fields */
 .modal-content {
   border-radius: 10px;
@@ -1548,6 +1547,73 @@ input[type="file"] {
   to {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+/* Overall modal */
+.custom-clean-type-modal .modal-content.clean-type-modal-content {
+  border-radius: 150px;
+  padding: 0;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+}
+.modal-title {
+  flex: 1;
+  text-align: center;
+  font-size: 1.5rem;
+  color: white;
+}
+
+/* Modal header */
+.clean-type-modal-header {
+  background-color: #19409A;
+  color: white;
+  border-top-left-radius: 150px;
+  border-top-right-radius: 150px;
+  padding: 20px 30px;
+}
+
+/* Modal body */
+.clean-type-modal-body {
+  padding: 50px 65px;
+  font-size: 1rem;
+  color: #333;
+  line-height: 1.7;
+  background-color: #f9f9f9;
+}
+
+/* Headings in the body content */
+.clean-type-modal-body h4 {
+  color: #19409A;
+  margin-top: 20px;
+  margin-bottom: 10px;
+  font-weight: 600;
+}
+
+/* Paragraphs in the body */
+.clean-type-modal-body p {
+  margin-bottom: 15px;
+}
+
+/* Bullet points or lists */
+.clean-type-modal-body ul {
+  padding-left: 20px;
+  margin-bottom: 15px;
+}
+
+.clean-type-modal-body li {
+  margin-bottom: 8px;
+}
+
+/* Responsive adjustments */
+@media (min-width: 768px) {
+  .custom-clean-type-modal {
+    max-width: 900px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .custom-clean-type-modal {
+    max-width: 1000px;
   }
 }
 

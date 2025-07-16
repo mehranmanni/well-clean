@@ -84,6 +84,13 @@
       >
         <i class="fab fa-instagram"></i>
       </a>
+      <a
+        href="https://www.linkedin.com/company/well-clean"
+        class="social-btn linkedin"
+        target="_blank"
+      >
+        <i class="fab fa-linkedin-in"></i>
+      </a>
     </div>
     <!-- Navbar & Hero Start -->
     <div class="container-fluid position-relative p-0">
@@ -139,12 +146,6 @@
     </div>
     <!-- Navbar & Hero End -->
 
-    <!-- Add this JavaScript -->
-    <script>
-      document.addEventListener("DOMContentLoaded", function () {
-        // No additional JavaScript needed
-      });
-    </script>
     <!-- Availability Section -->
     <!-- <div class="container-fluid cleaning-services-section">
       <div class="container">
@@ -228,15 +229,24 @@
                             >Size of House *</label
                           >
                           <select
-                            class="form-select"
                             id="oneOffRoomSize"
+                            class="form-select"
                             name="oneOffRoomSize"
                             required
                           >
                             <option value="">Select size</option>
-                            <option value="1-2">1-2 Rooms</option>
-                            <option value="3-4">3-4 Rooms</option>
-                            <option value="5+">5+ Rooms</option>
+                            <option value="1-bed flat">1-bed flat</option>
+                            <option value="2-bed, 1-bath">2-bed, 1-bath</option>
+                            <option value="3-bed, 1-2 bath">
+                              3-bed, 1-2 bath
+                            </option>
+                            <option value="4-bed, 2-bath">4-bed, 2-bath</option>
+                            <option value="5-bed, 2-3 bath">
+                              5-bed, 2-3 bath
+                            </option>
+                            <option value="6+ bedrooms / large homes">
+                              6+ bedrooms / large homes
+                            </option>
                           </select>
                         </div>
                         <div class="mb-4">
@@ -421,19 +431,7 @@
                             <option value="5+">5+ Rooms</option>
                           </select>
                         </div>
-                        <div class="mb-4">
-                          Type of Clean
-                          <select
-                            class="form-select mb-4"
-                            id="regularCleaningType"
-                            required
-                          >
-                            <option value="">Select type of clean</option>
-                            <option value="Light">Light Clean</option>
-                            <option value="Standard">Standard Clean</option>
-                            <option value="Deep">Deep Clean</option>
-                          </select>
-                        </div>
+
                         <div class="mb-4">
                           <label for="regularFrequency" class="form-label"
                             >Cleaning Frequency *</label
@@ -611,6 +609,10 @@
                           <h6 class="mb-1">House Size</h6>
                           <p id="houseSize">Select house size</p>
                         </div>
+                        <div class="mb-2">
+                          <h6 class="mb-1">Cleaning Type</h6>
+                          <p id="cleaningType">Select cleaning type</p>
+                        </div>
                         <div
                           class="mb-2"
                           id="frequencySection"
@@ -653,6 +655,9 @@
                     </div>
                   </div>
                 </div>
+                <a href="#" id="cleanTypeLink"
+                  >Click here for clean type details</a
+                >
               </div>
             </div>
           </div>
@@ -823,16 +828,13 @@
         const regularSection = document.getElementById("regularSection");
 
         // Pricing data
-        const priceData = {
-          "one-off": {
-            "1-2": { min: 40, max: 60, paypal: 50 },
-            "3-4": { min: 80, max: 120, paypal: 100 },
-            "5+": { min: 120, max: 180, paypal: 150 },
-          },
-          regular: {
-            weekly: 13.5,
-            monthly: 15,
-          },
+        const oneOffPrices = {
+          "1-bed flat": { Light: 45, Standard: 55, Deep: 100 },
+          "2-bed, 1-bath": { Light: 60, Standard: 70, Deep: 120 },
+          "3-bed, 1-2 bath": { Light: 70, Standard: 85, Deep: 145 },
+          "4-bed, 2-bath": { Light: 90, Standard: 130, Deep: 180 },
+          "5-bed, 2-3 bath": { Light: 110, Standard: 150, Deep: 225 },
+          "6+ bedrooms / large homes": { Light: 130, Standard: 200, Deep: 275 },
         };
 
         // Update price display
@@ -896,19 +898,19 @@
 
           if (roomSize) {
             if (serviceType === "one-off") {
-              const priceRange = priceData["one-off"][roomSize];
-              const price = (priceRange.min + priceRange.max) / 2;
+              const price = oneOffPrices[roomSize]?.[cleaningType] || 0;
               document.getElementById(
                 "totalPrice"
               ).textContent = `£${price.toFixed(2)}`;
               document.getElementById(
                 "basePrice"
               ).textContent = `£${price.toFixed(2)}`;
-              document.getElementById(
-                "priceRange"
-              ).textContent = `£${priceRange.min} - £${priceRange.max}`;
+              document.getElementById("priceRange").textContent =
+                price > 0
+                  ? `£${price.toFixed(2)}`
+                  : "Select options to see price";
 
-              // Hide hourly rate and monthly rate sections
+              // Hide hourly/monthly sections
               document.getElementById("hourlyRateSection").style.display =
                 "none";
               document.getElementById("monthlyRateSection").style.display =
@@ -1556,8 +1558,8 @@
                       {
                         amount: {
                           value: amount.toFixed(2),
+                          currency_code: "GBP",
                         },
-                        description: `${serviceType} - ${houseSize}`,
                       },
                     ],
                   });
@@ -1599,9 +1601,50 @@
                 "1-2";
 
               // Set the price based on the number of rooms (in pence for Stripe)
-              let amount = 5000; // £50.00 in pence (1-2 rooms)
-              if (roomSize === "3-4") {
-                amount = 10000; // £100.00 in pence
+              let amount = 0;
+              const serviceType =
+                document.getElementById("serviceType").textContent;
+              const cleaningType =
+                document.getElementById("cleaningType").textContent;
+              console.log("Starting amount calculation:", {
+                serviceType,
+                cleaningType,
+              });
+
+              if (serviceType === "One-Off Cleaning") {
+                console.log("Processing One-Off Cleaning");
+                if (!roomSize || !cleaningType) {
+                  console.error("Missing roomSize or cleaningType");
+                  alert(
+                    "Please select both house size and cleaning type before proceeding."
+                  );
+                  if (button) {
+                    button.innerHTML = originalText;
+                    button.disabled = false;
+                  }
+                  return;
+                }
+
+                console.log("Selected room size:", roomSize);
+                console.log("Selected cleaning type:", cleaningType);
+
+                const cleanPrice = oneOffPrices[roomSize]?.[cleaningType];
+                console.log("Clean price from oneOffPrices:", cleanPrice);
+
+                if (!cleanPrice || cleanPrice < 0.5) {
+                  console.error("Invalid clean price:", cleanPrice);
+                  alert(
+                    "The selected combination does not have a valid price. Please check your selections."
+                  );
+                  if (button) {
+                    button.innerHTML = originalText;
+                    button.disabled = false;
+                  }
+                  return;
+                }
+
+                amount = Math.round(cleanPrice * 100);
+                console.log("Final calculated amount (in pence):", amount);
               } else if (roomSize === "5+") {
                 amount = 15000; // £150.00 in pence
               }
@@ -1612,9 +1655,6 @@
                 priceElement.textContent = `£${(amount / 100).toFixed(2)}`;
               }
 
-              // Rest of your existing code...
-              const serviceType =
-                document.getElementById("serviceType").textContent;
               const isOneOff = serviceType === "One-Off";
 
               // Get common form elements
@@ -1648,7 +1688,7 @@
                 serviceType: serviceType,
                 houseSize: document.getElementById("houseSize").textContent,
                 priceRange: document.getElementById("priceRange").textContent,
-                totalPrice: `£${(amount / 100).toFixed(2)}`,
+                totalPrice: `£${amount.toFixed(2)}`,
                 customerName:
                   document.querySelector('[name="fullName"]')?.value || "",
                 customerEmail: emailElement ? emailElement.value : "",
@@ -1707,15 +1747,30 @@
               if (oneOffDate) urlParams.set("oneOffDate", oneOffDate);
               if (oneOffTime) urlParams.set("oneOffTime", oneOffTime);
 
+              console.log("Raw amount from form:", amount);
+              console.log(
+                "Converted amount to pence:",
+                Math.round(parseFloat(amount) * 100)
+              );
+
+              // Extract numeric value from priceRange (e.g., "£130.00" -> 13000 pence)
+              const priceInPounds = parseFloat(
+                bookingDetails.priceRange.replace(/[^0-9.]/g, "")
+              );
+              const amountInPence = Math.round(priceInPounds * 100);
+
+              console.log("Price from priceRange:", bookingDetails.priceRange);
+              console.log("Amount in pence:", amountInPence);
+
               // Create payment intent data with success URL containing all parameters
               const paymentIntentData = {
-                amount: amount, // Use the calculated amount in pence
+                amount: amountInPence, // Use the converted price from priceRange
                 currency: "gbp",
                 metadata: {
                   serviceType: bookingDetails.serviceType,
                   houseSize: bookingDetails.houseSize,
                   priceRange: bookingDetails.priceRange,
-                  totalPrice: `£${(amount / 100).toFixed(2)}`,
+                  totalPrice: bookingDetails.priceRange, // Use the original priceRange value
                   customerName: bookingDetails.customerName || "",
                   customerEmail: bookingDetails.customerEmail || "",
                   customerPhone: bookingDetails.customerPhone || "",
@@ -1735,6 +1790,13 @@
                 }/payment-success.html?${urlParams.toString()}`,
                 cancel_url: `${window.location.origin}/pricing.html`,
               };
+
+              console.log("Payment intent data being sent:", {
+                ...paymentIntentData,
+                amount: `£${(paymentIntentData.amount / 100).toFixed(2)} (${
+                  paymentIntentData.amount
+                } pence)`,
+              });
 
               // Create a payment intent on your server
               const response = await fetch("/create-payment-intent", {
@@ -1794,7 +1856,7 @@
                 </div>
                 <div style="display: flex; justify-content: space-between; margin-top: 10px; padding-top: 10px; border-top: 1px dashed #eee;">
                   <span style="font-weight: bold;">Total Amount:</span>
-                  <span style="font-weight: bold; font-size: 1.2em;">${bookingDetails.totalPrice}</span>
+                  <span style="font-weight: bold; font-size: 1.2em;">${bookingDetails.priceRange}</span>
                 </div>
               </div>
             `;
@@ -1986,6 +2048,7 @@
       }
     </script>
 
+    <!-- Add this CSS to your existing styles -->
     <style>
       .payment-option {
         transition: transform 0.2s, box-shadow 0.2s;
@@ -2319,68 +2382,77 @@
           bookingModal = new bootstrap.Modal(bookingModalEl);
         }
 
-        const priceData = {
-          "one-off": {
-            "1-2": { min: 40, max: 60, paypal: 50 },
-            "3-4": { min: 80, max: 120, paypal: 100 },
-            "5+": { min: 120, max: 180, paypal: 150 },
-          },
-          regular: {
-            weekly: 13.5,
-            monthly: 15,
-          },
+        const oneOffPrices = {
+          "1-bed flat": { Light: 45, Standard: 55, Deep: 100 },
+          "2-bed, 1-bath": { Light: 60, Standard: 70, Deep: 120 },
+          "3-bed, 1-2 bath": { Light: 70, Standard: 85, Deep: 145 },
+          "4-bed, 2-bath": { Light: 90, Standard: 130, Deep: 180 },
+          "5-bed, 2-3 bath": { Light: 110, Standard: 150, Deep: 225 },
+          "6+ bedrooms / large homes": { Light: 130, Standard: 200, Deep: 275 },
         };
 
         function updatePrice() {
           const serviceType =
-            oneOffSection && oneOffSection.style.display === "block"
-              ? "one-off"
-              : "regular";
+            oneOffSection.style.display === "block" ? "one-off" : "regular";
+
+          const cleaningType =
+            serviceType === "one-off"
+              ? document.getElementById("oneOffCleaningType").value
+              : document.getElementById("regularCleaningType").value;
 
           const roomSize =
             serviceType === "one-off"
-              ? oneOffRoomSizeEl?.value
-              : regularRoomSizeEl?.value;
-          const frequency = regularFrequencyEl?.value;
+              ? document.getElementById("oneOffRoomSize").value
+              : document.getElementById("regularRoomSize").value;
 
+          const frequency = document.getElementById("regularFrequency")?.value;
+
+          // Update service type
           document.getElementById("serviceType").textContent =
             serviceType === "one-off" ? "One-Off Clean" : "Regular Cleaning";
 
-          const houseSizeElement = document.getElementById("houseSize");
-          if (houseSizeElement) {
-            houseSizeElement.textContent = roomSize
-              ? `${roomSize} Rooms`
-              : "Select house size";
-          } else {
-            console.error("Element with ID 'houseSize' not found in the DOM");
-          }
+          // Update house size
+          document.getElementById("houseSize").textContent = roomSize
+            ? roomSize
+            : "Select house size";
 
+          // Update cleaning type
+          document.getElementById("cleaningType").textContent = cleaningType
+            ? cleaningType === "Light"
+              ? "Light Clean"
+              : cleaningType === "Standard"
+              ? "Standard Clean"
+              : "Deep Clean"
+            : "Select cleaning type";
+
+          // Show/hide frequency section
+          const frequencySection = document.getElementById("frequencySection");
           if (serviceType === "regular") {
-            document.getElementById("frequencySection").style.display = "block";
+            frequencySection.style.display = "block";
             document.getElementById("cleaningFrequency").textContent = frequency
               ? frequency === "weekly"
                 ? "Weekly/Bi-Weekly"
                 : "Monthly"
               : "Select frequency";
           } else {
-            document.getElementById("frequencySection").style.display = "none";
+            frequencySection.style.display = "none";
           }
 
           if (roomSize) {
             if (serviceType === "one-off") {
-              const priceRange = priceData["one-off"][roomSize];
-              const price = (priceRange.min + priceRange.max) / 2;
+              const price = oneOffPrices[roomSize]?.[cleaningType] || 0;
               document.getElementById(
                 "totalPrice"
               ).textContent = `£${price.toFixed(2)}`;
               document.getElementById(
                 "basePrice"
               ).textContent = `£${price.toFixed(2)}`;
-              document.getElementById(
-                "priceRange"
-              ).textContent = `£${priceRange.min} - £${priceRange.max}`;
+              document.getElementById("priceRange").textContent =
+                price > 0
+                  ? `£${price.toFixed(2)}`
+                  : "Select options to see price";
 
-              // Hide hourly rate and monthly rate sections
+              // Hide hourly/monthly sections
               document.getElementById("hourlyRateSection").style.display =
                 "none";
               document.getElementById("monthlyRateSection").style.display =
@@ -2395,7 +2467,7 @@
               ).textContent = `£${rate.toFixed(2)}`;
               document.getElementById("priceRange").textContent =
                 frequency === "weekly"
-                  ? `£13.50hr (with cleaning supplies provided) - £14.50`
+                  ? `£13.50hr (with cleaning supplies provided)`
                   : `£15 per hour`;
 
               // Show hourly rate section, hide monthly rate
@@ -2444,16 +2516,22 @@
           });
         }
 
-        if (oneOffRoomSizeEl)
-          oneOffRoomSizeEl.addEventListener("change", updatePrice);
-        if (regularRoomSizeEl)
-          regularRoomSizeEl.addEventListener("change", updatePrice);
-        if (regularFrequencyEl)
-          regularFrequencyEl.addEventListener("change", updatePrice);
+        [
+          "oneOffRoomSize",
+          "regularRoomSize",
+          "regularFrequency",
+          "oneOffCleaningType",
+          "regularCleaningType",
+        ].forEach((id) => {
+          const el = document.getElementById(id);
+          if (el) el.addEventListener("change", updatePrice);
+        });
 
         function getBookingDetailsFromForm() {
           const serviceType =
-            oneOffSection.style.display === "block" ? "one-off" : "regular";
+            document.getElementById("oneOffSection").style.display === "block"
+              ? "one-off"
+              : "regular";
 
           // Get common elements
           const fullName = document.getElementById("fullName")?.value || "";
@@ -2633,19 +2711,19 @@
             // Send booking data
             const whatsappMessage = `
           *New Booking Request*
-
+          
           *Customer Details:*
           Name: ${bookingData.fullName}
           Email: ${bookingData.email}
           Phone: ${bookingData.phone}
           Alternate Phone: ${bookingData.alternatePhone}
-
+          
           *Address:*
           ${bookingData.address}
           Postcode: ${bookingData.postcode}
           City: ${bookingData.city}
           Country: ${bookingData.country}
-
+          
           *Service Details:*
           Service Type: ${bookingData.serviceType}
           House Size: ${bookingData.houseSize}
@@ -2654,10 +2732,10 @@
               ? `Frequency: ${bookingData.time}\n`
               : `Preferred Time: ${bookingData.time}\nPreferred Time: ${bookingData.preferredTime}\n`
           }
-
+          
           *Additional Notes:*
           ${bookingData.notes}
-
+          
           Status: ${bookingData.status}
           Timestamp: ${bookingData.timestamp}
         `;
@@ -2730,7 +2808,7 @@
                 });
               },
               onError: function (err) {
-                console.error("PayPal error:", err);
+                console.error("PayPal payment failed:", err);
                 // Handle errors here
               },
             })
@@ -2757,5 +2835,89 @@
         oneOffBtn.classList.remove("active");
       });
     </script>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const cleanTypeLink = document.getElementById("cleanTypeLink");
+        const cleanTypeContent = document.getElementById("cleanTypeContent");
+
+        const cleanTypeHTML = `
+    <h5 style="color: #19409A; margin-bottom: 20px;">Clean Type Descriptions</h5>
+      <h6 style="color: #19409A;">🧽 Light Clean *</h6>
+      <p>
+        Perfect for busy professionals or weekly upkeep. A quick refresh including light dusting, vacuuming, mopping, wiping kitchen surfaces, basic bathroom clean, disinfecting high-touch areas, and bin emptying.<br>
+        <strong>Ideal for:</strong> 1–2 bed tidy homes<br>
+        <strong>Duration:</strong> ~2.5 hours
+      </p>
+
+      <h6 style="color: #19409A;">🧽 Standard Clean *</h6>
+      <p>
+        A deeper regular clean covering full dusting, vacuuming, mopping, kitchen surfaces, hob, exterior appliances, and full bathroom clean.<br>
+        <strong>Ideal for:</strong> Weekly/fortnightly maintenance<br>
+        <strong>Duration:</strong> 3–6 hours depending on property size
+      </p>
+
+      <h6 style="color: #19409A;">🧽 Deep Clean *</h6>
+      <p>
+        A top-to-bottom clean including everything in Light & Standard Clean, plus skirting boards, sockets, internal windows, kitchen cupboards, oven, fridge, tiles, grout, extractor fans, and more.<br>
+        <strong>Ideal for:</strong> Spring cleans, post-renovation, or neglected spaces<br>
+        <strong>Duration:</strong> 4–8+ hours
+      </p>
+
+      <h6 style="color: #19409A;">🧽 End of Tenancy / Moving Out *</h6>
+      <p>
+        Designed to meet landlord/agency standards. Includes deep clean plus any specific requests like inside appliances, windows, walls, and all hidden areas.<br>
+        <strong>Ideal for:</strong> Tenants, landlords, estate agents<br>
+        <strong>Duration:</strong> Varies – please ask for a <a href="index.html#openEstimateModal" style="color: #19409A; text-decoration: underline; cursor: pointer;">quote</a>
+
+      </p>
+
+      <h6 style="color: #19409A;">🧽 Airbnb / Short Let Turnaround *</h6>
+      <p>
+        Quick, efficient reset between guests. Includes surface wipe-down, fresh linens (if provided), bin emptying, bathroom & kitchen clean, and tidy-up.<br>
+        <strong>Ideal for:</strong> Hosts needing fast, reliable service<br>
+        <strong>Duration:</strong> Varies by size & turnover time
+      </p>
+
+      <hr>
+
+      
+    `;
+
+        cleanTypeLink.addEventListener("click", (e) => {
+          e.preventDefault();
+          cleanTypeContent.innerHTML = cleanTypeHTML;
+          const modal = new bootstrap.Modal(
+            document.getElementById("cleanTypeModal")
+          );
+          modal.show();
+        });
+      });
+    </script>
+
+    <!-- Clean Type Details Modal -->
+    <div
+      class="modal fade"
+      id="cleanTypeModal"
+      tabindex="-1"
+      aria-labelledby="cleanTypeModalLabel"
+      aria-hidden="true"
+    >
+      <div
+        class="modal-dialog modal-xl modal-dialog-centered modal-scrollable custom-clean-type-modal"
+      >
+        <div class="modal-content clean-type-modal-content">
+          <div class="modal-body clean-type-modal-body" id="cleanTypeContent">
+            <button
+              type="button"
+              class="btn-close btn-close-white"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+
+            <!-- Filled by JS -->
+          </div>
+        </div>
+      </div>
+    </div>
   </body>
 </html>
