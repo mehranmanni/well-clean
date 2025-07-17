@@ -16,6 +16,13 @@
     <link rel="icon" type="image/x-icon" href="img/favicon-32x32.png" />
 
     <style>
+      @media print {
+        a.btn,
+        .btn-download {
+          display: none !important;
+        }
+      }
+
       body {
         background-color: #f8f9fa;
         font-family: "Varela Round", sans-serif;
@@ -118,6 +125,7 @@
         background-color: #e8f5e9;
         border-radius: 5px;
       }
+
       .capturing {
         opacity: 0.5;
       }
@@ -207,7 +215,7 @@
           <p class="mb-4">
             Our team will contact you shortly to confirm your cleaning
             appointment details. <br />
-            For any questions, feel free to reach out to us on WhatsApp.
+            For any questions, feel free to reach out to us on WhatsApp. 
           </p>
 
           <div class="d-flex justify-content-center flex-wrap">
@@ -227,6 +235,8 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
     <script>
       document.addEventListener("DOMContentLoaded", () => {
         /** Utilities **/
@@ -239,8 +249,8 @@
           cleaningType: getParam("cleaningType") || "N/A",
           houseSize: getParam("houseSize") || getParam("roomSize") || "N/A",
           frequency: getParam("frequency") || "N/A",
-          preferredDate: getParam("preferredDate") || "N/A",
-          preferredTime: getParam("preferredTime") || "N/A",
+          preferredDate: getParam("oneOffDate") || "N/A",
+          preferredTime: getParam("oneOffTime") || "N/A",
           totalPrice: getParam("totalPrice") || "£0.00",
           name: getParam("name") || getParam("customerName") || "N/A",
           email: getParam("email") || getParam("customerEmail") || "N/A",
@@ -398,5 +408,66 @@ Thank you for booking with Well Clean!`
         }
       });
     </script>
+   <script>
+  document.getElementById("downloadBtn").addEventListener("click", function () {
+    const receiptContent = document.querySelector(".success-container");
+
+    // ✅ Clone content and remove buttons
+    const clone = receiptContent.cloneNode(true);
+    const buttons = clone.querySelectorAll(".btn, .btn-download, .btn-back, .btn-whatsapp");
+    buttons.forEach(btn => btn.remove());
+
+    // ✅ Create a temporary offscreen container
+    const tempDiv = document.createElement("div");
+    tempDiv.style.position = "fixed";
+    tempDiv.style.left = "-9999px";
+    tempDiv.style.top = "0";
+    tempDiv.style.width = "800px";
+    tempDiv.style.background = "#fff";
+    tempDiv.appendChild(clone);
+    document.body.appendChild(tempDiv);
+
+    // ✅ Capture the cleaned content
+    html2canvas(clone, {
+      scale: 3,
+      useCORS: true,
+      backgroundColor: "#ffffff"
+    }).then((canvas) => {
+      const imgData = canvas.toDataURL("image/png");
+
+      const { jsPDF } = window.jspdf;
+      const pdf = new jsPDF("p", "mm", "a4");
+
+      const pageWidth = pdf.internal.pageSize.getWidth();
+      const imgWidth = pageWidth;
+      const imgHeight = (canvas.height * imgWidth) / canvas.width;
+
+      // ✅ Adjust PDF height if needed
+      const pageHeight = imgHeight;
+      pdf.internal.pageSize.height = pageHeight;
+
+      pdf.addImage(imgData, "PNG", 0, 0, imgWidth, imgHeight);
+
+      // ✅ Extract customer's name from "Name:" field
+      let nameValue = "receipt";
+      const labels = document.querySelectorAll(".detail-label");
+      labels.forEach(label => {
+        if (label.textContent.trim() === "Name:") {
+          const val = label.nextElementSibling?.textContent?.trim();
+          if (val) nameValue = val;
+        }
+      });
+
+      const safeName = nameValue.split(" ")[0] || "receipt";
+      pdf.save(`${safeName}-receipt.pdf`);
+
+      // ✅ Cleanup temporary DOM
+      document.body.removeChild(tempDiv);
+    });
+  });
+</script>
+
+
+
   </body>
 </html>
