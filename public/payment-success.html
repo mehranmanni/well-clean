@@ -215,7 +215,7 @@
           <p class="mb-4">
             Our team will contact you shortly to confirm your cleaning
             appointment details. <br />
-            For any questions, feel free to reach out to us on WhatsApp. 
+            For any questions, feel free to reach out to us on WhatsApp.
           </p>
 
           <div class="d-flex justify-content-center flex-wrap">
@@ -408,66 +408,88 @@ Thank you for booking with Well Clean!`
         }
       });
     </script>
-   <script>
-  document.getElementById("downloadBtn").addEventListener("click", function () {
-    const receiptContent = document.querySelector(".success-container");
+    <script>
+      document
+        .getElementById("downloadBtn")
+        .addEventListener("click", function () {
+          const receiptContent = document.querySelector(".success-container");
 
-    // ✅ Clone content and remove buttons
-    const clone = receiptContent.cloneNode(true);
-    const buttons = clone.querySelectorAll(".btn, .btn-download, .btn-back, .btn-whatsapp");
-    buttons.forEach(btn => btn.remove());
+          // ✅ Clone content and remove buttons
+          const clone = receiptContent.cloneNode(true);
+          const buttons = clone.querySelectorAll(
+            ".btn, .btn-download, .btn-back, .btn-whatsapp"
+          );
+          buttons.forEach((btn) => btn.remove());
 
-    // ✅ Create a temporary offscreen container
-    const tempDiv = document.createElement("div");
-    tempDiv.style.position = "fixed";
-    tempDiv.style.left = "-9999px";
-    tempDiv.style.top = "0";
-    tempDiv.style.width = "800px";
-    tempDiv.style.background = "#fff";
-    tempDiv.appendChild(clone);
-    document.body.appendChild(tempDiv);
+          // ✅ Create a temporary offscreen container
+          const tempDiv = document.createElement("div");
+          tempDiv.style.position = "fixed";
+          tempDiv.style.left = "-9999px";
+          tempDiv.style.top = "0";
+          tempDiv.style.width = "800px";
+          tempDiv.style.background = "#fff";
+          tempDiv.appendChild(clone);
+          document.body.appendChild(tempDiv);
 
-    // ✅ Capture the cleaned content
-    html2canvas(clone, {
-      scale: 3,
-      useCORS: true,
-      backgroundColor: "#ffffff"
-    }).then((canvas) => {
-      const imgData = canvas.toDataURL("image/png");
+          // ✅ Capture the cleaned content
+          html2canvas(clone, {
+            scale: 3,
+            useCORS: true,
+            backgroundColor: "#ffffff",
+          }).then((canvas) => {
+            const imgData = canvas.toDataURL("image/png");
 
-      const { jsPDF } = window.jspdf;
-      const pdf = new jsPDF("p", "mm", "a4");
+            const { jsPDF } = window.jspdf;
+            const pdf = new jsPDF("p", "mm", "a4");
 
-      const pageWidth = pdf.internal.pageSize.getWidth();
-      const imgWidth = pageWidth;
-      const imgHeight = (canvas.height * imgWidth) / canvas.width;
+            const pageWidth = pdf.internal.pageSize.getWidth();
+            const imgWidth = pageWidth;
+            const imgHeight = (canvas.height * imgWidth) / canvas.width;
 
-      // ✅ Adjust PDF height if needed
-      const pageHeight = imgHeight;
-      pdf.internal.pageSize.height = pageHeight;
+            // ✅ Adjust PDF height if needed
+            const pageHeight = imgHeight;
+            pdf.internal.pageSize.height = pageHeight;
 
-      pdf.addImage(imgData, "PNG", 0, 0, imgWidth, imgHeight);
+            pdf.addImage(imgData, "PNG", 0, 0, imgWidth, imgHeight);
 
-      // ✅ Extract customer's name from "Name:" field
-      let nameValue = "receipt";
-      const labels = document.querySelectorAll(".detail-label");
-      labels.forEach(label => {
-        if (label.textContent.trim() === "Name:") {
-          const val = label.nextElementSibling?.textContent?.trim();
-          if (val) nameValue = val;
+            // ✅ Extract customer's name from "Name:" field
+            let nameValue = "receipt";
+            const labels = document.querySelectorAll(".detail-label");
+            labels.forEach((label) => {
+              if (label.textContent.trim() === "Name:") {
+                const val = label.nextElementSibling?.textContent?.trim();
+                if (val) nameValue = val;
+              }
+            });
+
+            const safeName = nameValue.split(" ")[0] || "receipt";
+            pdf.save(`${safeName}-receipt.pdf`);
+
+            // ✅ Cleanup temporary DOM
+            document.body.removeChild(tempDiv);
+          });
+        });
+    </script>
+    <script>
+      function updateNavbarVisibility() {
+        const navbarCollapse = document.getElementById("navbarCollapse");
+        if (window.innerWidth > 991.98) {
+          navbarCollapse.classList.add("show");
+        } else {
+          navbarCollapse.classList.remove("show");
         }
-      });
+      }
 
-      const safeName = nameValue.split(" ")[0] || "receipt";
-      pdf.save(`${safeName}-receipt.pdf`);
+      updateNavbarVisibility();
 
-      // ✅ Cleanup temporary DOM
-      document.body.removeChild(tempDiv);
-    });
-  });
-</script>
-
-
-
+      document
+        .querySelector(".navbar-toggler")
+        .addEventListener("click", function () {
+          if (window.innerWidth <= 991.98) {
+            document.getElementById("navbarCollapse").classList.toggle("show");
+          }
+        });
+      window.addEventListener("resize", updateNavbarVisibility);
+    </script>
   </body>
 </html>

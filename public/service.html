@@ -81,7 +81,7 @@
         target="_blank"
       >
         <i class="fab fa-instagram"></i>
-      </a>  
+      </a>
       <a
         href="https://www.linkedin.com/company/well-clean"
         class="social-btn linkedin"
@@ -560,6 +560,27 @@
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
     <script src="js/script.js"></script>
+    <script>
+      function updateNavbarVisibility() {
+        const navbarCollapse = document.getElementById("navbarCollapse");
+        if (window.innerWidth > 991.98) {
+          navbarCollapse.classList.add("show");
+        } else {
+          navbarCollapse.classList.remove("show");
+        }
+      }
+
+      updateNavbarVisibility();
+
+      document
+        .querySelector(".navbar-toggler")
+        .addEventListener("click", function () {
+          if (window.innerWidth <= 991.98) {
+            document.getElementById("navbarCollapse").classList.toggle("show");
+          }
+        });
+      window.addEventListener("resize", updateNavbarVisibility);
+    </script>
 
     <!-- Booking Details Modal -->
     <div
