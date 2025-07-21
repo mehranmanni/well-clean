@@ -828,15 +828,17 @@
           "5-bed, 2-3 bath": { Light: 110, Standard: 150, Deep: 225 },
           "6+ bedrooms / large homes": { Light: 130, Standard: 200, Deep: 275 },
         };
+        const priceData = {
+          regular: {
+            weekly: 13.5,
+            monthly: 15.0,
+          },
+        };
 
         // Update price display
         function updatePrice() {
           const serviceType =
             oneOffSection.style.display === "block" ? "one-off" : "regular";
-          const cleaningType =
-            serviceType === "one-off"
-              ? document.getElementById("oneOffCleaningType").value
-              : document.getElementById("regularCleaningType").value;
           const roomSize =
             serviceType === "one-off"
               ? document.getElementById("oneOffRoomSize").value
@@ -2415,15 +2417,16 @@
           "5-bed, 2-3 bath": { Light: 110, Standard: 150, Deep: 225 },
           "6+ bedrooms / large homes": { Light: 130, Standard: 200, Deep: 275 },
         };
+        const priceData = {
+          regular: {
+            weekly: 13.5,
+            monthly: 15.0,
+          },
+        };
 
         function updatePrice() {
           const serviceType =
             oneOffSection.style.display === "block" ? "one-off" : "regular";
-
-          const cleaningType =
-            serviceType === "one-off"
-              ? document.getElementById("oneOffCleaningType").value
-              : document.getElementById("regularCleaningType").value;
 
           const roomSize =
             serviceType === "one-off"
@@ -2812,12 +2815,12 @@
           paypal
             .Buttons({
               createOrder: function (data, actions) {
-                const amt = parseFloat(
+                const amount= parseFloat(
                   window.pendingFormData?.totalPrice?.replace(/[^0-9.]/g, "")
                 ).toFixed(2);
 
-                if (!amt || isNaN(amt) || Number(amt) <= 0) {
-                  console.error("Invalid PayPal amount:", amt);
+                if (!amount || isNaN(amount) || Number(amount) <= 0) {
+                  console.error("Invalid PayPal amount:", amount);
                   alert(
                     "Something went wrong. Please check your selected options."
                   );
@@ -2828,7 +2831,7 @@
                   purchase_units: [
                     {
                       amount: {
-                        value: amt,
+                        value: amount,
                         currency_code: "GBP",
                       },
                     },

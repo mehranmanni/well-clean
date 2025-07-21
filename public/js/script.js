@@ -319,11 +319,6 @@ document.addEventListener("DOMContentLoaded", function () {
       oneOffSection.style.display === "block" ? "one-off" : "regular";
 
     // Get selected values
-    const cleaningType =
-      serviceType === "one-off"
-        ? document.getElementById("oneOffCleaningType").value
-        : document.getElementById("regularCleaningType").value;
-
     const roomSize =
       serviceType === "one-off"
         ? document.getElementById("oneOffRoomSize").value
