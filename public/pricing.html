@@ -1550,7 +1550,7 @@
             paypal
               .Buttons({
                 createOrder: function (data, actions) {
-                  const amount = parseFloat(finalAmount).toFixed(2); // ensure valid number
+                  const amount = parseFloat(amount).toFixed(2); // ensure valid number
 
                   if (!amount || isNaN(amount) || Number(amount) <= 0) {
                     console.error("Invalid PayPal amount:", amount);
@@ -2187,37 +2187,50 @@
             container.innerHTML = "";
 
             // Create new PayPal button
-            window.paypalButtonInstance = paypal.Buttons({
-              createOrder: function (data, actions) {
-                return actions.order.create({
-                  purchase_units: [
-                    {
-                      amount: {
-                        value: price,
-                        currency_code: "GBP",
-                      },
-                    },
-                  ],
-                });
-              },
-              onApprove: function (data, actions) {
-                return actions.order.capture().then(function (details) {
-                  alert(
-                    "Transaction completed by " + details.payer.name.given_name
-                  );
-                  // Add any additional success handling here
-                });
-              },
-              onError: function (err) {
-                console.error("PayPal error:", err);
-                // Handle errors here
-              },
-            });
+            window.paypalButtonInstance = paypal
+              .Buttons({
+                createOrder: function (data, actions) {
+                  // 1. Get the price from your form
+                  let raw = document.getElementById("totalPrice").textContent; // "£130.00"
+                  let value = parseFloat(raw.replace(/[^0-9.]/g, "")); // 130
 
-            // Render the PayPal button
-            if (window.paypalButtonInstance) {
-              window.paypalButtonInstance.render("#paypal-button-container");
-            }
+                  if (!value || value < 0.5) {
+                    alert("Please select a valid service and price first.");
+                    return actions.reject();
+                  }
+
+                  // 2. Build the order
+                  return actions.order.create({
+                    intent: "CAPTURE",
+                    purchase_units: [
+                      {
+                        amount: {
+                          currency_code: "GBP",
+                          value: value.toFixed(2), // "130.00"
+                        },
+                      },
+                    ],
+                    application_context: {
+                      shipping_preference: "NO_SHIPPING",
+                    },
+                  });
+                },
+
+                onApprove: function (data, actions) {
+                  return actions.order.capture().then((details) => {
+                    alert(
+                      `Payment completed by ${details.payer.name.given_name}`
+                    );
+                    // TODO: send booking details to your server
+                  });
+                },
+
+                onError: (err) => {
+                  console.error("PayPal error:", err);
+                  alert("Something went wrong with PayPal. Please try again.");
+                },
+              })
+              .render("#paypal-button-container");
           } else {
             container.style.display = "none";
           }
@@ -2799,23 +2812,23 @@
           paypal
             .Buttons({
               createOrder: function (data, actions) {
-                const amount = parseFloat(finalAmount); // DON'T fix to 2 decimals yet
+                const amt = parseFloat(
+                  window.pendingFormData?.totalPrice?.replace(/[^0-9.]/g, "")
+                ).toFixed(2);
 
-                // ✅ Guard clause: check if amount is valid and > 0
-                if (!amount || isNaN(amount) || amount <= 0) {
-                  console.error("Invalid PayPal amount:", amount);
+                if (!amt || isNaN(amt) || Number(amt) <= 0) {
+                  console.error("Invalid PayPal amount:", amt);
                   alert(
-                    "Total amount must be greater than zero. Please check your selected options."
+                    "Something went wrong. Please check your selected options."
                   );
-                  return actions.reject(); // Reject the order creation
+                  return;
                 }
 
-                // ✅ Safe to proceed
                 return actions.order.create({
                   purchase_units: [
                     {
                       amount: {
-                        value: amount.toFixed(2), // Final formatting here
+                        value: amt,
                         currency_code: "GBP",
                       },
                     },
@@ -2961,7 +2974,6 @@
               data-bs-dismiss="modal"
               aria-label="Close"
             ></button>
-
             <!-- Filled by JS -->
           </div>
         </div>

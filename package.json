@@ -23,6 +23,7 @@
     "express": "^4.18.2",
     "git-filter-repo": "^0.0.30",
     "path": "^0.12.7",
+    "paypal": "^1.0.1",
     "stripe": "^18.2.1",
     "vercel": "^44.2.13"
   },
