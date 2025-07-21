@@ -245,22 +245,23 @@
 
         /** 1️⃣ Collect ALL booking data from query string **/
         const bookingDetails = {
-          serviceType: getParam("serviceType") || "N/A",
-          cleaningType: getParam("cleaningType") || "N/A",
-          houseSize: getParam("houseSize") || getParam("roomSize") || "N/A",
-          frequency: getParam("frequency") || "N/A",
-          preferredDate: getParam("oneOffDate") || "N/A",
-          preferredTime: getParam("oneOffTime") || "N/A",
-          totalPrice: getParam("totalPrice") || "£0.00",
-          name: getParam("name") || getParam("customerName") || "N/A",
-          email: getParam("email") || getParam("customerEmail") || "N/A",
-          phone: getParam("phone") || getParam("customerPhone") || "N/A",
-          alternatePhone: getParam("alternatePhone") || "N/A",
-          address: getParam("address") || "N/A",
-          city: getParam("city") || "N/A",
-          postcode: getParam("postcode") || "N/A",
-          country: getParam("country") || "N/A",
-          priceRange: getParam("priceRange") || "",
+          serviceType: urlParams.get("serviceType") || "N/A",
+          cleaningType: urlParams.get("cleaningType") || "N/A",
+          houseSize: urlParams.get("houseSize") || "N/A",
+          preferredDate: urlParams.get("preferredDate") || "N/A",
+          preferredTime: urlParams.get("regularTime") || "N/A",
+          fullName: urlParams.get("regularName") || "N/A",
+          email: urlParams.get("email") || "N/A",
+          phone: urlParams.get("phone") || "N/A",
+          alternatePhone: urlParams.get("alternatePhone") || "N/A",
+          address: urlParams.get("address") || "N/A",
+          city: urlParams.get("city") || "N/A",
+          postcode: urlParams.get("postcode") || "N/A",
+          country: urlParams.get("country") || "N/A",
+          notes: urlParams.get("regularNotes") || "N/A",
+          priceRange: urlParams.get("priceRange") || "N/A",
+          paymentStatus: urlParams.get("paymentStatus") || "Paid",
+          paymentMethod: urlParams.get("paymentMethod") || "PayPal",
         };
 
         /** 2️⃣ Format date nicely **/
@@ -291,7 +292,8 @@
 
         /** 4️⃣ Determine Display Price **/
         let displayPrice =
-          bookingDetails.priceRange || bookingDetails.totalPrice;
+          bookingDetails.priceRange ||
+          "£13.50hr (with cleaning supplies provided)";
         if (displayPrice === "£0.00" && getParam("amount")) {
           displayPrice = `£${(parseFloat(getParam("amount")) / 100).toFixed(
             2
@@ -321,19 +323,11 @@
         bookingDetails.preferredTime
       )}</div>
     </div>
-    ${
-      bookingDetails.frequency !== "N/A" && bookingDetails.frequency
-        ? `<div class="detail-item">
-            <div class="detail-label">Cleaning Frequency:</div>
-            <div class="detail-value">${bookingDetails.frequency}</div>
-          </div>`
-        : ""
-    }
 
     <div class="section-header">Customer Information</div>
     <div class="detail-item">
       <div class="detail-label">Name:</div>
-      <div class="detail-value">${bookingDetails.name}</div>
+      <div class="detail-value">${bookingDetails.fullName}</div>
     </div>
     <div class="detail-item">
       <div class="detail-label">Email:</div>
@@ -373,7 +367,9 @@
     </div>
     <div class="detail-item">
       <div class="detail-label">Payment Status:</div>
-      <div class="detail-value text-success">Paid</div>
+      <div class="detail-value text-success">${
+        bookingDetails.paymentStatus
+      }</div>
     </div>
   `;
 
@@ -392,7 +388,7 @@
 *Amount Paid:* ${displayPrice}
 
 *Customer Details*
-Name: ${bookingDetails.name}
+Name: ${bookingDetails.fullName}
 Email: ${bookingDetails.email}
 Phone: ${bookingDetails.phone}
 Alternate Phone: ${bookingDetails.alternatePhone}
@@ -473,22 +469,26 @@ Thank you for booking with Well Clean!`
     <script>
       function updateNavbarVisibility() {
         const navbarCollapse = document.getElementById("navbarCollapse");
-        if (window.innerWidth > 991.98) {
-          navbarCollapse.classList.add("show");
-        } else {
-          navbarCollapse.classList.remove("show");
+        if (navbarCollapse) {
+          if (window.innerWidth > 991.98) {
+            navbarCollapse.classList.add("show");
+          } else {
+            navbarCollapse.classList.remove("show");
+          }
         }
       }
 
       updateNavbarVisibility();
 
-      document
-        .querySelector(".navbar-toggler")
-        .addEventListener("click", function () {
-          if (window.innerWidth <= 991.98) {
-            document.getElementById("navbarCollapse").classList.toggle("show");
+      const navbarToggler = document.querySelector(".navbar-toggler");
+      if (navbarToggler) {
+        navbarToggler.addEventListener("click", function () {
+          const navbarCollapse = document.getElementById("navbarCollapse");
+          if (window.innerWidth <= 991.98 && navbarCollapse) {
+            navbarCollapse.classList.toggle("show");
           }
         });
+      }
       window.addEventListener("resize", updateNavbarVisibility);
     </script>
   </body>

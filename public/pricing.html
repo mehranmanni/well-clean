@@ -402,7 +402,7 @@
                   id="regularSection"
                   class="booking-section"
                   style="display: none"
-                >
+                 >
                   <div class="card shadow-sm">
                     <div class="card-body">
                       <h3 class="card-title mb-4">Regular Cleaning</h3>
@@ -451,6 +451,22 @@
                             required
                           />
                         </div>
+                        <div class="mb-4">
+                          <label for="regularTime" class="form-label"
+                            >Preferred Time *</label
+                          >
+                          <select
+                            class="form-select"
+                            name="regularTime"
+                            id="regularTime"
+                            required
+                          >
+                            <option value="">Select time</option>
+                            <option value="morning">Morning</option>
+                            <option value="afternoon">Afternoon</option>
+                            <option value="evening">Evening</option>
+                          </select>
+                        </div>
                         <h5 class="mt-4 mb-3">Contact Information</h5>
                         <div class="row">
                           <div class="col-md-6 mb-3">
@@ -466,90 +482,90 @@
                             />
                           </div>
                           <div class="col-md-6 mb-3">
-                            <label for="emailLabel" class="form-label"
+                            <label for="email" class="form-label"
                               >Email Address *</label
                             >
                             <input
-                              type="email"
+                              type="text"
                               class="form-control"
-                              name="emailLabel"
-                              id="emailLabel"
+                              name="email"
+                              id="email"
                               required
                             />
                           </div>
                         </div>
                         <div class="row">
                           <div class="col-md-6 mb-3">
-                            <label for="phoneLabel" class="form-label"
+                            <label for="phone" class="form-label"
                               >Phone Number *</label
                             >
                             <input
-                              type="tel"
+                              type="text"
                               class="form-control"
-                              name="phoneLabel"
-                              id="phoneLabel"
+                              name="phone"
+                              id="phone"
                               required
                             />
                           </div>
                           <div class="col-md-6 mb-3">
-                            <label for="alternatePhoneLabel" class="form-label"
+                            <label for="alternatePhone" class="form-label"
                               >Alternate Phone</label
                             >
                             <input
-                              type="tel"
+                              type="text"
                               class="form-control"
-                              name="alternatePhoneLabel"
-                              id="alternatePhoneLabel"
+                              name="alternatePhone"
+                              id="alternatePhone"
                             />
                           </div>
                         </div>
                         <h5 class="mt-4 mb-3">Address Information</h5>
                         <div class="mb-3">
-                          <label for="addressLabel" class="form-label"
+                          <label for="address" class="form-label"
                             >Address *</label
                           >
-                          <textarea
+                          <input
+                            type="text"
                             class="form-control"
-                            name="addressLabel"
-                            id="addressLabel"
-                            rows="2"
+                            name="address"
+                            id="address"
                             required
-                          ></textarea>
+                          />
                         </div>
                         <div class="row">
                           <div class="col-md-4 mb-3">
-                            <label for="postcodeLabel" class="form-label"
+                            <label for="postcode" class="form-label"
                               >Postcode *</label
                             >
                             <input
                               type="text"
                               class="form-control"
-                              name="postcodeLabel"
-                              id="postcodeLabel"
+                              name="postcode"
+                              id="postcode"
                               required
                             />
                           </div>
                           <div class="col-md-4 mb-3">
-                            <label for="cityLabel" class="form-label"
+                            <label for="city" class="form-label"
                               >City *</label
                             >
                             <input
                               type="text"
                               class="form-control"
-                              name="cityLabel"
-                              id="cityLabel"
+                              name="city"
+                              id="city"
                               required
                             />
                           </div>
                           <div class="col-md-4 mb-3">
-                            <label for="countryLabel" class="form-label"
+                            <label for="country" class="form-label"
                               >Country *</label
                             >
                             <input
                               type="text"
                               class="form-control"
-                              name="countryLabel"
-                              id="countryLabel"
+                              name="country"
+                              id="country"
                               required
                             />
                           </div>
@@ -560,8 +576,8 @@
                           >
                           <textarea
                             class="form-control"
-                            name="regularNotesLabel"
-                            id="regularNotesLabel"
+                            name="notes"
+                            id="regularNotes"
                             rows="3"
                             required
                           ></textarea>
@@ -2815,7 +2831,7 @@
           paypal
             .Buttons({
               createOrder: function (data, actions) {
-                const amount= parseFloat(
+                const amount = parseFloat(
                   window.pendingFormData?.totalPrice?.replace(/[^0-9.]/g, "")
                 ).toFixed(2);
 
