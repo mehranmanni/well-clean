@@ -5,10 +5,10 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 // Initialize Stripe with your secret key
-console.log(
-  "Stripe Key:",
-  process.env.STRIPE_SECRET_KEY ? "Loaded" : "Not loaded!"
-);
+// console.log(
+//   "Stripe Key:",
+//   process.env.STRIPE_SECRET_KEY ? "Loaded" : "Not loaded!"
+// );
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
 // Import routes

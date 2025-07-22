@@ -18,7 +18,7 @@ document.addEventListener("DOMContentLoaded", function () {
   form.addEventListener("submit", function (event) {
     event.preventDefault(); // Prevent default form submission
 
-    const whatsappNumber = "447398538498"; // Ensure correct format
+    const whatsappNumber = "+441733964472"; // Ensure correct format
 
     // Get form values safely
     const getValue = (id) =>
@@ -89,7 +89,7 @@ if (contactForm) {
 
 function handleWhatsAppSubmission(event) {
   const form = event.target;
-  const whatsappNumber = "447398538498";
+  const whatsappNumber = "+441733964472";
 
   // Get form values directly from the form elements
   const name = form.querySelector("#name")?.value.trim() || "Not provided";
@@ -130,7 +130,7 @@ Message: ${message}`;
 
 function handleContactFormSubmission(event) {
   const form = event.target;
-  const whatsappNumber = "447398538498";
+  const whatsappNumber = "+441733964472";
 
   // Get form values directly from the form elements
   const firstName =
@@ -180,7 +180,7 @@ document.addEventListener("DOMContentLoaded", function () {
     estimateForm.addEventListener("submit", function (event) {
       event.preventDefault(); // Stop default submission
 
-      const whatsappNumber = "447398538498";
+      const whatsappNumber = "+441733964472";
 
       // Get input values safely
       const getValue = (id) =>
@@ -583,7 +583,7 @@ document.addEventListener("DOMContentLoaded", function () {
             `;
 
         // Open WhatsApp
-        const whatsappUrl = `https://wa.me/447398538498?text=${encodeURIComponent(
+        const whatsappUrl = `https://wa.me/+441733964472?text=${encodeURIComponent(
           whatsappMessage
         )}`;
         window.open(whatsappUrl, "_blank");
