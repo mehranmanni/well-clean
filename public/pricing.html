@@ -402,7 +402,7 @@
                   id="regularSection"
                   class="booking-section"
                   style="display: none"
-                 >
+                >
                   <div class="card shadow-sm">
                     <div class="card-body">
                       <h3 class="card-title mb-4">Regular Cleaning</h3>
@@ -546,9 +546,7 @@
                             />
                           </div>
                           <div class="col-md-4 mb-3">
-                            <label for="city" class="form-label"
-                              >City *</label
-                            >
+                            <label for="city" class="form-label">City *</label>
                             <input
                               type="text"
                               class="form-control"
@@ -859,24 +857,26 @@
             serviceType === "one-off"
               ? document.getElementById("oneOffRoomSize").value
               : document.getElementById("regularRoomSize").value;
-          const frequency = document.getElementById("regularFrequency").value;
+          const cleaningType =
+            serviceType === "one-off"
+              ? document.getElementById("oneOffCleaningType")?.value || ""
+              : document.getElementById("regularCleaningType")?.value || "";
+          const frequency = document.getElementById("regularFrequency")?.value;
 
-          // Update service type
+          // Update service type display
           const serviceTypeEl = document.getElementById("serviceType");
           if (serviceTypeEl) {
             serviceTypeEl.textContent =
               serviceType === "one-off" ? "One-Off Clean" : "Regular Cleaning";
           }
 
-          // Update house size
+          // Update house size display
           const houseSizeEl = document.getElementById("houseSize");
           if (houseSizeEl) {
-            houseSizeEl.textContent = roomSize
-              ? `${roomSize} Rooms`
-              : "Select house size";
+            houseSizeEl.textContent = roomSize || "Select house size";
           }
 
-          // Update cleaning type
+          // Update cleaning type display
           const cleaningTypeEl = document.getElementById("cleaningType");
           if (cleaningTypeEl) {
             cleaningTypeEl.textContent = cleaningType
@@ -888,7 +888,38 @@
               : "Select cleaning type";
           }
 
-          // Update frequency (only for regular)
+          // Calculate and update price
+          let price = 0;
+          let priceRange = "";
+
+          if (serviceType === "one-off" && roomSize && cleaningType) {
+            price = oneOffPrices[roomSize]?.[cleaningType] || 0;
+            priceRange = `£${price}.00`;
+          } else if (
+            serviceType === "regular" &&
+            roomSize &&
+            cleaningType &&
+            frequency
+          ) {
+            // Regular cleaning price calculation if needed
+            const basePrice = 0; // Add your regular cleaning base price logic here
+            price = basePrice;
+            priceRange = `£${price.toFixed(2)}`;
+          }
+
+          // Update price display
+          const totalPriceEl = document.getElementById("totalPrice");
+          const priceRangeEl = document.getElementById("priceRange");
+          const basePriceEl = document.getElementById("basePrice");
+
+          if (totalPriceEl) totalPriceEl.textContent = `£${price.toFixed(2)}`;
+          if (priceRangeEl)
+            priceRangeEl.textContent = price
+              ? priceRange
+              : "Select options to see price";
+          if (basePriceEl) basePriceEl.textContent = `£${price.toFixed(2)}`;
+
+          // Update frequency section visibility
           const frequencySection = document.getElementById("frequencySection");
           const cleaningFrequencyEl =
             document.getElementById("cleaningFrequency");
@@ -991,6 +1022,9 @@
           .addEventListener("change", updatePrice);
         document
           .getElementById("regularFrequency")
+          .addEventListener("change", updatePrice);
+        document
+          .getElementById("oneOffCleaningType")
           .addEventListener("change", updatePrice);
 
         // Get booking details from forms
@@ -2197,6 +2231,8 @@
 
             // Clean up any existing PayPal button
             if (window.paypalButtonInstance) {
+              window.paypalButtonInstance.close =
+                window.paypalButtonInstance.close || function () {};
               window.paypalButtonInstance.close();
               window.paypalButtonInstance = null;
             }
@@ -2278,6 +2314,7 @@
         }
       });
     </script>
+
     <!-- Footer Start -->
     <div
       class="container-fluid footer bg-footer py-5 wow fadeIn"
@@ -2448,17 +2485,24 @@
             serviceType === "one-off"
               ? document.getElementById("oneOffRoomSize").value
               : document.getElementById("regularRoomSize").value;
-
+          const cleaningType =
+            serviceType === "one-off"
+              ? document.getElementById("oneOffCleaningType")?.value || ""
+              : document.getElementById("regularCleaningType")?.value || "";
           const frequency = document.getElementById("regularFrequency")?.value;
-
           // Update service type
-          document.getElementById("serviceType").textContent =
-            serviceType === "one-off" ? "One-Off Clean" : "Regular Cleaning";
+          const serviceTypeEl = document.getElementById("serviceType");
+          if (serviceTypeEl) {
+            serviceTypeEl.textContent =
+              serviceType === "one-off" ? "One-Off Clean" : "Regular Cleaning";
+          }
 
           // Update house size
-          document.getElementById("houseSize").textContent = roomSize
-            ? roomSize
-            : "Select house size";
+          const houseSizeEl = document.getElementById("houseSize");
+          if (houseSizeEl) {
+            houseSizeEl.textContent = roomSize ? roomSize : "Select house size";
+          }
+          
 
           // Update cleaning type
           document.getElementById("cleaningType").textContent = cleaningType
