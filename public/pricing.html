@@ -227,18 +227,12 @@
                             required
                           >
                             <option value="">Select size</option>
-                            <option value="1-bed flat">1-bed flat</option>
-                            <option value="2-bed, 1-bath">2-bed, 1-bath</option>
-                            <option value="3-bed, 1-2 bath">
-                              3-bed, 1-2 bath
-                            </option>
-                            <option value="4-bed, 2-bath">4-bed, 2-bath</option>
-                            <option value="5-bed, 2-3 bath">
-                              5-bed, 2-3 bath
-                            </option>
-                            <option value="6+ bedrooms / large homes">
-                              6+ bedrooms / large homes
-                            </option>
+                            <option value="1-bed">1-bed</option>
+                            <option value="2-bed">2-bed</option>
+                            <option value="3-bed">3-bed</option>
+                            <option value="4-bed">4-bed</option>
+                            <option value="5-bed">5-bed</option>
+                            <option value="6+ bedrooms / large homes">6+ bedrooms / large homes</option>
                           </select>
                         </div>
                         <div class="mb-4">
@@ -455,17 +449,13 @@
                           <label for="regularTime" class="form-label"
                             >Preferred Time *</label
                           >
-                          <select
-                            class="form-select"
-                            name="regularTime"
+                          <input
+                            type="time"
+                            class="form-control"
                             id="regularTime"
+                            name="regularTime"
                             required
-                          >
-                            <option value="">Select time</option>
-                            <option value="morning">Morning</option>
-                            <option value="afternoon">Afternoon</option>
-                            <option value="evening">Evening</option>
-                          </select>
+                          />
                         </div>
                         <h5 class="mt-4 mb-3">Contact Information</h5>
                         <div class="row">
@@ -835,11 +825,11 @@
 
         // Pricing data
         const oneOffPrices = {
-          "1-bed flat": { Light: 45, Standard: 55, Deep: 100 },
-          "2-bed, 1-bath": { Light: 60, Standard: 70, Deep: 120 },
-          "3-bed, 1-2 bath": { Light: 70, Standard: 85, Deep: 145 },
-          "4-bed, 2-bath": { Light: 90, Standard: 130, Deep: 180 },
-          "5-bed, 2-3 bath": { Light: 110, Standard: 150, Deep: 225 },
+          "1-bed": { Light: 45, Standard: 55, Deep: 100 },
+          "2-bed": { Light: 60, Standard: 70, Deep: 120 },
+          "3-bed": { Light: 70, Standard: 85, Deep: 145 },
+          "4-bed": { Light: 90, Standard: 130, Deep: 180 },
+          "5-bed": { Light: 110, Standard: 150, Deep: 225 },
           "6+ bedrooms / large homes": { Light: 130, Standard: 200, Deep: 275 },
         };
         const priceData = {
@@ -2463,11 +2453,11 @@
         }
 
         const oneOffPrices = {
-          "1-bed flat": { Light: 45, Standard: 55, Deep: 100 },
-          "2-bed, 1-bath": { Light: 60, Standard: 70, Deep: 120 },
-          "3-bed, 1-2 bath": { Light: 70, Standard: 85, Deep: 145 },
-          "4-bed, 2-bath": { Light: 90, Standard: 130, Deep: 180 },
-          "5-bed, 2-3 bath": { Light: 110, Standard: 150, Deep: 225 },
+          "1-bed": { Light: 45, Standard: 55, Deep: 100 },
+          "2-bed": { Light: 60, Standard: 70, Deep: 120 },
+          "3-bed": { Light: 70, Standard: 85, Deep: 145 },
+          "4-bed": { Light: 90, Standard: 130, Deep: 180 },
+          "5-bed": { Light: 110, Standard: 150, Deep: 225 },
           "6+ bedrooms / large homes": { Light: 130, Standard: 200, Deep: 275 },
         };
         const priceData = {
@@ -2502,7 +2492,6 @@
           if (houseSizeEl) {
             houseSizeEl.textContent = roomSize ? roomSize : "Select house size";
           }
-          
 
           // Update cleaning type
           document.getElementById("cleaningType").textContent = cleaningType
