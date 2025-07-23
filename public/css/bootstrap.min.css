@@ -2534,9 +2534,9 @@ textarea.form-control.is-invalid {
     transition: none;
   }
 }
-.btn:hover {
+/* .btn:hover {
   color: gray;
-}
+} */
 .btn-check:focus + .btn,
 .btn:focus {
   outline: 0;

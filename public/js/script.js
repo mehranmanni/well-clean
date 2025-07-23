@@ -318,13 +318,15 @@ document.addEventListener("DOMContentLoaded", function () {
     const serviceType =
       oneOffSection.style.display === "block" ? "one-off" : "regular";
 
-    // Get selected values
+    // Get selected values with null checks
     const roomSize =
       serviceType === "one-off"
-        ? document.getElementById("oneOffRoomSize").value
-        : document.getElementById("regularRoomSize").value;
+        ? document.getElementById("oneOffRoomSize")?.value || ""
+        : document.getElementById("regularRoomSize")?.value || "";
 
-    const frequency = document.getElementById("regularFrequency").value;
+    const frequency = document.getElementById("regularFrequency")?.value || "";
+    const cleaningType =
+      document.getElementById("oneOffCleaningType")?.value || "";
 
     // Update UI labels
     document.getElementById("serviceType").textContent =

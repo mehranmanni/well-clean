@@ -1646,3 +1646,124 @@ input[type="file"] {
 .modal-dialog {
   z-index: 1060;
 }
+.cleaning-services-section {
+        background-color: #f8f9fa;
+        padding: 80px 0;
+      }
+
+      .cleaning-service-tabs {
+        gap: 1rem;
+      }
+
+      .cleaning-service-tab {
+        background: white;
+        border: 2px solid #f1f1f1;
+        padding: 1rem 2rem;
+        border-radius: 50px;
+        color: #333;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        text-transform: uppercase;
+        cursor: pointer;
+      }
+
+      .cleaning-service-tab:hover,
+      .cleaning-service-tab.active {
+        background: #fff;
+        border-color: #e1e1e1;
+        color: #000;
+        transform: translateY(-3px);
+      }
+
+      .cleaning-service-tab i {
+        font-size: 1.1rem;
+      }
+
+      .cleaning-service-card {
+        background: white;
+        border: 2px solid #f1f1f1;
+        border-radius: 15px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        transition: all 0.3s ease;
+      }
+
+      .cleaning-service-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+      }
+
+      .cleaning-service-card h3 {
+        color: #000;
+        font-weight: 600;
+        margin-bottom: 1.5rem;
+      }
+
+      .cleaning-service-card p {
+        color: #666;
+        line-height: 1.6;
+        font-size: 0.95rem;
+      }
+
+      .cleaning-service-features {
+        margin: 0;
+        padding: 0;
+      }
+
+      .cleaning-service-features li {
+        margin-bottom: 0.5rem;
+        color: #666;
+        font-size: 0.9rem;
+      }
+
+      .cleaning-service-features i {
+        font-size: 0.8rem;
+      }
+
+      .cleaning-service-card .btn {
+        padding: 0.8rem 1.5rem;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        margin-top: 1.5rem;
+      }
+
+      .cleaning-service-card .btn:hover {
+        transform: translateX(10px);
+      }
+
+      .cleaning-service-card .btn i {
+        transition: transform 0.3s ease;
+        font-size: 0.9rem;
+      }
+
+      .cleaning-service-card .btn:hover i {
+        transform: translateX(5px);
+      }
+
+      @media (max-width: 768px) {
+        .cleaning-service-tabs {
+          flex-wrap: wrap;
+          justify-content: center;
+        }
+
+        .cleaning-service-tab {
+          padding: 0.8rem 1.5rem;
+          font-size: 0.9rem;
+        }
+
+        .cleaning-service-card {
+          padding: 2rem;
+        }
+
+        .cleaning-service-card h3 {
+          font-size: 1.2rem;
+        }
+      }
+
+      /* Remove content switch animation */
+      .cleaning-service-content {
+        display: none;
+      }
+
+      .cleaning-service-content.active {
+        display: block;
+      }
