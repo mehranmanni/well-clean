@@ -860,12 +860,12 @@ input[type="file"] {
 }
 
 .form-cover .btn {
-  background-color: #000 !important;
+  background-color: #19409a !important;
   border: none !important;
 }
 
 .form-cover .btn:hover {
-  background-color: #292828 !important;
+  background-color: #112c6a !important;
 }
 
 .counter .counter-item {

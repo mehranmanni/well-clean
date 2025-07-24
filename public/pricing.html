@@ -70,7 +70,7 @@
       </a>
 
       <a
-        href="https://www.facebook.com/well-clean"
+        href="https://www.facebook.com/share/16wzxUB23J/?mibextid=wwXIfr"
         class="social-btn facebook"
         target="_blank"
       >
@@ -78,14 +78,14 @@
       </a>
 
       <a
-        href="https://www.instagram.com/well-clean"
+        href="https://www.instagram.com/wellcleanservicesltd?igsh=MXV3N3hrcTRnM2FkbQ%3D%3D&utm_source=qr"
         class="social-btn instagram"
         target="_blank"
       >
         <i class="fab fa-instagram"></i>
       </a>
       <a
-        href="https://www.linkedin.com/company/well-clean/"
+        href="https://uk.linkedin.com/in/wellclean-services-127034374/"
         class="social-btn linkedin"
         target="_blank"
       >
@@ -753,7 +753,6 @@
           },
         };
 
-        // Update price display
         function updatePrice() {
           const serviceType =
             oneOffSection.style.display === "block" ? "one-off" : "regular";
@@ -2389,13 +2388,13 @@
             oneOffSection.style.display === "block" ? "one-off" : "regular";
 
           let roomSize = "";
-if (serviceType === "one-off") {
-  const roomSizeEl = document.getElementById("oneOffRoomSize");
-  roomSize = roomSizeEl ? roomSizeEl.value : "";
-} else {
-  const roomSizeEl = document.getElementById("regularRoomSize");
-  roomSize = roomSizeEl ? roomSizeEl.value : "";
-}
+          if (serviceType === "one-off") {
+            const roomSizeEl = document.getElementById("oneOffRoomSize");
+            roomSize = roomSizeEl ? roomSizeEl.value : "";
+          } else {
+            const roomSizeEl = document.getElementById("regularRoomSize");
+            roomSize = roomSizeEl ? roomSizeEl.value : "";
+          }
           const cleaningType =
             serviceType === "one-off"
               ? document.getElementById("oneOffCleaningType")?.value || ""
