@@ -357,12 +357,6 @@ document.addEventListener("DOMContentLoaded", function () {
         2
       )}`;
       document.getElementById("basePrice").textContent = `£${price.toFixed(2)}`;
-      document.getElementById("priceRange").textContent =
-        price > 0
-          ? `£${price.toFixed(2)}`
-          : "Select options to see price range";
-
-      // Hide regular sections
       document.getElementById("hourlyRateSection").style.display = "none";
       document.getElementById("monthlyRateSection").style.display = "none";
     } else if (serviceType === "regular") {
@@ -373,10 +367,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
       document.getElementById("totalPrice").textContent = `£${rate.toFixed(2)}`;
       document.getElementById("hourlyRate").textContent = `£${rate.toFixed(2)}`;
-      document.getElementById("priceRange").textContent =
-        frequency === "weekly"
-          ? `£13.50/hr (with cleaning supplies provided)`
-          : `£15.00/hr`;
 
       document.getElementById("hourlyRateSection").style.display = "block";
       document.getElementById("monthlyRateSection").style.display = "none";
@@ -388,8 +378,6 @@ document.addEventListener("DOMContentLoaded", function () {
       document.getElementById("houseSize").textContent = "Select house size";
       document.getElementById("cleaningFrequency").textContent =
         "Select frequency";
-      document.getElementById("priceRange").textContent =
-        "Select options to see price range";
       document.getElementById("basePrice").textContent = "£0.00";
       document.getElementById("hourlyRate").textContent = "£0.00";
       document.getElementById("monthlyRate").textContent = "£0.00";
@@ -617,8 +605,6 @@ document.addEventListener("DOMContentLoaded", function () {
         document.getElementById("houseSize").textContent = "Select house size";
         document.getElementById("cleaningFrequency").textContent =
           "Select frequency";
-        document.getElementById("priceRange").textContent =
-          "Select options to see price range";
         document.getElementById("basePrice").textContent = "£0.00";
         document.getElementById("hourlyRate").textContent = "£0.00";
         document.getElementById("monthlyRate").textContent = "£0.00";
