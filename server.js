@@ -83,8 +83,8 @@ app.get("/get-stripe-key", (req, res) => {
   });
 });
 // Add this before your 404 handler
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'index.html'));
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "public", "index.html"));
 });
 // Routes
 app.get("/pricing", (req, res) => {
