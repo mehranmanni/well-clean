@@ -398,15 +398,11 @@
                   id="regularSection"
                   class="booking-section"
                   style="display: none"
-                 >
+                >
                   <div class="card shadow-sm">
                     <div class="card-body">
                       <h3 class="card-title mb-4">Regular Cleaning</h3>
-                      <p class="mb-4 text-muted">
-                        Enjoy peace of mind with scheduled cleanings. Whether
-                        you prefer weekly touch-ups or monthly deep refreshes,
-                        our plans are flexible, professional, and hassle-free.
-                      </p>
+
                       <!-- Toggle Button -->
                       <div class="d-flex justify-content-center mb-4">
                         <div
@@ -419,69 +415,73 @@
                             class="btn pricing-btn active"
                             id="weeklyToggle"
                           >
-                            Weekly/Bi-Weekly
+                            Basic Cleaning
                           </button>
                           <button
                             type="button"
                             class="btn pricing-btn"
                             id="monthlyToggle"
                           >
-                            Monthly
+                            Deep Cleaning
                           </button>
                         </div>
                       </div>
 
                       <!-- Weekly/Bi-Weekly Packages -->
                       <div id="weeklyPackages" class="row">
-                        <div class="col-md-6 mb-4">
-                          <div class="package card p-3">
-                            <h5>Basic Weekly</h5>
-                            <p class="text-muted">
-                              Perfect for light, routine upkeep of small
-                              apartments.
+                        <div class="col-md-12">
+                          <div class="package card p-4">
+                            <h5>Basic Cleaning Booking Form</h5>
+                            <p class="mb-4 text-muted">
+                              Enjoy peace of mind with scheduled cleanings.
+                              Whether you prefer weekly touch-ups or monthly
+                              deep refreshes, our plans are flexible,
+                              professional, and hassle-free.
                             </p>
-                            <ul class="list-unstyled small">
-                              <li>✅ 1-2 Bedrooms</li>
-                              <li>✅ Dusting & Surface Wipe</li>
-                              <li>✅ Vacuum & Mop</li>
-                              <li>✅ Bathroom & Kitchen touch-up</li>
-                            </ul>
-                            <p><strong>£13.5/week</strong></p>
-                            <button
-                              class="btn btn-primary select-package"
-                              data-name="Basic Weekly"
-                              data-price="13.5"
-                              data-frequency="Weekly/Bi-Weekly"
-                              data-cleaning-type="Standard"
-                              data-base="45"
-                            >
-                              Select
-                            </button>
-                          </div>
-                        </div>
-                        <div class="col-md-6 mb-4">
-                          <div class="package card p-3">
-                            <h5>Deluxe Weekly</h5>
-                            <p class="text-muted">
-                              Best for families and homes needing more care.
-                            </p>
-                            <ul class="list-unstyled small">
-                              <li>✅ 3-4 Bedrooms</li>
-                              <li>✅ Full Kitchen & Bathroom Clean</li>
-                              <li>✅ Trash Disposal</li>
-                              <li>✅ Optional Balcony Sweep</li>
-                            </ul>
-                            <p><strong>£16.5/week</strong></p>
-                            <button
-                              class="btn btn-primary select-package"
-                              data-name="Deluxe Weekly"
-                              data-price="16.5"
-                              data-frequency="Weekly/Bi-Weekly"
-                              data-cleaning-type="Standard"
-                              data-base="65"
-                            >
-                              Select
-                            </button>
+                            <!-- Bedrooms -->
+                            <div class="mb-3">
+                              <label for="bedrooms" class="form-label"
+                                >Bedrooms</label
+                              >
+                              <select id="bedrooms" class="form-select">
+                                <option selected disabled>
+                                  Select Bedrooms
+                                </option>
+                                <option value="1">1 Bedroom</option>
+                                <option value="2">2 Bedrooms</option>
+                                <option value="3">3 Bedrooms</option>
+                                <option value="4">4 Bedrooms</option>
+                                <option value="5">5 Bedrooms</option>
+                                <option value="6">6 Bedrooms</option>
+                              </select>
+                            </div>
+
+                            <!-- Frequency -->
+                            <div class="mb-3">
+                              <label for="frequency" class="form-label"
+                                >Frequency</label
+                              >
+                              <select id="frequency" class="form-select">
+                                <option selected disabled>
+                                  Select Frequency
+                                </option>
+                                <option value="weekly">Weekly</option>
+                                <option value="biweekly">Biweekly</option>
+                                <option value="monthly">Monthly</option>
+                              </select>
+                              <button
+                                class="btn btn-primary select-package float-end mt-3 me-3"
+                                data-name="Custom Cleaning"
+                                data-price=""
+                                data-frequency=""
+                                data-cleaning-type=""
+                                data-base=""
+                              >
+                                Book Now
+                              </button>
+                            </div>
+
+                            <!-- Book Button -->
                           </div>
                         </div>
                       </div>
@@ -492,65 +492,63 @@
                         class="row"
                         style="display: none"
                       >
-                        <div class="col-md-6 mb-4">
-                          <div class="package card p-3">
-                            <h5>Basic Monthly</h5>
-                            <p class="text-muted">
-                              Ideal for maintaining everyday cleanliness in
-                              compact living spaces.
+                        <div class="col-md-12">
+                          <div class="package card p-4">
+                            <h5>Deep Cleaning Booking Form</h5>
+                            <p class="mb-4 text-muted">
+                              Go beyond the surface with our Deep Cleaning
+                              service. Ideal for a seasonal refresh or a
+                              thorough home reset, it tackles hidden dirt and
+                              leaves every corner spotless.
                             </p>
-                            <ul class="list-unstyled small">
-                              <li>✅ 2–3 bedrooms</li>
-                              <li>✅ Thorough dusting & surface wipe-down</li>
-                              <li>✅ Full vacuuming and mopping of floors</li>
-                              <li>✅ Refresh of bathrooms and kitchen areas</li>
-                            </ul>
-                            <p><strong>£15/month</strong></p>
-                            <button
-                              class="btn btn-primary select-package"
-                              data-name="Basic Monthly"
-                              data-price="15"
-                              data-frequency="Monthly"
-                              data-cleaning-type="Standard"
-                              data-base="60"
-                            >
-                              Select
-                            </button>
+                            <!-- Bedrooms -->
+                            <div class="mb-3">
+                              <label for="bedroomsMonthly" class="form-label"
+                                >Bedrooms</label
+                              >
+                              <select id="bedroomsMonthly" class="form-select">
+                                <option selected disabled>
+                                  Select Bedrooms
+                                </option>
+                                <option value="1">1 Bedroom</option>
+                                <option value="2">2 Bedrooms</option>
+                                <option value="3">3 Bedrooms</option>
+                                <option value="4">4 Bedrooms</option>
+                                <option value="5">5 Bedrooms</option>
+                                <option value="6">6 Bedrooms</option>
+                              </select>
+                            </div>
+
+                            <!-- Frequency -->
+                            <div class="mb-3">
+                              <label for="frequencyMonthly" class="form-label"
+                                >Frequency</label
+                              >
+                              <select id="frequencyMonthly" class="form-select">
+                                <option selected disabled>
+                                  Select Frequency
+                                </option>
+                                <option value="weekly">Weekly</option>
+                                <option value="biweekly">Biweekly</option>
+                                <option value="monthly">Monthly</option>
+                              </select>
+                              <button
+                                class="btn btn-primary select-package float-end mt-3 me-3"
+                                data-name="Custom Deep Cleaning"
+                                data-price=""
+                                data-frequency=""
+                                data-cleaning-type=""
+                                data-base=""
+                              >
+                                Book Now
+                              </button>
+                            </div>
                           </div>
-                        </div>
-                        <div class="col-md-6 mb-4">
-                          <div class="package card p-3">
-                            <h5>Deluxe Monthly</h5>
-                            <p class="text-muted">
-                              Full house clean with appliances and deep cleaning
-                            </p>
-                            <ul class="list-unstyled small">
-                              <li>✅ 3-4 Bedrooms</li>
-                              <li>✅ Dusting & Surface Wipe</li>
-                              <li>✅ Vacuum & Mop</li>
-                              <li>✅ Bathroom & Kitchen touch-up</li>
-                            </ul>
-                            <p><strong>£16.5/month</strong></p>
-                            <button
-                              class="btn btn-primary select-package"
-                              data-name="Deluxe Monthly"
-                              data-price="16.5"
-                              data-frequency="Monthly"
-                              data-cleaning-type="Deep"
-                              data-base="85"
-                            >
-                              Select
-                            </button>
-                          </div>
+                          <!-- Book Button -->
                         </div>
                       </div>
 
                       <!-- Pricing Summary -->
-                      <div class="mt-4">
-                        <h5>Selected Package:</h5>
-                        <p id="selectedPackage">None selected</p>
-                        <p id="selectedPrice"></p>
-                      </div>
                     </div>
                   </div>
                 </div>
@@ -567,7 +565,7 @@
                       </div>
 
                       <div class="price-breakdown">
-                        <div class="mb-2">
+                        <div class="mb-2" style="display: none">
                           <h6 class="mb-1">Service Type</h6>
                           <p id="serviceType">Select a service type</p>
                         </div>
@@ -575,7 +573,7 @@
                           <h6 class="mb-1">House Size</h6>
                           <p id="houseSize">Select house size</p>
                         </div>
-                        <div class="mb-2">
+                        <div class="mb-2" style="display: none">
                           <h6 class="mb-1">Cleaning Type</h6>
                           <p id="cleaningType">Select cleaning type</p>
                         </div>
@@ -595,7 +593,7 @@
                         </div>
                       </div>
 
-                      <div class="price-details mt-3">
+                      <div class="price-details mt-3" style="display: none">
                         <h6 class="mb-2">Price Details</h6>
                         <div class="price-item mb-1">
                           <span>Base Price</span>
@@ -2951,5 +2949,7 @@
         </div>
       </div>
     </div>
+    <!-- Pricing Script -->
+    <script src="js/pricing.js"></script>
   </body>
 </html>

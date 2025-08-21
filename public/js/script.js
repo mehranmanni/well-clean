@@ -1,4 +1,10 @@
 document.addEventListener("DOMContentLoaded", function () {
+  // Initialize bedroom pricing display
+  const bedroomsSelect = document.getElementById('bedrooms');
+  if (bedroomsSelect) {
+    bedroomsSelect.addEventListener('change', updateBedroomPricing);
+  }
+
   const form = document.getElementById("cleaningEnquiryForm");
   const estimateModalEl = document.getElementById("estimateModal"); // Get the modal element
   let estimateModal = null;
@@ -67,7 +73,64 @@ document.addEventListener("DOMContentLoaded", function () {
     // Reset form
     form.reset();
   });
+
+  // Initialize price display
+  updatePriceDisplay('Select a service type', 'Select house size', 'Select cleaning type', 'Select frequency', '£0.00', '£0.00');
 });
+
+// Update bedroom pricing when selection changes
+function updateBedroomPricing() {
+  const bedroomsSelect = document.getElementById('bedrooms');
+  const priceElement = document.getElementById('totalPrice');
+  const houseSizeElement = document.getElementById('houseSize');
+  const basePriceElement = document.getElementById('basePrice');
+  const priceRangeElement = document.getElementById('priceRange');
+  
+  if (bedroomsSelect && bedroomsSelect.value) {
+    const selection = bedroomsSelect.value;
+    const priceData = bedroomPricing[selection];
+    
+    if (priceData) {
+      const price = priceData.price;
+      const hours = priceData.hours;
+      
+      // Update the display
+      priceElement.textContent = `£${price.toFixed(2)}`;
+      houseSizeElement.textContent = `${selection} Bedroom${selection > 1 ? 's' : ''} (${hours} hours)`;
+      basePriceElement.textContent = `£${price.toFixed(2)}`;
+      priceRangeElement.textContent = `£${price.toFixed(2)}`;
+      
+      // Update the book now button data
+      const bookButton = document.querySelector('.select-package');
+      if (bookButton) {
+        bookButton.setAttribute('data-price', price);
+      }
+    }
+  } else {
+    // Reset if no selection
+    priceElement.textContent = '£0.00';
+    houseSizeElement.textContent = 'Select house size';
+    basePriceElement.textContent = '£0.00';
+    priceRangeElement.textContent = 'Select options to see price range';
+  }
+}
+
+// Update price display function
+function updatePriceDisplay(service, size, cleaningType, frequency, price, basePrice) {
+  const serviceTypeElement = document.getElementById('serviceType');
+  const houseSizeElement = document.getElementById('houseSize');
+  const cleaningTypeElement = document.getElementById('cleaningType');
+  const frequencyElement = document.getElementById('cleaningFrequency');
+  const priceElement = document.getElementById('totalPrice');
+  const basePriceElement = document.getElementById('basePrice');
+  
+  if (serviceTypeElement) serviceTypeElement.textContent = service;
+  if (houseSizeElement) houseSizeElement.textContent = size;
+  if (cleaningTypeElement) cleaningTypeElement.textContent = cleaningType;
+  if (frequencyElement) frequencyElement.textContent = frequency;
+  if (priceElement) priceElement.textContent = price;
+  if (basePriceElement) basePriceElement.textContent = basePrice;
+}
 
 // Add enquiry form handling
 const enquiryForm = document.getElementById("enquiryForm");
