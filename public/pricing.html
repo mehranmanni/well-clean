@@ -41,7 +41,7 @@
       }
     </style>
     <!-- PayPal SDK -->
-    <script src="https://www.paypal.com/sdk/js?client-id=ASNGhKzEe51oF20pg75Uv28jRFOZD1kKmpWS35DsKL9tJBM2BjLJ1XnfmJNjASOFNYQA6jDqMvM5BV0r&currency=GBP"></script>
+    <script src="https://www.paypal.com/sdk/js?client-id=AboK-oq6nnplV5UVW9djS7-Q5z6iZjZjzzR2vD6IQnThL1twuIlL4Khla8kSKgfBInLF9EqZtyxpSJ9i&currency=GBP&disable-funding=card"></script>
   </head>
 
   <body>
@@ -605,7 +605,9 @@
                           style="display: none"
                         >
                           <span style="display: none">Hourly Rate</span>
-                          <span style="display: none" id="hourlyRate">£0.00</span>
+                          <span style="display: none" id="hourlyRate"
+                            >£0.00</span
+                          >
                         </div>
                         <div
                           class="price-item mb-1"
@@ -2030,19 +2032,19 @@
 
     <!-- Payment Modal -->
     <div
-      class="modal fade"
+      class="modal fade "
       id="paymentModal"
       tabindex="-1"
       aria-labelledby="paymentModalLabel"
       aria-hidden="true"
     >
-      <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-dialog modal-dialog-centered modal-sm">
         <div class="modal-content">
           <div class="modal-header">
             <h5
               class="modal-title"
               id="paymentModalLabel"
-              style="color: #000000"
+              style="color: #000000; font-size: 20px"
             >
               Select Payment Method
             </h5>
@@ -2055,16 +2057,11 @@
           </div>
           <div class="modal-body text-center">
             <p class="mb-4">Please choose your preferred payment method:</p>
-            <div class="d-flex justify-content-center align-items-center gap-4">
+            <div class="mt-4 d-flex justify-content-center gap-3">
               <!-- PayPal Button with square border -->
               <div
                 class="payment-option"
-                style="
-                  border: 1px solid #ddd;
-                  border-radius: 4px;
-                  padding: 34px 110px;
-                  width: 200px;
-                "
+                style="border: 1px solid #ddd; border-radius: 4px; width: 234px"
               >
                 <div id="paypal-button-container"></div>
               </div>
@@ -2077,15 +2074,14 @@
                   cursor: pointer;
                   border: 1px solid #ddd;
                   border-radius: 4px;
-                  padding: 31px;
-                  width: 200px;
+                  width: 234px;
                 "
               >
                 <img
-                  src="img/stripe.png"
+                  src="img/debit credit card.png"
                   alt="Stripe"
                   class="img-fluid"
-                  style="max-width: 120px"
+                  style="max-width: 206px; margin-right: 5px"
                 />
               </div>
             </div>
@@ -2775,7 +2771,7 @@
       });
     </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://www.paypal.com/sdk/js?client-id=AboK-oq6nnplV5UVW9djS7-Q5z6iZjZjzzR2vD6IQnThL1twuIlL4Khla8kSKgfBInLF9EqZtyxpSJ9i&currency=GBP"></script>
+    <script src="https://www.paypal.com/sdk/js?client-id=AboK-oq6nnplV5UVW9djS7-Q5z6iZjZjzzR2vD6IQnThL1twuIlL4Khla8kSKgfBInLF9EqZtyxpSJ9i&currency=GBP&disable-funding=card"></script>
     <script>
       document.addEventListener("DOMContentLoaded", function () {
         setTimeout(() => {
@@ -2936,7 +2932,7 @@
       <div
         class="modal-dialog modal-xl modal-dialog-centered modal-scrollable custom-clean-type-modal"
       >
-        <div class="modal-content clean-type-modal-content">
+        <div class="modal-content clean-type-modal-content" style="width: 0% !important">
           <div class="modal-body clean-type-modal-body" id="cleanTypeContent">
             <button
               type="button"

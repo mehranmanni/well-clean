@@ -708,7 +708,6 @@ h6 {
     font-family: sans-serif;
   }
 #paypal-button-container {
-  min-height: 50px; /* Adjust based on your button size */
   transition: opacity 0.3s ease;
 }
   /*
@@ -790,7 +789,7 @@ h6 {
 }
 
 .modal-body {
-  padding: 20px;
+  padding: 34px;
 }
 
 /* Custom file input */
