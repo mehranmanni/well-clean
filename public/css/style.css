@@ -1766,3 +1766,6 @@ input[type="file"] {
       .cleaning-service-content.active {
         display: block;
       }
+      .is-invalid {
+  border-color: #dc3545 !important;
+}

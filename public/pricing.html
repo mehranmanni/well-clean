@@ -438,50 +438,272 @@
                               deep refreshes, our plans are flexible,
                               professional, and hassle-free.
                             </p>
-                            <!-- Bedrooms -->
-                            <div class="mb-3">
-                              <label for="bedrooms" class="form-label"
-                                >Bedrooms</label
-                              >
-                              <select id="bedrooms" class="form-select">
-                                <option selected disabled>
-                                  Select Bedrooms
-                                </option>
-                                <option value="1">1 Bedroom</option>
-                                <option value="2">2 Bedrooms</option>
-                                <option value="3">3 Bedrooms</option>
-                                <option value="4">4 Bedrooms</option>
-                                <option value="5">5 Bedrooms</option>
-                                <option value="6">6 Bedrooms</option>
-                              </select>
+
+                            <!-- Bedrooms & Frequency -->
+                            <div class="row mb-3">
+                              <div class="col-md-6">
+                                <label for="basicbedrooms" class="form-label"
+                                  >Bedrooms</label
+                                >
+                                <select id="basicbedrooms" class="form-select">
+                                  <option selected disabled>
+                                    Select Bedrooms
+                                  </option>
+                                  <option value="1">1 Bedroom (3 hours)</option>
+                                  <option value="2">
+                                    2 Bedrooms (3.5 hours)
+                                  </option>
+                                  <option value="3">
+                                    3 Bedrooms (4 hours)
+                                  </option>
+                                  <option value="4">
+                                    4 Bedrooms (5 hours)
+                                  </option>
+                                  <option value="5">
+                                    5 Bedrooms (6 hours)
+                                  </option>
+                                  <option value="6">
+                                    6 Bedrooms (7 hours)
+                                  </option>
+                                </select>
+                              </div>
+                              <div class="col-md-6">
+                                <label for="basicfrequency" class="form-label"
+                                  >Frequency</label
+                                >
+                                <select id="basicfrequency" class="form-select">
+                                  <option selected disabled>
+                                    Select Frequency
+                                  </option>
+                                  <option value="weekly">Weekly</option>
+                                  <option value="biweekly">Biweekly</option>
+                                  <option value="monthly">Monthly</option>
+                                </select>
+                              </div>
                             </div>
 
-                            <!-- Frequency -->
-                            <div class="mb-3">
-                              <label for="frequency" class="form-label"
-                                >Frequency</label
+                            <!-- Preferred Date & Time -->
+                            <div class="row mb-3">
+                              <div class="col-md-6">
+                                <label
+                                  for="basicpreferredDate"
+                                  class="form-label"
+                                  >Preferred Date</label
+                                >
+                                <input
+                                  type="date"
+                                  id="basicpreferredDate"
+                                  class="form-control"
+                                />
+                              </div>
+                              <div class="col-md-6">
+                                <label
+                                  for="basicpreferredTime"
+                                  class="form-label"
+                                  >Preferred Time</label
+                                >
+                                <input
+                                  type="time"
+                                  id="basicpreferredTime"
+                                  class="form-control"
+                                />
+                              </div>
+                            </div>
+
+                            <!-- Contact Information -->
+                            <h6 class="mt-4" style="font-size: 18px">
+                              Contact Information
+                            </h6>
+                            <div class="row mb-3">
+                              <div class="col-md-6">
+                                <label for="basicfullName" class="form-label"
+                                  >Full Name *</label
+                                >
+                                <input
+                                  type="text"
+                                  id="basicfullName"
+                                  class="form-control"
+                                  required
+                                />
+                              </div>
+                              <div class="col-md-6">
+                                <label for="basicemail" class="form-label"
+                                  >Email Address *</label
+                                >
+                                <input
+                                  type="email"
+                                  id="basicemail"
+                                  class="form-control"
+                                  required
+                                />
+                              </div>
+                            </div>
+                            <div class="row mb-3">
+                              <div class="col-md-6">
+                                <label for="basicphone" class="form-label"
+                                  >Phone Number *</label
+                                >
+                                <input
+                                  type="tel"
+                                  id="basicphone"
+                                  class="form-control"
+                                  required
+                                />
+                              </div>
+                              <div class="col-md-6">
+                                <label for="basicaltPhone" class="form-label"
+                                  >Alternate Phone</label
+                                >
+                                <input
+                                  type="tel"
+                                  id="basicaltPhone"
+                                  class="form-control"
+                                />
+                              </div>
+                            </div>
+
+                            <!-- Address Information -->
+                            <h6 class="mt-4" style="font-size: 18px">
+                              Address Information
+                            </h6>
+                            <div class="row mb-3">
+                              <div class="col-md-6">
+                                <label for="basicaddress" class="form-label"
+                                  >Address *</label
+                                >
+                                <input
+                                  type="text"
+                                  id="basicaddress"
+                                  class="form-control"
+                                  required
+                                />
+                              </div>
+                              <div class="col-md-6">
+                                <label for="basicpostcode" class="form-label"
+                                  >Postcode *</label
+                                >
+                                <input
+                                  type="text"
+                                  id="basicpostcode"
+                                  class="form-control"
+                                  required
+                                />
+                              </div>
+                            </div>
+                            <div class="row mb-3">
+                              <div class="col-md-6">
+                                <label for="basiccity" class="form-label"
+                                  >City *</label
+                                >
+                                <input
+                                  type="text"
+                                  id="basiccity"
+                                  class="form-control"
+                                  required
+                                />
+                              </div>
+                              <div class="col-md-6">
+                                <label for="basiccountry" class="form-label"
+                                  >Country *</label
+                                >
+                                <input
+                                  type="text"
+                                  id="basiccountry"
+                                  class="form-control"
+                                  required
+                                />
+                              </div>
+                            </div>
+
+                            <!-- Special Instructions -->
+                            <div class="mb-3" style="font-size: 18px">
+                              <label for="basicinstructions" class="form-label"
+                                >Special Instructions</label
                               >
-                              <select id="frequency" class="form-select">
-                                <option selected disabled>
-                                  Select Frequency
-                                </option>
-                                <option value="weekly">Weekly</option>
-                                <option value="biweekly">Biweekly</option>
-                                <option value="monthly">Monthly</option>
-                              </select>
+                              <textarea
+                                id="basicinstructions"
+                                class="form-control"
+                                rows="3"
+                              ></textarea>
+                            </div>
+
+                            <!-- Book Now Button -->
+                            <div class="d-flex justify-content-end">
                               <button
-                                class="btn btn-primary select-package float-end mt-3 me-3"
-                                data-name="Custom Cleaning"
-                                data-price=""
-                                data-frequency=""
-                                data-cleaning-type=""
-                                data-base=""
+                                id="basicBookNow"
+                                class="btn btn-primary mt-3 me-2"
                               >
-                                Book Now
+                                <i class="fas fa-calendar-check me-2"></i> Book
+                                Now
                               </button>
                             </div>
+                          </div>
+                        </div>
+                      </div>
+                      <!-- Basic Cleaning Payment Modal -->
+                      <div
+                        class="modal fade"
+                        id="basicPaymentModal"
+                        tabindex="-1"
+                        aria-labelledby="basicPaymentModalLabel"
+                        aria-hidden="true"
+                      >
+                        <div
+                          class="modal-dialog modal-dialog-centered modal-sm"
+                        >
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5
+                                style="color: #000000"
+                                class="modal-title"
+                                id="basicPaymentModalLabel"
+                              >
+                                Select Payment Method
+                              </h5>
+                              <button
+                                type="button"
+                                class="btn-close"
+                                data-bs-dismiss="modal"
+                                aria-label="Close"
+                              ></button>
+                            </div>
+                            <div class="modal-body text-center">
+                              <p class="mb-4">
+                                Please choose your preferred payment method:
+                              </p>
+                              <div class="d-flex justify-content-center gap-3">
+                                <!-- PayPal Button -->
+                                <div
+                                  class="payment-option"
+                                  style="
+                                    border: 1px solid #ddd;
+                                    border-radius: 4px;
+                                    width: 200px;
+                                  "
+                                >
+                                  <div id="basic-paypal-button-container"></div>
+                                </div>
 
-                            <!-- Book Button -->
+                                <!-- Stripe Button -->
+                                <div
+                                  class="payment-option"
+                                  onclick="processPayment('stripe')"
+                                  style="
+                                    cursor: pointer;
+                                    border: 1px solid #ddd;
+                                    border-radius: 4px;
+                                    width: 200px;
+                                  "
+                                >
+                                  <img
+                                    src="img/debit credit card.png"
+                                    alt="Stripe"
+                                    class="img-fluid"
+                                    style="max-width: 180px"
+                                  />
+                                </div>
+                              </div>
+                            </div>
                           </div>
                         </div>
                       </div>
@@ -491,7 +713,7 @@
                         id="monthlyPackages"
                         class="row"
                         style="display: none"
-                      >
+                       >
                         <div class="col-md-12">
                           <div class="package card p-4">
                             <h5>Deep Cleaning Booking Form</h5>
@@ -501,52 +723,268 @@
                               thorough home reset, it tackles hidden dirt and
                               leaves every corner spotless.
                             </p>
-                            <!-- Bedrooms -->
-                            <div class="mb-3">
-                              <label for="bedroomsMonthly" class="form-label"
-                                >Bedrooms</label
-                              >
-                              <select id="bedroomsMonthly" class="form-select">
-                                <option selected disabled>
-                                  Select Bedrooms
-                                </option>
-                                <option value="1">1 Bedroom</option>
-                                <option value="2">2 Bedrooms</option>
-                                <option value="3">3 Bedrooms</option>
-                                <option value="4">4 Bedrooms</option>
-                                <option value="5">5 Bedrooms</option>
-                                <option value="6">6 Bedrooms</option>
-                              </select>
+
+                            <!-- Bedrooms & Frequency -->
+                            <div class="row mb-3">
+                              <div class="col-md-6">
+                                <label for="deepbedroomsMonthly" class="form-label"
+                                  >Bedrooms</label
+                                >
+                                <select
+                                  id="deepbedroomsMonthly"
+                                  class="form-select"
+                                >
+                                  <option selected disabled>
+                                    Select Bedrooms
+                                  </option>
+                                  <option value="1">
+                                    1 Bedroom (3.5 hours)
+                                  </option>
+                                  <option value="2">
+                                    2 Bedrooms (4.5 hours)
+                                  </option>
+                                  <option value="3">
+                                    3 Bedrooms (5.5 hours)
+                                  </option>
+                                  <option value="4">
+                                    4 Bedrooms (6.5 hours)
+                                  </option>
+                                  <option value="5">
+                                    5 Bedrooms (7.5 hours)
+                                  </option>
+                                  <option value="6">
+                                    6 Bedrooms (8.5 hours)
+                                  </option>
+                                </select>
+                              </div>
+                              <div class="col-md-6">
+                                <label for="deepfrequencyMonthly" class="form-label"
+                                  >Frequency</label
+                                >
+                                <select
+                                  id="deepfrequencyMonthly"
+                                  class="form-select"
+                                >
+                                  <option selected disabled>
+                                    Select Frequency
+                                  </option>
+                                  <option value="weekly">Weekly</option>
+                                  <option value="biweekly">Biweekly</option>
+                                  <option value="monthly">Monthly</option>
+                                </select>
+                              </div>
                             </div>
 
-                            <!-- Frequency -->
-                            <div class="mb-3">
-                              <label for="frequencyMonthly" class="form-label"
-                                >Frequency</label
+                            <!-- Preferred Date & Time -->
+                            <div class="row mb-3">
+                              <div class="col-md-6">
+                                <label
+                                  for="deeppreferredDate"
+                                  class="form-label"
+                                  >Preferred Date</label
+                                >
+                                <input
+                                  type="date"
+                                  id="deeppreferredDate"
+                                  class="form-control"
+                                />
+                              </div>
+                              <div class="col-md-6">
+                                <label
+                                  for="deeppreferredTime"
+                                  class="form-label"
+                                  >Preferred Time</label
+                                >
+                                <input
+                                  type="time"
+                                  id="deeppreferredTime"
+                                  class="form-control"
+                                />
+                              </div>
+                            </div>
+
+                            <!-- Contact Information -->
+                            <h6 class="mt-4" style="font-size: 18px">
+                              Contact Information
+                            </h6>
+                            <div class="row mb-3">
+                              <div class="col-md-6">
+                                <label for="deepfullName" class="form-label"
+                                  >Full Name *</label
+                                >
+                                <input
+                                  type="text"
+                                  id="deepfullName"
+                                  class="form-control"
+                                  required
+                                />
+                              </div>
+                              <div class="col-md-6">
+                                <label for="deepemail" class="form-label"
+                                  >Email Address *</label
+                                >
+                                <input
+                                  type="email"
+                                  id="deepemail"
+                                  class="form-control"
+                                  required
+                                />
+                              </div>
+                            </div>
+                            <div class="row mb-3">
+                              <div class="col-md-6">
+                                <label for="deepphone" class="form-label"
+                                  >Phone Number *</label
+                                >
+                                <input
+                                  type="tel"
+                                  id="deepphone"
+                                  class="form-control"
+                                  required
+                                />
+                              </div>
+                              <div class="col-md-6">
+                                <label for="deepaltPhone" class="form-label"
+                                  >Alternate Phone</label
+                                >
+                                <input
+                                  type="tel"
+                                  id="deepaltPhone"
+                                  class="form-control"
+                                />
+                              </div>
+                            </div>
+
+                            <!-- Address Information -->
+                            <h6 class="mt-4" style="font-size: 18px">
+                              Address Information
+                            </h6>
+                            <div class="row mb-3">
+                              <div class="col-md-6">
+                                <label for="deepaddress" class="form-label"
+                                  >Address *</label
+                                >
+                                <input
+                                  type="text"
+                                  id="deepaddress"
+                                  class="form-control"
+                                  required
+                                />
+                              </div>
+                              <div class="col-md-6">
+                                <label for="deeppostcode" class="form-label"
+                                  >Postcode *</label
+                                >
+                                <input
+                                  type="text"
+                                  id="deeppostcode"
+                                  class="form-control"
+                                  required
+                                />
+                              </div>
+                            </div>
+                            <div class="row mb-3">
+                              <div class="col-md-6">
+                                <label for="deepcity" class="form-label"
+                                  >City *</label
+                                >
+                                <input
+                                  type="text"
+                                  id="deepcity"
+                                  class="form-control"
+                                  required
+                                />
+                              </div>
+                              <div class="col-md-6">
+                                <label for="deepcountry" class="form-label"
+                                  >Country *</label
+                                >
+                                <input
+                                  type="text"
+                                  id="deepcountry"
+                                  class="form-control"
+                                  required
+                                />
+                              </div>
+                            </div>
+
+                            <!-- Special Instructions -->
+                            <div class="mb-3" style="font-size: 18px">
+                              <label for="deepinstructions" class="form-label"
+                                >Special Instructions</label
                               >
-                              <select id="frequencyMonthly" class="form-select">
-                                <option selected disabled>
-                                  Select Frequency
-                                </option>
-                                <option value="weekly">Weekly</option>
-                                <option value="biweekly">Biweekly</option>
-                                <option value="monthly">Monthly</option>
-                              </select>
+                              <textarea
+                                id="deepinstructions"
+                                class="form-control"
+                                rows="3"
+                              ></textarea>
+                            </div>
+
+                            <!-- Book Now Button -->
+                            <div class="d-flex justify-content-end">
                               <button
-                                class="btn btn-primary select-package float-end mt-3 me-3"
-                                data-name="Custom Deep Cleaning"
-                                data-price=""
-                                data-frequency=""
-                                data-cleaning-type=""
-                                data-base=""
+                                id="deepBookNow"
+                                class="btn btn-primary mt-3 me-2"
+                                data-bs-toggle="modal"
+                                data-bs-target="#deepPaymentModal"
                               >
-                                Book Now
+                                <i class="fas fa-calendar-check me-2"></i> Book
+                                Now
                               </button>
                             </div>
                           </div>
-                          <!-- Book Button -->
                         </div>
                       </div>
+<!-- Deep Cleaning Payment Modal -->
+<div
+  class="modal fade"
+  id="deepPaymentModal"
+  tabindex="-1"
+  aria-labelledby="deepPaymentModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 style="color: #000000" class="modal-title" id="deepPaymentModalLabel">
+          Select Payment Method
+        </h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body text-center">
+        <p class="mb-4">Please choose your preferred payment method:</p>
+        <div class="d-flex justify-content-center gap-3">
+          <!-- PayPal Button -->
+          <div
+            class="payment-option"
+            style="border: 1px solid #ddd; border-radius: 4px; width: 200px;"
+          >
+            <div id="deep-paypal-button-container"></div>
+          </div>
+
+          <!-- Stripe Button -->
+          <div
+            class="payment-option"
+            onclick="processPayment('stripe')"
+            style="cursor: pointer; border: 1px solid #ddd; border-radius: 4px; width: 200px;"
+          >
+            <img
+              src="img/debit credit card.png"
+              alt="Stripe"
+              class="img-fluid"
+              style="max-width: 180px"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
                       <!-- Pricing Summary -->
                     </div>
@@ -2032,7 +2470,7 @@
 
     <!-- Payment Modal -->
     <div
-      class="modal fade "
+      class="modal fade"
       id="paymentModal"
       tabindex="-1"
       aria-labelledby="paymentModalLabel"
@@ -2932,7 +3370,10 @@
       <div
         class="modal-dialog modal-xl modal-dialog-centered modal-scrollable custom-clean-type-modal"
       >
-        <div class="modal-content clean-type-modal-content" style="width: 0% !important">
+        <div
+          class="modal-content clean-type-modal-content"
+          style="width: 0% !important"
+        >
           <div class="modal-body clean-type-modal-body" id="cleanTypeContent">
             <button
               type="button"
@@ -2945,6 +3386,7 @@
         </div>
       </div>
     </div>
+
     <!-- Pricing Script -->
     <script src="js/pricing.js"></script>
   </body>
