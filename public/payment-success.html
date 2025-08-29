@@ -28,9 +28,10 @@
         font-family: "Varela Round", sans-serif;
       }
       .success-container {
+        border: 1px solid #011e3b;
         max-width: 800px;
         margin: 50px auto;
-        padding: 40px;
+        padding: 30px;
         background: white;
         border-radius: 10px;
         box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
@@ -244,10 +245,30 @@
         const getParam = (name) => urlParams.get(name) || "";
 
         /** 1️⃣ Collect ALL booking data from query string **/
+        // First, collect all form data from URL parameters
+        const formData = {};
+        urlParams.forEach((value, key) => {
+          if (key.startsWith("form_")) {
+            formData[key.replace("form_", "")] = value;
+          }
+        });
+
+        // Determine which form was used
+        const isBasicForm = formData.basicfullName !== undefined;
+        const isDeepForm = formData.deepfullName !== undefined;
+
+        // Set up booking details with appropriate values based on form type
         const bookingDetails = {
-          serviceType: urlParams.get("serviceType") || "N/A",
+          // Common fields
+          serviceType:
+            urlParams.get("serviceType") || formData.serviceType || "N/A",
           cleaningType: urlParams.get("cleaningType") || "N/A",
           houseSize: urlParams.get("houseSize") || "N/A",
+          priceRange: urlParams.get("priceRange") || "N/A",
+          paymentStatus: urlParams.get("paymentStatus") || "Paid",
+          paymentMethod: urlParams.get("paymentMethod") || "PayPal",
+
+          // One-off form fields
           preferredDate: urlParams.get("oneOffDate") || "N/A",
           preferredTime: urlParams.get("oneOffTime") || "N/A",
           fullName: urlParams.get("customerName") || "N/A",
@@ -259,10 +280,59 @@
           postcode: urlParams.get("postcode") || "N/A",
           country: urlParams.get("country") || "N/A",
           notes: urlParams.get("regularNotes") || "N/A",
-          priceRange: urlParams.get("priceRange") || "N/A",
-          paymentStatus: urlParams.get("paymentStatus") || "Paid",
-          paymentMethod: urlParams.get("paymentMethod") || "PayPal",
+
+          // Form type flag
+          formType: isBasicForm ? "basic" : isDeepForm ? "deep" : "oneoff",
         };
+
+        // Override with basic form data if that's what was used
+        if (isBasicForm) {
+          bookingDetails.fullName =
+            formData.basicfullName || bookingDetails.fullName;
+          bookingDetails.email = formData.basicemail || bookingDetails.email;
+          bookingDetails.phone = formData.basicphone || bookingDetails.phone;
+          bookingDetails.alternatePhone =
+            formData.basicaltPhone || bookingDetails.alternatePhone;
+          bookingDetails.address =
+            formData.basicaddress || bookingDetails.address;
+          bookingDetails.city = formData.basiccity || bookingDetails.city;
+          bookingDetails.postcode =
+            formData.basicpostcode || bookingDetails.postcode;
+          bookingDetails.country =
+            formData.basiccountry || bookingDetails.country;
+          bookingDetails.notes =
+            formData.basicinstructions || bookingDetails.notes;
+          bookingDetails.preferredDate =
+            formData.basicpreferredDate || bookingDetails.preferredDate;
+          bookingDetails.preferredTime =
+            formData.basicpreferredTime || bookingDetails.preferredTime;
+          bookingDetails.bedrooms = formData.basicbedrooms || "N/A";
+          bookingDetails.frequency = formData.basicfrequency || "N/A";
+        }
+        // Override with deep form data if that's what was used
+        else if (isDeepForm) {
+          bookingDetails.fullName =
+            formData.deepfullName || bookingDetails.fullName;
+          bookingDetails.email = formData.deepemail || bookingDetails.email;
+          bookingDetails.phone = formData.deepphone || bookingDetails.phone;
+          bookingDetails.alternatePhone =
+            formData.deepaltPhone || bookingDetails.alternatePhone;
+          bookingDetails.address =
+            formData.deepaddress || bookingDetails.address;
+          bookingDetails.city = formData.deepcity || bookingDetails.city;
+          bookingDetails.postcode =
+            formData.deeppostcode || bookingDetails.postcode;
+          bookingDetails.country =
+            formData.deepcountry || bookingDetails.country;
+          bookingDetails.notes =
+            formData.deepinstructions || bookingDetails.notes;
+          bookingDetails.preferredDate =
+            formData.deeppreferredDate || bookingDetails.preferredDate;
+          bookingDetails.preferredTime =
+            formData.deeppreferredTime || bookingDetails.preferredTime;
+          bookingDetails.bedrooms = formData.deepbedrooms || "N/A";
+          bookingDetails.frequency = formData.deepfrequency || "N/A";
+        }
 
         /** 2️⃣ Format date nicely **/
         const formatDate = (dateString) => {
@@ -276,6 +346,17 @@
                 month: "long",
                 day: "numeric",
               });
+        };
+
+        /** 2.5 Format frequency nicely **/
+        const formatFrequency = (freq) => {
+          if (!freq || freq === "N/A") return "N/A";
+          const freqMap = {
+            weekly: "Weekly",
+            biweekly: "Bi-weekly",
+            monthly: "Monthly",
+          };
+          return freqMap[freq] || freq;
         };
 
         /** 3️⃣ Format time nicely **/
@@ -301,77 +382,136 @@
         }
 
         /** 5️⃣ Build the HTML to insert **/
-        const detailsHTML = `
+        // Build service details based on form type
+        let serviceDetailsHTML = "";
+
+        // Common service details
+        serviceDetailsHTML += `
     <div class="section-header">Service Information</div>
     <div class="detail-item">
       <div class="detail-label">Service Type:</div>
-      <div class="detail-value">${bookingDetails.serviceType}</div>
-    </div>
+      <div class="detail-value">${bookingDetails.serviceType} ${
+          bookingDetails.formType === "basic"
+            ? "(Basic Cleaning)"
+            : bookingDetails.formType === "deep"
+            ? "(Deep Cleaning)"
+            : ""
+        }</div>
+    </div>`;
+
+        // Add bedrooms and frequency for basic/deep cleaning forms
+        if (bookingDetails.formType !== "oneoff") {
+          serviceDetailsHTML += `
+    <div class="detail-item">
+      <div class="detail-label">Cleaning Frequency:</div>
+      <div class="detail-value">${
+        formatFrequency(bookingDetails.frequency) || "N/A"
+      }</div>
+    </div>`;
+        }
+
+        // Add house size if available
+        if (bookingDetails.houseSize && bookingDetails.houseSize !== "N/A") {
+          serviceDetailsHTML += `
     <div class="detail-item">
       <div class="detail-label">House Size:</div>
       <div class="detail-value">${bookingDetails.houseSize}</div>
-    </div>
-    <div class="detail-item">
-      <div class="detail-label">Preferred Date:</div>
-      <div class="detail-value">${formatDate(
-        bookingDetails.preferredDate
-      )}</div>
-    </div>
-    <div class="detail-item">
-      <div class="detail-label">Preferred Time:</div>
-      <div class="detail-value">${formatTime(
-        bookingDetails.preferredTime
-      )}</div>
-    </div>
+    </div>`;
+        }
 
-    <div class="section-header">Customer Information</div>
+        // Add service schedule
+        serviceDetailsHTML += `
     <div class="detail-item">
-      <div class="detail-label">Name:</div>
-      <div class="detail-value">${bookingDetails.fullName}</div>
-    </div>
-    <div class="detail-item">
-      <div class="detail-label">Email:</div>
-      <div class="detail-value">${bookingDetails.email}</div>
-    </div>
-    <div class="detail-item">
-      <div class="detail-label">Phone:</div>
-      <div class="detail-value">${bookingDetails.phone}</div>
-    </div>
-    <div class="detail-item">
-      <div class="detail-label">Alternate Phone:</div>
-      <div class="detail-value">${bookingDetails.alternatePhone}</div>
-    </div>
+      <div class="detail-label">Preferred Date & Time:</div>
+      <div class="detail-value">${formatDate(bookingDetails.preferredDate)} & ${formatTime(bookingDetails.preferredTime)}</div>
+    </div>`;
 
-    <div class="section-header">Service Address</div>
-    <div class="detail-item">
-      <div class="detail-label">Address:</div>
-      <div class="detail-value">${bookingDetails.address}</div>
-    </div>
-    <div class="detail-item">
-      <div class="detail-label">City:</div>
-      <div class="detail-value">${bookingDetails.city}</div>
-    </div>
-    <div class="detail-item">
-      <div class="detail-label">Postcode:</div>
-      <div class="detail-value">${bookingDetails.postcode}</div>
-    </div>
-    <div class="detail-item">
-      <div class="detail-label">Country:</div>
-      <div class="detail-value">${bookingDetails.country}</div>
-    </div>
+        // Customer information - using let instead of const to allow modifications
+        let customerDetailsHTML = `
+  <div class="section-header" style="font-weight: bold; margin-bottom: 10px;">Customer Information</div>
 
+  <div style="display: flex; gap: 20px; margin-bottom: 5px;">
+    <div style="flex: 1; display: flex;">
+      <div style="width: 100px; font-weight: bold;">Name:</div>
+      <div>${bookingDetails.fullName || "N/A"}</div>
+    </div>
+    <div style="flex: 1; display: flex;">
+      <div style="width: 100px; font-weight: bold;">Email:</div>
+      <div>${bookingDetails.email || "N/A"}</div>
+    </div>
+  </div>
+
+  <div style="display: flex; gap: 20px; margin-bottom: 5px;">
+    <div style="flex: 1; display: flex;">
+      <div style="width: 100px; font-weight: bold;">Phone:</div>
+      <div>${bookingDetails.phone || "N/A"}</div>
+    </div>
+    <div style="flex: 1; display: flex;">
+      <div style="width: 100px; font-weight: bold;">Alt Phone:</div>
+      <div>${bookingDetails.alternatePhone || "N/A"}</div>
+    </div>
+  </div>
+`;
+
+        // Service address
+        const addressHTML = `
+  <div class="section-header" style="font-weight: bold; margin-bottom: 10px;">Service Address</div>
+
+  <!-- Address stays on its own line -->
+  <div style="display: flex; margin-bottom: 5px;">
+    <div style="width: 100px; font-weight: bold;">Address:</div>
+    <div>${bookingDetails.address || "N/A"}</div>
+  </div>
+
+  <!-- City, Postcode, Country in one line -->
+  <div style="display: flex; gap: 20px; margin-bottom: 5px;">
+    <div style="flex: 1; display: flex;">
+      <div style="width: 91px; font-weight: bold;">City:</div>
+      <div>${bookingDetails.city || "N/A"}</div>
+    </div>
+    <div style="flex: 1; display: flex;">
+      <div style="width: 100px; font-weight: bold;">Postcode:</div>
+      <div>${bookingDetails.postcode || "N/A"}</div>
+    </div>
+    <div style="flex: 1; display: flex;">
+      <div style="width: 100px; font-weight: bold;">Country:</div>
+      <div>${bookingDetails.country || "N/A"}</div>
+    </div>
+  </div>
+`;
+
+
+        // Special instructions if available
+        let notesHTML = "";
+        if (bookingDetails.notes && bookingDetails.notes !== "N/A") {
+          notesHTML = `
+    <div class="section-header">Special Instructions</div>
+    <div class="detail-item">
+      <div class="detail-value">${bookingDetails.notes}</div>
+    </div>`;
+        }
+
+        // Payment information
+        const paymentHTML = `
     <div class="section-header">Payment Information</div>
-    <div class="detail-item">
-      <div class="detail-label">Total Amount:</div>
-      <div class="detail-value">${displayPrice}</div>
-    </div>
-    <div class="detail-item">
-      <div class="detail-label">Payment Status:</div>
-      <div class="detail-value text-success">${
-        bookingDetails.paymentStatus
-      }</div>
-    </div>
-  `;
+    <div style="display: flex; gap: 20px; margin-bottom: 5px;">
+      <div style="flex: 1; display: flex;">
+        <div style="width: 150px; font-weight: bold;">Total Amount:</div>
+        <div>${displayPrice}</div>
+      </div>
+      <div style="flex: 1; display: flex;">
+        <div style="width: 150px; font-weight: bold;">Payment Status:</div>
+        <div class="text-success">${bookingDetails.paymentStatus}</div>
+      </div>
+    </div>`;
+
+        // Combine all sections
+        const detailsHTML =
+          serviceDetailsHTML +
+          customerDetailsHTML +
+          addressHTML +
+          notesHTML +
+          paymentHTML;
 
         /** 6️⃣ Inject the HTML into the page **/
         document.getElementById("bookingDetails").innerHTML = detailsHTML;
@@ -410,14 +550,14 @@ Thank you for booking with Well Clean!`
         .addEventListener("click", function () {
           const receiptContent = document.querySelector(".success-container");
 
-          // ✅ Clone content and remove buttons
+          // Clone content and remove buttons
           const clone = receiptContent.cloneNode(true);
           const buttons = clone.querySelectorAll(
             ".btn, .btn-download, .btn-back, .btn-whatsapp"
           );
           buttons.forEach((btn) => btn.remove());
 
-          // ✅ Create a temporary offscreen container
+          // Create a temporary offscreen container
           const tempDiv = document.createElement("div");
           tempDiv.style.position = "fixed";
           tempDiv.style.left = "-9999px";
@@ -427,28 +567,16 @@ Thank you for booking with Well Clean!`
           tempDiv.appendChild(clone);
           document.body.appendChild(tempDiv);
 
-          // ✅ Capture the cleaned content
+          // Capture the cleaned content
           html2canvas(clone, {
             scale: 3,
             useCORS: true,
             backgroundColor: "#ffffff",
           }).then((canvas) => {
+            // Convert canvas to image
             const imgData = canvas.toDataURL("image/png");
 
-            const { jsPDF } = window.jspdf;
-            const pdf = new jsPDF("p", "mm", "a4");
-
-            const pageWidth = pdf.internal.pageSize.getWidth();
-            const imgWidth = pageWidth;
-            const imgHeight = (canvas.height * imgWidth) / canvas.width;
-
-            // ✅ Adjust PDF height if needed
-            const pageHeight = imgHeight;
-            pdf.internal.pageSize.height = pageHeight;
-
-            pdf.addImage(imgData, "PNG", 0, 0, imgWidth, imgHeight);
-
-            // ✅ Extract customer's name from "Name:" field
+            // Extract customer's name from "Name:" field for filename
             let nameValue = "receipt";
             const labels = document.querySelectorAll(".detail-label");
             labels.forEach((label) => {
@@ -457,15 +585,22 @@ Thank you for booking with Well Clean!`
                 if (val) nameValue = val;
               }
             });
-
             const safeName = nameValue.split(" ")[0] || "receipt";
-            pdf.save(`${safeName}-receipt.pdf`);
 
-            // ✅ Cleanup temporary DOM
+            // Create a temporary link to trigger download
+            const link = document.createElement("a");
+            link.href = imgData;
+            link.download = `${safeName}-receipt.png`;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+
+            // Cleanup temporary DOM
             document.body.removeChild(tempDiv);
           });
         });
     </script>
+
     <script>
       function updateNavbarVisibility() {
         const navbarCollapse = document.getElementById("navbarCollapse");

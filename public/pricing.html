@@ -58,7 +58,6 @@
         <span class="sr-only">Loading...</span>
       </div>
     </div>
-    <!-- Spinner End -->
     <!-- Social Media Sticky Buttons -->
     <div class="social-icons">
       <a
@@ -136,55 +135,6 @@
       </div> -->
       <!-- Header End -->
     </div>
-    <!-- Navbar & Hero End -->
-
-    <!-- Availability Section -->
-    <!-- <div class="container-fluid cleaning-services-section">
-      <div class="container">
-        <div class="container-fluid booking-section">
-          <div class="container">
-            <div class="row justify-content-center">
-              <div class="col-12 text-center">
-                <section class="avail-body">
-                  <div class="container">
-                    <h2 class="avail-heading">Our Availability</h2>
-                    <p
-                      class="text-muted text-center mb-4"
-                      style="max-width: 1000px; margin: 0 auto 1rem"
-                    >
-                      Check our available time slots below. Today's availability
-                      is highlighted for your convenience.
-                    </p>
-                    <div class="avail-container" id="availability-cards">
-                   
-                      <div
-                        class="avail-card loading-state"
-                        style="
-                          grid-column: 1 / -1;
-                          text-align: center;
-                          padding: 30px;
-                        "
-                      >
-                        <div
-                          class="spinner-border text-primary"
-                          role="status"
-                          style="width: 2.5rem; height: 2.5rem"
-                        >
-                          <span class="visually-hidden">Loading...</span>
-                        </div>
-                        <p class="mt-3 mb-0">Loading availability...</p>
-                      </div>
-                    </div>
-                  </div>
-                  
-                </section>
-              </div>
-              
-            </div>
-          
-        </div>
-      </div>
-    </div> -->
 
     <!-- Services Section -->
     <div class="container-fluid cleaning-services-section">
@@ -713,7 +663,7 @@
                         id="monthlyPackages"
                         class="row"
                         style="display: none"
-                       >
+                      >
                         <div class="col-md-12">
                           <div class="package card p-4">
                             <h5>Deep Cleaning Booking Form</h5>
@@ -727,7 +677,9 @@
                             <!-- Bedrooms & Frequency -->
                             <div class="row mb-3">
                               <div class="col-md-6">
-                                <label for="deepbedroomsMonthly" class="form-label"
+                                <label
+                                  for="deepbedroomsMonthly"
+                                  class="form-label"
                                   >Bedrooms</label
                                 >
                                 <select
@@ -758,7 +710,9 @@
                                 </select>
                               </div>
                               <div class="col-md-6">
-                                <label for="deepfrequencyMonthly" class="form-label"
+                                <label
+                                  for="deepfrequencyMonthly"
+                                  class="form-label"
                                   >Frequency</label
                                 >
                                 <select
@@ -935,56 +889,73 @@
                           </div>
                         </div>
                       </div>
-<!-- Deep Cleaning Payment Modal -->
-<div
-  class="modal fade"
-  id="deepPaymentModal"
-  tabindex="-1"
-  aria-labelledby="deepPaymentModalLabel"
-  aria-hidden="true"
->
-  <div class="modal-dialog modal-dialog-centered modal-sm">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 style="color: #000000" class="modal-title" id="deepPaymentModalLabel">
-          Select Payment Method
-        </h5>
-        <button
-          type="button"
-          class="btn-close"
-          data-bs-dismiss="modal"
-          aria-label="Close"
-        ></button>
-      </div>
-      <div class="modal-body text-center">
-        <p class="mb-4">Please choose your preferred payment method:</p>
-        <div class="d-flex justify-content-center gap-3">
-          <!-- PayPal Button -->
-          <div
-            class="payment-option"
-            style="border: 1px solid #ddd; border-radius: 4px; width: 200px;"
-          >
-            <div id="deep-paypal-button-container"></div>
-          </div>
+                      <!-- Deep Cleaning Payment Modal -->
+                      <div
+                        class="modal fade"
+                        id="deepPaymentModal"
+                        tabindex="-1"
+                        aria-labelledby="deepPaymentModalLabel"
+                        aria-hidden="true"
+                      >
+                        <div
+                          class="modal-dialog modal-dialog-centered modal-sm"
+                        >
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5
+                                style="color: #000000"
+                                class="modal-title"
+                                id="deepPaymentModalLabel"
+                              >
+                                Select Payment Method
+                              </h5>
+                              <button
+                                type="button"
+                                class="btn-close"
+                                data-bs-dismiss="modal"
+                                aria-label="Close"
+                              ></button>
+                            </div>
+                            <div class="modal-body text-center">
+                              <p class="mb-4">
+                                Please choose your preferred payment method:
+                              </p>
+                              <div class="d-flex justify-content-center gap-3">
+                                <!-- PayPal Button -->
+                                <div
+                                  class="payment-option"
+                                  style="
+                                    border: 1px solid #ddd;
+                                    border-radius: 4px;
+                                    width: 200px;
+                                  "
+                                >
+                                  <div id="deep-paypal-button-container"></div>
+                                </div>
 
-          <!-- Stripe Button -->
-          <div
-            class="payment-option"
-            onclick="processPayment('stripe')"
-            style="cursor: pointer; border: 1px solid #ddd; border-radius: 4px; width: 200px;"
-          >
-            <img
-              src="img/debit credit card.png"
-              alt="Stripe"
-              class="img-fluid"
-              style="max-width: 180px"
-            />
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
+                                <!-- Stripe Button -->
+                                <div
+                                  class="payment-option"
+                                  onclick="processPayment('stripe')"
+                                  style="
+                                    cursor: pointer;
+                                    border: 1px solid #ddd;
+                                    border-radius: 4px;
+                                    width: 200px;
+                                  "
+                                >
+                                  <img
+                                    src="img/debit credit card.png"
+                                    alt="Stripe"
+                                    class="img-fluid"
+                                    style="max-width: 180px"
+                                  />
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
 
                       <!-- Pricing Summary -->
                     </div>
@@ -1137,9 +1108,7 @@
             isMonthly ? "block" : "none";
         });
       });
-    </script>
 
-    <script>
       function getBookingDetails() {
         const isOneOff =
           document.getElementById("oneOffSection").style.display !== "none";
@@ -1768,67 +1737,6 @@
             form.querySelector('[name="oneOffTime"]')?.value || "Not selected"
           );
 
-          // console.log(
-          //   "  • Special Instructions:",
-          //   form.querySelector('[name="oneOffNotes"]')?.value ||
-          //     document.getElementById("oneOffNotes")?.value ||
-          //     "Not provided"
-          // );
-          // console.log(
-          //   "  • Email:",
-          //   form.querySelector('[name="email"]')?.value ||
-          //     document.getElementById("email")?.value ||
-          //     "Not provided"
-          // );
-          // console.log(
-          //   "  • Phone:",
-          //   form.querySelector('[name="phone"]')?.value ||
-          //     document.getElementById("phone")?.value ||
-          //     "Not provided"
-          // );
-          // console.log(
-          //   "  • Alternate Phone:",
-          //   form.querySelector('[name="alternatePhone"]')?.value ||
-          //     document.getElementById("alternatePhone")?.value ||
-          //     "Not provided"
-          // );
-
-          // console.log("\n🏠 Address Information:");
-          // console.log(
-          //   "  • Address:",
-          //   form.querySelector('[name="address"]')?.value ||
-          //     document.getElementById("address")?.value ||
-          //     "Not provided"
-          // );
-          // console.log(
-          //   "  • Postcode:",
-          //   form.querySelector('[name="postcode"]')?.value ||
-          //     document.getElementById("postcode")?.value ||
-          //     "Not provided"
-          // );
-          // console.log(
-          //   "  • City:",
-          //   form.querySelector('[name="city"]')?.value ||
-          //     document.getElementById("city")?.value ||
-          //     "Not provided"
-          // );
-          // console.log(
-          //   "  • Country:",
-          //   form.querySelector('[name="country"]')?.value ||
-          //     document.getElementById("Country")?.value ||
-          //     "Not provided"
-          // );
-
-          // console.log("\n📝 Special Instructions:");
-          // console.log(
-          //   "  ",
-          //   form.querySelector('[name="oneOffNotes"]')?.value ||
-          //     document.getElementById("oneOffNotes")?.value ||
-          //     "None provided"
-          // );
-
-          // console.groupEnd();
-
           // Show payment modal if form is valid
           const paymentModal = new bootstrap.Modal(
             document.getElementById("paymentModal")
@@ -2166,28 +2074,128 @@
               console.log("Price from priceRange:", bookingDetails.priceRange);
               console.log("Amount in pence:", amountInPence);
 
+              // Collect form data
+              // Helper function to safely get element value
+              const getValue = (id) => {
+                const el = document.getElementById(id);
+                return el ? el.value : "";
+              };
+
+              // Collect basic form data with null checks
+              const basicFormData = {
+                packageType: "Basic Cleaning",
+                basicbedrooms: getValue("basicbedrooms"),
+                basicfrequency: getValue("basicfrequency"),
+                basicpreferredDate: getValue("basicpreferredDate"),
+                basicpreferredTime: getValue("basicpreferredTime"),
+                basicfullName: getValue("basicfullName"),
+                basicemail: getValue("basicemail"),
+                basicphone: getValue("basicphone"),
+                basicaltPhone: getValue("basicaltPhone"),
+                basicaddress: getValue("basicaddress"),
+                basicpostcode: getValue("basicpostcode"),
+                basiccity: getValue("basiccity"),
+                basiccountry: getValue("basiccountry"),
+                basicinstructions: getValue("basicinstructions"),
+              };
+
+              // Collect deep clean form data with null checks
+              const deepCleanFormData = {
+                packageType: "Deep Cleaning",
+                deepbedrooms: getValue("deepbedroomsMonthly"),
+                deepfrequency: getValue("deepfrequencyMonthly"),
+                deeppreferredDate: getValue("deeppreferredDate"),
+                deeppreferredTime: getValue("deeppreferredTime"),
+                deepfullName: getValue("deepfullName"),
+                deepemail: getValue("deepemail"),
+                deepphone: getValue("deepphone"),
+                deepaltPhone: getValue("deepaltPhone"),
+                deepaddress: getValue("deepaddress"),
+                deeppostcode: getValue("deeppostcode"),
+                deepcity: getValue("deepcity"),
+                deepcountry: getValue("deepcountry"),
+                deepinstructions: getValue("deepinstructions"),
+              };
+              console.log("Basic Cleaning Booking Form Data:", basicFormData);
+              console.log(
+                "Deep Cleaning Booking Form Data:",
+                deepCleanFormData
+              );
+
               // Create payment intent data with success URL containing all parameters
+              // Determine which form was used
+              const isBasicForm = basicFormData.basicfullName !== "";
+              const isDeepForm = deepCleanFormData.deepfullName !== "";
+              const formData = isBasicForm
+                ? basicFormData
+                : isDeepForm
+                ? deepCleanFormData
+                : null;
+
+              // Add form data to URL params
+              if (formData) {
+                Object.entries(formData).forEach(([key, value]) => {
+                  if (value) urlParams.append(`form_${key}`, value);
+                });
+              }
+
               const paymentIntentData = {
                 amount: amountInPence, // Use the converted price from priceRange
                 currency: "gbp",
                 metadata: {
                   serviceType: bookingDetails.serviceType,
                   houseSize: bookingDetails.houseSize,
-                  priceRange: bookingDetails.priceRange,
-                  totalPrice: bookingDetails.priceRange, // Use the original priceRange value
-                  customerName: bookingDetails.customerName || "",
-                  customerEmail: bookingDetails.customerEmail || "",
-                  customerPhone: bookingDetails.customerPhone || "",
-                  address: bookingDetails.address || "",
-                  postcode: bookingDetails.postcode || "",
-                  city: bookingDetails.city || "",
-                  country: bookingDetails.country || "",
-                  notes: bookingDetails.notes || "",
+                  totalPrice: bookingDetails.priceRange,
+                  customerName:
+                    bookingDetails.customerName ||
+                    basicFormData.basicfullName ||
+                    deepCleanFormData.deepfullName,
+                  customerEmail:
+                    bookingDetails.customerEmail ||
+                    basicFormData.basicemail ||
+                    deepCleanFormData.deepemail,
+                  customerPhone:
+                    bookingDetails.customerPhone ||
+                    basicFormData.basicphone ||
+                    deepCleanFormData.deepphone,
+                  altPhone:
+                    bookingDetails.altPhone ||
+                    basicFormData.basicaltPhone ||
+                    deepCleanFormData.deepaltPhone,
+                  address:
+                    bookingDetails.address ||
+                    basicFormData.basicaddress ||
+                    deepCleanFormData.deepaddress,
+                  postcode:
+                    bookingDetails.postcode ||
+                    basicFormData.basicpostcode ||
+                    deepCleanFormData.deeppostcode,
+                  city:
+                    bookingDetails.city ||
+                    basicFormData.basiccity ||
+                    deepCleanFormData.deepcity,
+                  country:
+                    bookingDetails.country ||
+                    basicFormData.basiccountry ||
+                    deepCleanFormData.deepcountry,
+                  notes:
+                    bookingDetails.notes ||
+                    basicFormData.basicinstructions ||
+                    deepCleanFormData.deepinstructions,
                   oneOffDate: oneOffDate || "",
                   oneOffTime: oneOffTime || "",
-                  cleaningFrequency: bookingDetails.cleaningFrequency || "",
-                  preferredTime: bookingDetails.preferredTime || "",
-                  preferredDate: bookingDetails.preferredDate || "",
+                  cleaningFrequency:
+                    bookingDetails.cleaningFrequency ||
+                    basicFormData.basicfrequency ||
+                    deepCleanFormData.deepfrequency,
+                  preferredTime:
+                    bookingDetails.preferredTime ||
+                    basicFormData.basicpreferredTime ||
+                    deepCleanFormData.deeppreferredTime,
+                  preferredDate:
+                    bookingDetails.preferredDate ||
+                    basicFormData.basicpreferredDate ||
+                    deepCleanFormData.deeppreferredDate,
                 },
                 success_url: `${
                   window.location.origin

@@ -168,8 +168,9 @@ document.addEventListener("DOMContentLoaded", function () {
   // Regular Cleaning Book Now
   const bookNowBtn = document.getElementById("basicBookNow");
   if (bookNowBtn) {
-    bookNowBtn.addEventListener("click", function () {
-      let hasError = false;
+    bookNowBtn.addEventListener("click", function (e) {
+      e.preventDefault();
+
       const requiredFields = [
         "basicbedrooms",
         "basicfrequency",
@@ -182,20 +183,38 @@ document.addEventListener("DOMContentLoaded", function () {
         "basicpostcode",
         "basiccity",
         "basiccountry",
-      ];
+      ].map((id) => document.getElementById(id));
 
-      requiredFields.forEach((id) => {
-        const el = document.getElementById(id);
-        if (!el || !el.value) {
-          hasError = true;
-          el?.classList.add("is-invalid");
-        } else {
-          el.classList.remove("is-invalid");
+      let isValid = true;
+      let firstInvalid = null;
+
+      // Reset error states
+      requiredFields.forEach((field) => field.classList.remove("is-invalid"));
+
+      // Validate fields
+      requiredFields.forEach((field) => {
+        if (
+          !field.value.trim() ||
+          field.value === "Select Bedrooms" ||
+          field.value === "Select Frequency"
+        ) {
+          field.classList.add("is-invalid");
+          if (isValid) {
+            firstInvalid = field;
+          }
+          isValid = false;
         }
       });
 
-      if (hasError) return;
+      if (!isValid) {
+        if (firstInvalid) {
+          firstInvalid.scrollIntoView({ behavior: "smooth", block: "center" });
+          firstInvalid.focus();
+        }
+        return;
+      }
 
+      // ✅ Only open modal if valid
       new bootstrap.Modal(document.getElementById("basicPaymentModal")).show();
     });
   }
@@ -206,47 +225,80 @@ document.addEventListener("DOMContentLoaded", function () {
     deepBookNowBtn.addEventListener("click", function (e) {
       e.preventDefault();
 
-      const data = {
-        bedrooms: document.getElementById("deepbedroomsMonthly")?.value || "",
-        frequency: document.getElementById("deepfrequencyMonthly")?.value || "",
-        preferredDate:
-          document.getElementById("deeppreferredDate")?.value || "",
-        preferredTime:
-          document.getElementById("deeppreferredTime")?.value || "",
-        fullName: document.getElementById("deepfullName")?.value || "",
-        email: document.getElementById("deepemail")?.value || "",
-        phone: document.getElementById("deepphone")?.value || "",
-        address: document.getElementById("deepaddress")?.value || "",
-        postcode: document.getElementById("deeppostcode")?.value || "",
-        city: document.getElementById("deepcity")?.value || "",
-        country: document.getElementById("deepcountry")?.value || "",
-        totalPrice: document.getElementById("totalPrice")?.innerText || "£0.00",
-      };
+      const requiredFields = [
+        "deepbedroomsMonthly",
+        "deepfrequencyMonthly",
+        "deeppreferredDate",
+        "deeppreferredTime",
+        "deepfullName",
+        "deepemail",
+        "deepphone",
+        "deepaddress",
+        "deeppostcode",
+        "deepcity",
+        "deepcountry",
+      ].map((id) => document.getElementById(id));
 
-      let hasError = false;
-      [
-        "fullName",
-        "email",
-        "phone",
-        "address",
-        "postcode",
-        "city",
-        "country",
-      ].forEach((key) => {
-        if (!data[key]) {
-          console.error(`⚠️ ${key} is required but empty`);
-          hasError = true;
+      let isValid = true;
+      let firstInvalid = null;
+
+      // Reset previous error states
+      requiredFields.forEach((field) => {
+        field.classList.remove("is-invalid");
+      });
+
+      // Validate required fields
+      requiredFields.forEach((field) => {
+        if (
+          !field.value.trim() ||
+          field.value === "Select Bedrooms" ||
+          field.value === "Select Frequency"
+        ) {
+          field.classList.add("is-invalid");
+          if (isValid) {
+            firstInvalid = field;
+          }
+          isValid = false;
         }
       });
 
-      if (hasError || data.totalPrice === "£0.00") {
-        alert(
-          "⚠️ Please complete all required fields and select pricing before continuing."
-        );
+      // Check price selection
+      const totalPrice =
+        document.getElementById("totalPrice")?.innerText || "£0.00";
+      if (totalPrice === "£0.00") {
+        isValid = false;
+        if (!firstInvalid) {
+          firstInvalid = document.getElementById("deepbedroomsMonthly");
+        }
+      }
+
+      if (!isValid) {
+        if (firstInvalid) {
+          firstInvalid.scrollIntoView({ behavior: "smooth", block: "center" });
+          firstInvalid.focus();
+        }
         return;
       }
 
+      // Collect data if valid
+      const data = {
+        bedrooms: document.getElementById("deepbedroomsMonthly").value,
+        frequency: document.getElementById("deepfrequencyMonthly").value,
+        preferredDate: document.getElementById("deeppreferredDate").value,
+        preferredTime: document.getElementById("deeppreferredTime").value,
+        fullName: document.getElementById("deepfullName").value,
+        email: document.getElementById("deepemail").value,
+        phone: document.getElementById("deepphone").value,
+        address: document.getElementById("deepaddress").value,
+        postcode: document.getElementById("deeppostcode").value,
+        city: document.getElementById("deepcity").value,
+        country: document.getElementById("deepcountry").value,
+        totalPrice: totalPrice,
+      };
+
       console.log("📌 Deep Cleaning Booking Data:", data);
+
+      // Show modal if all valid
       new bootstrap.Modal(document.getElementById("deepPaymentModal")).show();
     });
   }
