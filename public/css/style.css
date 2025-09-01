@@ -675,7 +675,7 @@ h6 {
 
 .service-item:hover .service-btn-right i {
   transform: rotate(360deg);
-  color: var(--bs-primary) !important;
+  /* color: var(--bs-primary) !important; */
 }
 
 .service-item .service-btn i {
@@ -688,7 +688,7 @@ h6 {
 
 .service-item:hover .service-btn i {
   transform: rotate(360deg);
-  color: var(--bs-primary) !important;
+  /* color: var(--bs-primary) !important; */
 }
 /*** Service End ***/
 .list-unstyled li {
