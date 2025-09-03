@@ -198,7 +198,7 @@ h6 {
   }
 
   .navbar.navbar-expand-lg .navbar-toggler {
-    padding: 10px 20px;
+    padding: 5px 7px;
     border: 1px solid var(--bs-primary);
     color: var(--bs-primary);
   }
@@ -801,6 +801,89 @@ input[type="file"] {
 @media (max-width: 576px) {
   .modal-dialog {
     max-width: 95%;
+  }
+
+  .blu-color {
+    font-size: 18px !important;
+  }
+
+  .display-3 {
+    font-size: 20px !important;
+  }
+
+  p {
+    font-size: 13px !important;
+  }
+
+  .py-5 {
+    padding-top: 1.2rem !important;
+    padding-bottom: 1.2rem !important;
+  }
+
+  .bg-about .bg-light .d-flex {
+    display: flex;
+    flex-direction: column !important;
+  }
+
+  .bg-about .bg-light .d-flex .rounded-circle {
+    width: 70px !important;
+    height: 70px !important;
+  }
+
+  .bg-about .bg-light .d-flex h6 {
+    margin-top: 0.5rem !important;
+    font-size: 17px !important;
+  }
+
+  .bg-about .btn{
+    font-size: 14px !important;
+  }
+
+  .service-item .d-flex{
+    display: flex;
+    flex-direction: column !important;
+    justify-content: flex-start !important;
+  }
+
+  .service-item .d-flex .ps-4 {
+    padding-left: 0px !important;
+    margin-top: 0.5rem !important;
+  }
+
+  .service-item .service-btn-right {
+    margin-left: 4px !important;
+    margin-bottom: 0.5rem !important;
+  }
+
+  .bg-faq .p-5 {
+    width: 100% !important;
+    padding: 0.8rem !important;
+  }
+
+  .bg-light .d-flex{
+    display: flex;
+    flex-direction: column !important;
+    justify-content: flex-start !important;
+  }
+
+  .bg-light .d-flex .rounded-circle {
+    width: 70px !important;
+    height: 70px !important;
+    display: flex;
+    justify-content: center !important;
+    margin-bottom: 0.5rem !important;
+  }
+
+  .testimonial-carousel .owl-dots .owl-dot {
+    width: 16px !important;
+    height: 16px !important;
+  }
+
+  
+  .counter .counter-item .counter-item-icon {
+    width: 90px !important;
+    height: 90px !important;
+    justify-content: center;
   }
 }
 
