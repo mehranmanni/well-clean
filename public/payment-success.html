@@ -174,6 +174,31 @@
         border-radius: 10px;
         background-color: #f8f9fa;
       }
+
+      @media (max-width: 576px) {
+        .success-container .detail-item {
+          display: flex !important;
+          flex-direction: row !important;
+        }
+
+        .section-header {
+          font-size: 16px !important;
+        }
+
+        .detail-feilds {
+          display: flex !important;
+          flex-direction: column !important;
+        }
+
+        .detail-feilds-row {
+          display: flex !important;
+          flex-direction: row !important;
+        }
+
+        .detail-value {
+          font-size: 14px !important;
+        }
+      }
     </style>
   </head>
   <body>
@@ -430,25 +455,25 @@
         let customerDetailsHTML = `
   <div class="section-header" style="font-weight: bold; margin-bottom: 10px;">Customer Information</div>
 
-  <div style="display: flex; gap: 20px; margin-bottom: 5px;">
-    <div style="flex: 1; display: flex;">
+  <div class="detail-feilds" style="display: flex; gap: 20px; margin-bottom: 5px;">
+    <div class="detail-feilds-row" style="flex: 1; display: flex;">
       <div style="width: 100px; font-weight: bold;">Name:</div>
-      <div>${bookingDetails.fullName || "N/A"}</div>
+      <div class="detail-value">${bookingDetails.fullName || "N/A"}</div>
     </div>
-    <div style="flex: 1; display: flex;">
+    <div  class="detail-feilds-row" style="flex: 1; display: flex;">
       <div style="width: 100px; font-weight: bold;">Email:</div>
-      <div>${bookingDetails.email || "N/A"}</div>
+      <div class="detail-value">${bookingDetails.email || "N/A"}</div>
     </div>
   </div>
 
-  <div style="display: flex; gap: 20px; margin-bottom: 5px;">
-    <div style="flex: 1; display: flex;">
+  <div class="detail-feilds" style="display: flex; gap: 20px; margin-bottom: 5px;">
+    <div class="detail-feilds-row" style="flex: 1; display: flex;">
       <div style="width: 100px; font-weight: bold;">Phone:</div>
-      <div>${bookingDetails.phone || "N/A"}</div>
+      <div class="detail-value">${bookingDetails.phone || "N/A"}</div>
     </div>
-    <div style="flex: 1; display: flex;">
+    <div class="detail-feilds-row" style="flex: 1; display: flex;">
       <div style="width: 100px; font-weight: bold;">Alt Phone:</div>
-      <div>${bookingDetails.alternatePhone || "N/A"}</div>
+      <div class="detail-value">${bookingDetails.alternatePhone || "N/A"}</div>
     </div>
   </div>
 `;
@@ -458,24 +483,24 @@
   <div class="section-header" style="font-weight: bold; margin-bottom: 10px;">Service Address</div>
 
   <!-- Address stays on its own line -->
-  <div style="display: flex; margin-bottom: 5px;">
+  <div class="detail-feilds-row" style="display: flex; margin-bottom: 5px;">
     <div style="width: 100px; font-weight: bold;">Address:</div>
-    <div>${bookingDetails.address || "N/A"}</div>
+    <div class="detail-value">${bookingDetails.address || "N/A"}</div>
   </div>
 
   <!-- City, Postcode, Country in one line -->
-  <div style="display: flex; gap: 20px; margin-bottom: 5px;">
-    <div style="flex: 1; display: flex;">
+  <div class="detail-feilds" style="display: flex; gap: 20px; margin-bottom: 5px;">
+    <div class="detail-feilds-row" style="flex: 1; display: flex;">
       <div style="width: 91px; font-weight: bold;">City:</div>
-      <div>${bookingDetails.city || "N/A"}</div>
+      <div class="detail-value">${bookingDetails.city || "N/A"}</div>
     </div>
-    <div style="flex: 1; display: flex;">
+    <div class="detail-feilds-row" style="flex: 1; display: flex;">
       <div style="width: 100px; font-weight: bold;">Postcode:</div>
-      <div>${bookingDetails.postcode || "N/A"}</div>
+      <div class="detail-value">${bookingDetails.postcode || "N/A"}</div>
     </div>
-    <div style="flex: 1; display: flex;">
+    <div class="detail-feilds-row" style="flex: 1; display: flex;">
       <div style="width: 100px; font-weight: bold;">Country:</div>
-      <div>${bookingDetails.country || "N/A"}</div>
+      <div class="detail-value">${bookingDetails.country || "N/A"}</div>
     </div>
   </div>
 `;
@@ -494,14 +519,14 @@
         // Payment information
         const paymentHTML = `
     <div class="section-header">Payment Information</div>
-    <div style="display: flex; gap: 20px; margin-bottom: 5px;">
-      <div style="flex: 1; display: flex;">
+    <div class="detail-feilds" style="display: flex; gap: 20px; margin-bottom: 5px;">
+      <div class="detail-feilds-row" style="flex: 1; display: flex;">
         <div style="width: 150px; font-weight: bold;">Total Amount:</div>
-        <div>${displayPrice}</div>
+        <div class="detail-value">${displayPrice}</div>
       </div>
-      <div style="flex: 1; display: flex;">
+      <div class="detail-feilds-row" style="flex: 1; display: flex;">
         <div style="width: 150px; font-weight: bold;">Payment Status:</div>
-        <div class="text-success">${bookingDetails.paymentStatus}</div>
+        <div class="detail-value" class="text-success">${bookingDetails.paymentStatus}</div>
       </div>
     </div>`;
 

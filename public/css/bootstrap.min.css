@@ -4989,9 +4989,9 @@ fieldset:disabled .btn {
   .modal-dialog-centered {
     min-height: calc(100% - 3.5rem);
   }
-  .modal-sm {
+  /* .modal-sm {
     max-width: 300px;
-  }
+  } */
 }
 @media (min-width: 992px) {
   .modal-lg,
