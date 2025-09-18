@@ -487,6 +487,16 @@ h6 {
   background: rgba(255, 255, 255, 0.6);
 }
 /*** Carousel Hero Header End ***/
+.bg-breadcrumb-2{
+  position: relative;
+  overflow: hidden;
+  background: url(../img/about-us2.jpg);
+  background-position: center top;
+  background-repeat: no-repeat;
+  background-size: cover;
+  padding: 120px 0 60px 0;
+  transition: 0.5s;
+}
 
 /*** Single Page Hero Header Start ***/
 .bg-breadcrumb {
