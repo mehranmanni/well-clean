@@ -1429,6 +1429,8 @@ input[type="file"] {
 
 .footer .footer-item p {
   line-height: 35px;
+  text-align: justify;
+  margin-right: 25%;
 }
 
 .footer .footer-item a:hover {

@@ -248,7 +248,7 @@
                   <div class="carousel-caption-2-content-btn">
                     <a
                       class="btn mb-btn btn-primary rounded-pill py-3 px-5"
-                      href="/pricing"  
+                      href="/pricing"
                     >
                       Book Now
                     </a>
@@ -428,6 +428,7 @@
     </div> -->
     <!-- Order Modal Ends -->
     <!-- Estimate Modal -->
+    <!-- Modal -->
     <div
       class="modal fade"
       id="estimateModal"
@@ -448,8 +449,9 @@
               aria-label="Close"
             ></button>
           </div>
+
           <div class="modal-body">
-            <form id="estimateForm">
+            <form id="estimateForm" novalidate>
               <div class="row">
                 <!-- Business Name -->
                 <div class="col-md-6 mb-3">
@@ -460,40 +462,29 @@
                     type="text"
                     class="form-control"
                     id="businessName"
+                    name="businessName"
                     placeholder="Enter your business name"
                     required
                   />
                 </div>
 
-                <!-- Contact Person -->
+                <!-- Contact Name -->
                 <div class="col-md-6 mb-3">
-                  <label for="contactPerson" class="form-label"
-                    >Contact Person</label
+                  <label for="contactName" class="form-label"
+                    >Contact Name</label
                   >
                   <input
                     type="text"
                     class="form-control"
-                    id="contactPerson"
-                    placeholder="Your contact person"
+                    id="contactName"
+                    name="contactName"
+                    placeholder="Enter contact name"
                     required
                   />
                 </div>
               </div>
 
               <div class="row">
-                <!-- Email Address -->
-                <div class="col-md-6 mb-3">
-                  <label for="emailAddress" class="form-label"
-                    >Email Address</label
-                  >
-                  <input
-                    type="email"
-                    class="form-control"
-                    id="emailAddress"
-                    placeholder="Your email"
-                  />
-                </div>
-
                 <!-- Phone Number -->
                 <div class="col-md-6 mb-3">
                   <label for="phoneNumber" class="form-label"
@@ -503,150 +494,113 @@
                     type="tel"
                     class="form-control"
                     id="phoneNumber"
-                    placeholder="Your phone number"
+                    name="phoneNumber"
+                    placeholder="Enter phone number"
+                    required
+                  />
+                </div>
+
+                <!-- Email Address -->
+                <div class="col-md-6 mb-3">
+                  <label for="emailAddress" class="form-label"
+                    >Email Address</label
+                  >
+                  <input
+                    type="email"
+                    class="form-control"
+                    id="emailAddress"
+                    name="emailAddress"
+                    placeholder="Enter email address"
                     required
                   />
                 </div>
               </div>
 
               <div class="row">
-                <!-- Business Address -->
-                <div class="col-md-6 mb-3">
-                  <label for="businessAddress" class="form-label"
-                    >Business Address</label
-                  >
-                  <input
-                    type="text"
-                    class="form-control"
-                    id="businessAddress"
-                    placeholder="Your postcode"
-                  />
-                </div>
-
                 <!-- Type of Premises -->
                 <div class="col-md-6 mb-3">
                   <label for="premisesType" class="form-label"
                     >Type of Premises</label
                   >
-                  <select class="form-select" id="premisesType" required>
-                    <option value="" disabled selected>
-                      Choose property type
-                    </option>
+                  <select
+                    class="form-select"
+                    id="premisesType"
+                    name="premisesType"
+                    required
+                  >
+                    <option value="" disabled selected>Choose type</option>
                     <option>Office</option>
-                    <option>Retail Store</option>
+                    <option>Retail</option>
                     <option>Warehouse</option>
-                    <option>Restaurant</option>
-                    <option>School / Nursery</option>
+                    <option>School</option>
                     <option>Medical Facility</option>
                     <option>Other</option>
                   </select>
                 </div>
-              </div>
 
-              <div class="row">
-                <!-- Approximate Size -->
+                <!-- Preferred Contact Method -->
                 <div class="col-md-6 mb-3">
-                  <label for="approxSize" class="form-label"
-                    >Approximate Size of Premises</label
+                  <label for="contactMethod" class="form-label"
+                    >Preferred Contact Method</label
                   >
-                  <input
-                    type="text"
-                    class="form-control"
-                    id="approxSize"
-                    placeholder="Your (sq ft or sq m)"
-                  />
-                </div>
-
-                <!-- Number of Rooms -->
-                <div class="col-md-6 mb-3">
-                  <label for="numRooms" class="form-label"
-                    >Number of Rooms / Areas to be Cleaned</label
-                  >
-                  <input
-                    type="text"
-                    class="form-control"
-                    id="numRooms"
-                    placeholder="Your number of rooms"
-                  />
-                </div>
-              </div>
-
-              <div class="row">
-                <!-- Cleaning Frequency -->
-                <div class="col-md-6 mb-3">
-                  <label for="cleaningFrequency" class="form-label"
-                    >How Often Do You Require Cleaning?</label
-                  >
-                  <select class="form-select" id="cleaningFrequency" required>
-                    <option value="" disabled selected>Choose how often</option>
-                    <option>Daily</option>
-                    <option>Weekly</option>
-                    <option>Fortnightly</option>
-                    <option>Monthly</option>
-                    <option>One-off</option>
-                    <option>Other</option>
-                  </select>
-                </div>
-
-                <!-- Preferred Date & Time -->
-                <div class="col-md-6 mb-3">
-                  <label for="preferredDateTime" class="form-label"
-                    >Preferred Date & Time</label
-                  >
-                  <input
-                    type="datetime-local"
-                    class="form-control"
-                    id="preferredDateTime"
+                  <select
+                    class="form-select"
+                    id="contactMethod"
+                    name="contactMethod"
                     required
-                  />
-                </div>
-              </div>
-
-              <div class="row">
-                <!-- Services Required -->
-                <div class="col-md-6 mb-3">
-                  <label for="servicesRequired" class="form-label"
-                    >Services Required (tick all that apply):</label
                   >
-                  <select class="form-select" id="servicesRequired" required>
-                    <option value="" disabled selected>Choose a service</option>
-                    <option>General Cleaning (dusting, vacuuming, bins)</option>
-                    <option>Floor Cleaning (mopping, polishing)</option>
-                    <option>Window Cleaning</option>
-                    <option>Carpet Cleaning</option>
-                    <option>Washroom Cleaning & Supplies</option>
-                    <option>Kitchen / Breakroom Cleaning</option>
-                    <option>Deep Cleaning</option>
-                    <option>Other</option>
-                  </select>
-                </div>
-
-                <!-- Free Site Visit -->
-                <div class="col-md-6 mb-3">
-                  <label for="freeSiteVisit" class="form-label"
-                    >Would you like a free site visit and quote?</label
-                  >
-                  <select class="form-select" id="freeSiteVisit" required>
                     <option value="" disabled selected>
-                      Choose your answer
+                      Phone / Email / Either
                     </option>
-                    <option>Yes</option>
-                    <option>No</option>
+                    <option>Phone</option>
+                    <option>Email</option>
+                    <option>Either</option>
                   </select>
                 </div>
               </div>
 
-              <!-- Additional Notes -->
+              <!-- Brief Description -->
               <div class="mb-3">
-                <label for="additionalNotes" class="form-label"
-                  >Additional Notes or Specific Requirements:</label
+                <label for="description" class="form-label"
+                  >Brief Description of Your Needs</label
                 >
                 <textarea
                   class="form-control"
-                  id="additionalNotes"
+                  id="description"
+                  name="description"
                   rows="3"
-                  placeholder="Additional instructions"
+                  placeholder="e.g., frequency, special areas, or services required"
+                  required
                 ></textarea>
+              </div>
+
+              <div class="row align-items-center">
+                <!-- Free Site Visit (toggle) -->
+                <div class="col-md-6 mb-3 d-flex align-items-center">
+                  <div class="form-check form-switch me-3">
+                    <input
+                      class="form-check-input"
+                      type="checkbox"
+                      id="freeSiteVisitSwitch"
+                      checked
+                    />
+                    <label class="form-check-label" for="freeSiteVisitSwitch"
+                      >Free site visit & quote?</label
+                    >
+                  </div>
+                  <!-- hidden field to hold Yes/No for submission -->
+                  <input
+                    type="hidden"
+                    id="freeSiteVisit"
+                    name="freeSiteVisit"
+                    value="Yes"
+                  />
+                </div>
+
+                <!-- (Optional) Preferred follow-up time or similar could go here if needed -->
+                <div class="col-md-6 mb-3 text-muted small">
+                  <em>We’ll contact you by your preferred method.</em>
+                </div>
               </div>
 
               <!-- Submit Button -->
@@ -658,6 +612,7 @@
         </div>
       </div>
     </div>
+
     <!-- Estimate Modal Ends -->
     <!-- Navbar & Hero End -->
 
@@ -798,10 +753,10 @@
                           Satisfied Customer
                         </h6>
                         <p style="text-align: justify" class="mb-0">
-                          Our clients appreciate our attention to detail and
-                          commitment to providing exceptional cleaning services.
-                          We ensure every corner is spotless and every surface
-                          shines.
+                          Our clients truly appreciate our attention to detail
+                          and unwavering commitment to providing exceptional
+                          cleaning services & ensure every corner is spotless,
+                          every surface shines, and every space feels refreshed.
                         </p>
                       </div>
                     </div>
@@ -868,7 +823,7 @@
                       <h6 href="#" class="h4 d-inline-block mb-3">
                         Healthcare Centres & Hospitals
                       </h6>
-                      <p style="text-align: justify" class="mb-0">
+                      <p class="mb-0">
                         Trusted sanitisation ensuring patient and staff safety.
                         <br />
                         <a href="/service">Read More</a>
@@ -1029,9 +984,8 @@
                 Professional Cleaning Services
               </h4>
               <p class="mb-4">
-                We deliver top-quality cleaning solutions for homes and
-                businesses. Our trained staff use safe products and modern
-                techniques to ensure every space is spotless, fresh, and
+                We clean homes and businesses. Our trained staff use safe
+                products and modern methods to keep every space spotless and
                 hygienic.
               </p>
             </div>
@@ -1088,7 +1042,8 @@
               <p class="mb-4">
                 Have questions about our services? Check out our FAQ section to
                 find answers to the most common questions we receive. If you
-                don't find what you're looking for, feel free to <a href="/contact">contact us</a>.
+                don't find what you're looking for, feel free to
+                <a href="/contact">contact us</a>.
               </p>
 
               <!-- First FAQ item -->
@@ -1665,10 +1620,8 @@
             <div class="footer-item d-flex flex-column">
               <div class="footer-item">
                 <h3 class="mb-4">
-                  <img
-                    src="img/testing-logo-2.png"
-                    alt="Well-Clean"
-                    style="height: 70px"
+                  <img src="img/testing-logo-2.png" alt="Well-Clean"
+                  style="height: 70px; margin-top: -14px;"; margin-top: -14px;"
                   />
                 </h3>
                 <p class="mb-3">
@@ -1832,8 +1785,7 @@
     <!-- Template Javascript -->
     <script>
       document.getElementById("year").textContent = new Date().getFullYear();
-    </script>
-    <script>
+
       function updateNavbarVisibility() {
         const navbarCollapse = document.getElementById("navbarCollapse");
         if (window.innerWidth > 991.98) {
@@ -1853,8 +1805,7 @@
           }
         });
       window.addEventListener("resize", updateNavbarVisibility);
-    </script>
-    <script>
+
       document.addEventListener("DOMContentLoaded", function () {
         if (window.location.hash === "#openEstimateModal") {
           const modalTrigger = document.querySelector(
@@ -1865,6 +1816,49 @@
           }
         }
       });
+
+      (function () {
+        const switchEl = document.getElementById("freeSiteVisitSwitch");
+        const hidden = document.getElementById("freeSiteVisit");
+        const form = document.getElementById("estimateForm");
+
+        // keep Yes/No synced
+        switchEl.addEventListener("change", () => {
+          hidden.value = switchEl.checked ? "Yes" : "No";
+        });
+
+        // WhatsApp submission
+        form.addEventListener("submit", (e) => {
+          e.preventDefault();
+
+          if (!form.checkValidity()) {
+            form.reportValidity();
+            return;
+          }
+
+          const fd = Object.fromEntries(new FormData(form).entries());
+
+          // build message
+          let message = `*New Cleaning Enquiry*\n\n`;
+          message += `🏢 Business Name: ${fd.businessName}\n`;
+          message += `👤 Contact Name: ${fd.contactName}\n`;
+          message += `📞 Phone Number: ${fd.phoneNumber}\n`;
+          message += `📧 Email: ${fd.emailAddress}\n`;
+          message += `🏠 Premises Type: ${fd.premisesType}\n`;
+          message += `📬 Preferred Contact: ${fd.contactMethod}\n`;
+          message += `📝 Description: ${fd.description}\n`;
+          message += `📍 Free Site Visit: ${fd.freeSiteVisit}\n`;
+
+          // encode & build WhatsApp URL
+          const phone = "447398538498"; // your WhatsApp number
+          const url =
+            `https://api.whatsapp.com/send?phone=${phone}&text=` +
+            encodeURIComponent(message);
+
+          // redirect user to WhatsApp
+          window.open(url, "_blank");
+        });
+      })();
     </script>
     <script src="js/main.js"></script>
     <script src="js/script.js"></script>
