@@ -589,27 +589,28 @@ Thank you for booking with Well Clean!`
           tempDiv.appendChild(clone);
           document.body.appendChild(tempDiv);
 
+          // 🔹 Find "Name:" label more flexibly
+          let nameValue = "receipt";
+          const nameLabel = Array.from(clone.querySelectorAll("div")).find(
+            (div) => div.textContent.trim() === "Name:"
+          );
+
+          if (nameLabel) {
+            const val = nameLabel.nextElementSibling?.textContent?.trim();
+            if (val) nameValue = val;
+          }
+
+          const safeName = nameValue.split(" ")[0] || "receipt";
+
           // Capture the cleaned content
           html2canvas(clone, {
             scale: 3,
             useCORS: true,
             backgroundColor: "#ffffff",
           }).then((canvas) => {
-            // Convert canvas to image
             const imgData = canvas.toDataURL("image/png");
 
-            // Extract customer's name from "Name:" field for filename
-            let nameValue = "receipt";
-            const labels = document.querySelectorAll(".detail-label");
-            labels.forEach((label) => {
-              if (label.textContent.trim() === "Name:") {
-                const val = label.nextElementSibling?.textContent?.trim();
-                if (val) nameValue = val;
-              }
-            });
-            const safeName = nameValue.split(" ")[0] || "receipt";
-
-            // Create a temporary link to trigger download
+            // Trigger download
             const link = document.createElement("a");
             link.href = imgData;
             link.download = `${safeName}-receipt.png`;
@@ -617,7 +618,7 @@ Thank you for booking with Well Clean!`
             link.click();
             document.body.removeChild(link);
 
-            // Cleanup temporary DOM
+            // Cleanup
             document.body.removeChild(tempDiv);
           });
         });
@@ -648,7 +649,6 @@ Thank you for booking with Well Clean!`
       }
       window.addEventListener("resize", updateNavbarVisibility);
     </script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
   </body>
 </html>

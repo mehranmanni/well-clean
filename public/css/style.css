@@ -867,10 +867,8 @@ input[type="file"] {
   }
 
   .about-img {
-    margin: 0px !important;
-    height: 80vh !important;
+    display: none !important;
   }
-
   .bg-about .bg-light .d-flex {
     display: flex;
     flex-direction: column !important;
@@ -1167,6 +1165,7 @@ input[type="file"] {
   flex-direction: column;
   justify-content: center;
   text-align: center;
+  margin-top: 25px;
 }
 
 .counter .counter-item .counter-item-icon {
